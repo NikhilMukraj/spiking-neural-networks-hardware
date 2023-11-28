@@ -1,4 +1,6 @@
 // https://github.com/ben-marshall/uart/tree/master/rtl
+// may need to edit 50_000_000 freq to 100_000_000 or clock speed from 100 to 50 mhz 
+// to accomodate for alchitry
 
 // 
 // Module: impl_top
