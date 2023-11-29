@@ -1,6 +1,8 @@
 import cocotb
 from cocotb.triggers import FallingEdge, Timer
 from cocotb.binary import BinaryValue
+import sys
+sys.path.append("..")
 from models import fixed_point_to_decimal, decimal_to_fixed_point
 from models import check_with_tolerance
 import numpy as np
