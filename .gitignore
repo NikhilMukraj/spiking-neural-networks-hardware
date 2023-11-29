@@ -1,0 +1,4 @@
+/fixed-library/__pycache__
+/fixed-library/*/__pycache__
+/fixed-library/*/sim_build
+/fixed-library/*/results.xml
