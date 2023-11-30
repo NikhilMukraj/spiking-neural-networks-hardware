@@ -1,6 +1,47 @@
+import sys
+import json
 import re
 from models import decimal_to_fixed_point
 
+
+# use color formatting
+# if len(sys.argv) < 2:
+#     print('Too few args...')
+#     sys.exit(1)
+
+# with open(sys.argv[1], 'r') as f:
+#     args = json.load(f)
+
+# necessary_args = {
+#     'name': str,
+#     'eq': str,
+#     'variables': list,
+#     'integer_bits': int,
+#     'integer_bits': int,
+#     'lower_bound': (int, float),
+#     'upper_bound': (int, float),
+#     'tolerance': (int, float),
+# }
+
+# for key, value in necessary_args.items():
+#     if key not in args:
+#         print(f'"{key}" not found')
+#         sys.exit(1)
+#     if type(args[key]) != value:
+#         print(f'"{key}" is of type "{type(args[key])}" not {value}')
+#         sys.exit(1)
+
+# if any(type(i) != str for i in args['variables']):
+#     print('All items in "variables" must be strings')
+#     sys.exit(1)
+
+# module_name = args['name']
+# eq = args['equation']
+# integer_bits = args['integer_bits']
+# fractional_bits = args['fractional_bits']
+# variables = args['variables']
+# lower_bound, upper_bound = args['lower_bound'], args['upper_bound']
+# tolerance = args['tolerance']
 
 eq = '(x+((y*(z+2))+(3*(x*2))))' # should be inputtable from sys argv
 integer_bits = 16 # should be inputtable from sys argv
