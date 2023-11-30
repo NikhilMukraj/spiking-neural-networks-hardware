@@ -458,6 +458,3 @@ module fixed_point_cmp #(
         end
     end
 endmodule
-
-// https://github.com/freecores/verilog_fixed_point_math_library/blob/master/qmult.v
-// https://github.com/freecores/verilog_fixed_point_math_library/blob/master/qdiv.v
