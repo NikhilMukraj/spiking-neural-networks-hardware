@@ -5,6 +5,7 @@ from models import decimal_to_fixed_point
 
 
 # use color formatting
+# get rid of previous arg declarations
 # if len(sys.argv) < 2:
 #     print('Too few args...')
 #     sys.exit(1)
@@ -16,6 +17,7 @@ from models import decimal_to_fixed_point
 #     'name': str,
 #     'eq': str,
 #     'variables': list,
+    # 'out_variable': str,
 #     'integer_bits': int,
 #     'integer_bits': int,
 #     'lower_bound': (int, float),
@@ -40,6 +42,7 @@ from models import decimal_to_fixed_point
 # integer_bits = args['integer_bits']
 # fractional_bits = args['fractional_bits']
 # variables = args['variables']
+# out_variable = args['out_variable']
 # lower_bound, upper_bound = args['lower_bound'], args['upper_bound']
 # tolerance = args['tolerance']
 
