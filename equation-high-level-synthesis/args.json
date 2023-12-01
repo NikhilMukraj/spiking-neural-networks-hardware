@@ -1,0 +1,11 @@
+{
+    "name": "equation_test",
+    "eq": "(x+((y*(z+2))+(3*(x*2))))",
+    "variables": ["x", "y", "z"],
+    "out_variable": "out",
+    "integer_bits": 16,
+    "fractional_bits": 16,
+    "lower_bound": -128,
+    "upper_bound": 128,
+    "tolerance": 0.1
+}
