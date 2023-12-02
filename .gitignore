@@ -2,5 +2,6 @@
 /fixed-library/*/__pycache__
 /fixed-library/*/sim_build
 /fixed-library/*/results.xml
+/fixed-library/fixed-point-models/fixed_point_models/__pycache__
 /fixed-library/fixed-point-models/build
 /fixed-library/fixed-point-models/fixed_point_models.egg-info
