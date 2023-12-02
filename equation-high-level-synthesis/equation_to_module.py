@@ -1,7 +1,7 @@
 import sys
 import json
 import re
-from models import decimal_to_fixed_point
+from fixed_point_models import decimal_to_fixed_point
 
 
 # use color formatting
