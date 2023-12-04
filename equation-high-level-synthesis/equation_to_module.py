@@ -4,10 +4,13 @@ import re
 from fixed_point_models import decimal_to_fixed_point
 
 
-# use color formatting
+# GREEN = '\033[1;32m'
+# NC = '\033[0m'
+# RED = '\033[0;31m'
+
 # get rid of previous arg declarations
 # if len(sys.argv) < 2:
-#     print('Too few args...')
+#     print(f'{RED}Too few args...{NC}')
 #     sys.exit(1)
 
 # with open(sys.argv[1], 'r') as f:
@@ -27,10 +30,10 @@ from fixed_point_models import decimal_to_fixed_point
 
 # for key, value in necessary_args.items():
 #     if key not in args:
-#         print(f'"{key}" not found')
+#         print(f'{RED}"{key}" not found{NC}')
 #         sys.exit(1)
 #     if type(args[key]) != value:
-#         print(f'"{key}" is of type "{type(args[key])}" not {value}')
+#         print(f'{RED}"{key}" is of type "{type(args[key])}" not {value}{NC}')
 #         sys.exit(1)
 
 # if any(type(i) != str for i in args['variables']):
@@ -229,6 +232,8 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 '''
 
 print(makefile)
+
+print(f'{GREEN}Finished writing modules{NC}')
 
 # TODO:
 # equation preprocessing
