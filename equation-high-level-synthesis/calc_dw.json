@@ -1,0 +1,11 @@
+{
+    "name": "calc_dw",
+    "eq": "((a*((b*v)-w)*(dt*t))",
+    "variables": ["a", "b", "c", "d", "v", "w", "dt", "t"],
+    "out_variable": "out",
+    "integer_bits": 16,
+    "fractional_bits": 16,
+    "lower_bound": -128,
+    "upper_bound": 128,
+    "tolerance": 0.1
+}
