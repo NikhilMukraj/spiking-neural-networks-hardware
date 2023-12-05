@@ -1,57 +1,58 @@
 import sys
+import string
 import json
 import re
 from fixed_point_models import decimal_to_fixed_point
 
 
-# GREEN = '\033[1;32m'
-# NC = '\033[0m'
-# RED = '\033[0;31m'
+GREEN = '\033[1;32m'
+NC = '\033[0m'
+RED = '\033[0;31m'
 
-# get rid of previous arg declarations
-# if len(sys.argv) < 2:
-#     print(f'{RED}Too few args...{NC}')
-#     sys.exit(1)
+if len(sys.argv) < 2:
+    print(f'{RED}Too few args...{NC}')
+    sys.exit(1)
 
-# with open(sys.argv[1], 'r') as f:
-#     args = json.load(f)
+with open(sys.argv[1], 'r') as f:
+    args = json.load(f)
 
-# necessary_args = {
-#     'name': str,
-#     'eq': str,
-#     'variables': list,
-    # 'out_variable': str,
-#     'integer_bits': int,
-#     'integer_bits': int,
-#     'lower_bound': (int, float),
-#     'upper_bound': (int, float),
-#     'tolerance': (int, float),
-# }
+necessary_args = {
+    'name': str,
+    'eq': str,
+    'variables': list,
+    'out_variable': str,
+    'integer_bits': int,
+    'integer_bits': int,
+    'lower_bound': (int, float),
+    'upper_bound': (int, float),
+    'tolerance': (int, float),
+}
 
-# for key, value in necessary_args.items():
-#     if key not in args:
-#         print(f'{RED}"{key}" not found{NC}')
-#         sys.exit(1)
-#     if type(args[key]) != value:
-#         print(f'{RED}"{key}" is of type "{type(args[key])}" not {value}{NC}')
-#         sys.exit(1)
+for key, value in necessary_args.items():
+    if key not in args:
+        print(f'{RED}"{key}" not found{NC}')
+        sys.exit(1)
+    if type(args[key]) != value:
+        print(f'{RED}"{key}" is of type "{type(args[key])}" not {value}{NC}')
+        sys.exit(1)
 
-# if any(type(i) != str for i in args['variables']):
-#     print('All items in "variables" must be strings')
-#     sys.exit(1)
+if any(type(i) != str for i in args['variables']):
+    print(f'{RED}All items in "variables" must be strings{NC}')
+    sys.exit(1)
 
-# module_name = args['name']
-# eq = args['equation']
-# integer_bits = args['integer_bits']
-# fractional_bits = args['fractional_bits']
-# variables = args['variables']
-# out_variable = args['out_variable']
-# lower_bound, upper_bound = args['lower_bound'], args['upper_bound']
-# tolerance = args['tolerance']
+module_name = args['name']
 
-eq = '(x+((y*(z+2))+(3*(x*2))))' # should be inputtable from sys argv
-integer_bits = 16 # should be inputtable from sys argv
-fractional_bits = 16
+if any(i not in string.ascii_letters + string.ascii_digits for i in module_name):
+    print(f'{RED}All characters in "module_name" must be alphanumeric{NC}')
+    sys.exit(1)
+
+eq = args['equation']
+integer_bits = args['integer_bits']
+fractional_bits = args['fractional_bits']
+variables = args['variables']
+out_variable = args['out_variable']
+lower_bound, upper_bound = args['lower_bound'], args['upper_bound']
+tolerance = args['tolerance']
 
 add_module = lambda n, a, b, c: f'add adder{n} ( {a}, {b}, {c} );'
 mult_module = lambda n, a, b, c: f'mult multiplier{n} ( {a}, {b}, {c} );'
@@ -151,10 +152,6 @@ for n in range(max_depth-1, -1, -1):
 print(modules)
 print(intermediates)
 
-variables = ['x', 'y', 'z'] # should be inputtable from sys argv
-out_variable = 'out'
-module_name = 'eq'
-
 last_term_key = list(intermediates.keys())[-1]
 last_term = intermediates[last_term_key]
 del intermediates[last_term_key]
@@ -170,9 +167,6 @@ print(verilog_file)
 # print([i.group() for i in re.finditer('-*(\d|\.)+', verilog_file)])
 
 # last intermediate value should be overwritten with out_variable
-
-lower_bound, upper_bound = (-31, 31)
-tolerance = 1e-2
 
 generate_random_vars = '\n\t'.join(f'{i} = np.random.randint(lower_bound, upper_bound)' for i in variables)
 generate_binary_values = '\n\t'.join(f'binary_{i} = decimal_to_fixed_point({i}, int_bits, frac_bits)' for i in variables)
