@@ -1,2 +1,3 @@
 numpy==1.24.1
 cocotb==1.8.1
+./fixed-library/fixed-point-models
