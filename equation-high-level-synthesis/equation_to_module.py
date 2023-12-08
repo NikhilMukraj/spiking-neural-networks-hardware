@@ -17,22 +17,22 @@ with open(sys.argv[1], 'r') as f:
     args = json.load(f)
 
 necessary_args = {
-    'name': str,
-    'eq': str,
-    'variables': list,
-    'out_variable': str,
-    'integer_bits': int,
-    'integer_bits': int,
-    'lower_bound': (int, float),
-    'upper_bound': (int, float),
-    'tolerance': (int, float),
+    'name': [str],
+    'equation': [str],
+    'variables': [list],
+    'out_variable': [str],
+    'integer_bits': [int],
+    'integer_bits': [int],
+    'lower_bound': [int, float],
+    'upper_bound': [int, float],
+    'tolerance': [int, float],
 }
 
 for key, value in necessary_args.items():
     if key not in args:
         print(f'{RED}"{key}" not found{NC}')
         sys.exit(1)
-    if type(args[key]) != value:
+    if type(args[key]) not in value:
         print(f'{RED}"{key}" is of type "{type(args[key])}" not {value}{NC}')
         sys.exit(1)
 
@@ -42,7 +42,7 @@ if any(type(i) != str for i in args['variables']):
 
 module_name = args['name']
 
-if any(i not in string.ascii_letters + string.ascii_digits for i in module_name):
+if any(i not in string.ascii_letters + string.digits + '-_' for i in module_name):
     print(f'{RED}All characters in "module_name" must be alphanumeric{NC}')
     sys.exit(1)
 
@@ -126,7 +126,6 @@ for _, i in lowest:
     update_modules(modules, op, first, second, intermediates[i], i)
 
 for n in range(max_depth-1, -1, -1):
-    # level = [i for i in parsed if i[0] == max_depth-1]
     level = [i for i in parsed if i[0] == n]
 
     for _, i in level:
@@ -164,9 +163,6 @@ intermediates_string = 'reg [N-1:0] ' + ', '.join(intermediates.values()) + ';\n
 modules_string = '\n\t'.join(modules)
 verilog_file = include_string + module_header + intermediates_string + modules_string + '\nendmodule'
 print(verilog_file)
-# print([i.group() for i in re.finditer('-*(\d|\.)+', verilog_file)])
-
-# last intermediate value should be overwritten with out_variable
 
 generate_random_vars = '\n\t'.join(f'{i} = np.random.randint(lower_bound, upper_bound)' for i in variables)
 generate_binary_values = '\n\t'.join(f'binary_{i} = decimal_to_fixed_point({i}, int_bits, frac_bits)' for i in variables)
