@@ -1,6 +1,6 @@
 {
     "name": "calc_dw",
-    "eq": "((a*((b*v)-w)*(dt*t))",
+    "equation": "((a*((b*v)-w)*(dt*t))",
     "variables": ["a", "b", "c", "d", "v", "w", "dt", "t"],
     "out_variable": "out",
     "integer_bits": 16,

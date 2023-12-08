@@ -1,6 +1,6 @@
 {
     "name": "equation_test",
-    "eq": "(x+((y*(z+2))+(3*(x*2))))",
+    "equation": "(x+((y*(z+2))+(3*(x*2))))",
     "variables": ["x", "y", "z"],
     "out_variable": "out",
     "integer_bits": 16,

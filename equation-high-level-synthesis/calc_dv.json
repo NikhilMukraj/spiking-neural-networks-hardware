@@ -1,6 +1,6 @@
 {
     "name": "calc_dv",
-    "eq": "((((0.04*(v*v))+(5*v))+140)+((-1*w)+i))",
+    "equation": "((((0.04*(v*v))+(5*v))+140)+((-1*w)+i))",
     "variables": ["v", "w", "i"],
     "out_variable": "out",
     "integer_bits": 16,
