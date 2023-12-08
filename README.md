@@ -8,4 +8,4 @@
 
 ## notes
 
-- use dut._log.info(string) for logging
+- use `dut._log.info(string)` for logging cocotb simulations
