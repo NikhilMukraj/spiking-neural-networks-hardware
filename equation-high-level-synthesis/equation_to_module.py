@@ -1,4 +1,5 @@
 import sys
+import os
 import string
 import json
 import re
@@ -222,6 +223,14 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 '''
 
 print(makefile)
+
+os.mkdir(module_name)
+with open(f'{module_name}/Make', 'w+') as f:
+    f.write(makefile)
+with open(f'{module_name}/{module_name}.sv', 'w+') as f:
+    f.write(verilog_file)
+with open(f'{module_name}/{module_name}_test.py', 'w+') as f:
+    f.write(test_file)
 
 print(f'{GREEN}Finished writing modules{NC}')
 
