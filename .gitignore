@@ -5,3 +5,4 @@
 /fixed-library/fixed-point-models/fixed_point_models/__pycache__
 /fixed-library/fixed-point-models/build
 /fixed-library/fixed-point-models/fixed_point_models.egg-info
+/equation-high-level-synthesis/module-*/*
