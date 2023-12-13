@@ -43,13 +43,14 @@ if any(type(i) != str for i in args['variables']):
 
 module_name = args['name']
 
-if any(i not in string.ascii_letters + string.digits + '-_' for i in module_name):
+if any(i not in string.ascii_letters + string.digits + '_' for i in module_name):
     print(f'{RED}All characters in "module_name" must be alphanumeric{NC}')
     sys.exit(1)
 
 eq = args['equation']
 integer_bits = args['integer_bits']
 fractional_bits = args['fractional_bits']
+N = integer_bits + fractional_bits
 variables = args['variables']
 out_variable = args['out_variable']
 lower_bound, upper_bound = args['lower_bound'], args['upper_bound']
@@ -107,7 +108,7 @@ intermediates = {}
 
 def convert_decimals(string):
     if re.match(r'^-*(\d|\.)+$', string):
-        return f"{integer_bits}'b{decimal_to_fixed_point(float(string), integer_bits, fractional_bits)}"
+        return f"{N}'b{decimal_to_fixed_point(float(string), integer_bits, fractional_bits)}"
     else: 
         return string
 
@@ -159,7 +160,7 @@ modules = [i if last_term not in i else i.replace(last_term, out_variable) for i
 
 module_variables = ",\n\t".join(["input [N-1:0] " + i for i in variables])
 include_string = '`include "../ops.sv"\n\n'
-module_header = f'module {module_name} #(\n\tparameter N={integer_bits},\n\tparameter Q={fractional_bits}\n)(\n\t{module_variables},\n\toutput [N-1:0] {out_variable} \n);\n\t'
+module_header = f'module {module_name} #(\n\tparameter N={N},\n\tparameter Q={fractional_bits}\n)(\n\t{module_variables},\n\toutput [N-1:0] {out_variable} \n);\n\t'
 intermediates_string = 'reg [N-1:0] ' + ', '.join(intermediates.values()) + ';\n\n\t'
 modules_string = '\n\t'.join(modules)
 verilog_file = include_string + module_header + intermediates_string + modules_string + '\nendmodule'
@@ -172,8 +173,8 @@ generate_seting_values = '\n\t'.join(f'dut.{i}.value = BinaryValue(binary_{i})' 
 test_file = f'''import cocotb
 from cocotb.triggers import FallingEdge, Timer
 from cocotb.binary import BinaryValue
-from models import fixed_point_to_decimal, decimal_to_fixed_point
-from models import check_with_tolerance
+from fixed_point_models import fixed_point_to_decimal, decimal_to_fixed_point
+from fixed_point_models import check_with_tolerance
 import numpy as np
 
 
@@ -182,7 +183,7 @@ async def exp_test(dut):
     int_bits = {integer_bits}
     frac_bits = {fractional_bits}
     lower_bound, upper_bound = {lower_bound}, {upper_bound}
-    tolerance = 
+    tolerance = {tolerance}
 
     for i in range(100):
         {generate_random_vars}
@@ -202,10 +203,11 @@ async def exp_test(dut):
         )
 '''
 
+test_file = test_file.replace('\t', '        ')
+
 print(test_file)
 
-makefile = f'''
-# defaults
+makefile = f'''# defaults
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 
@@ -224,12 +226,12 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 
 print(makefile)
 
-os.mkdir(module_name)
-with open(f'{module_name}/Make', 'w+') as f:
+os.mkdir(f'module-{module_name}')
+with open(f'./module-{module_name}/Makefile', 'w+') as f:
     f.write(makefile)
-with open(f'{module_name}/{module_name}.sv', 'w+') as f:
+with open(f'./module-{module_name}/{module_name}.sv', 'w+') as f:
     f.write(verilog_file)
-with open(f'{module_name}/{module_name}_test.py', 'w+') as f:
+with open(f'./module-{module_name}/{module_name}_test.py', 'w+') as f:
     f.write(test_file)
 
 print(f'{GREEN}Finished writing modules{NC}')
