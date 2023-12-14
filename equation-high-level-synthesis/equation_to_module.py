@@ -41,6 +41,10 @@ if any(type(i) != str for i in args['variables']):
     print(f'{RED}All items in "variables" must be strings{NC}')
     sys.exit(1)
 
+# if any(i == 'e' for i in args['variables']):
+#     print(f'{RED}"e" is a reserved variable name{NC}')
+#     sys.exit(1)
+
 module_name = args['name']
 
 if any(i not in string.ascii_letters + string.digits + '_' for i in module_name):
@@ -60,16 +64,24 @@ add_module = lambda n, a, b, c: f'add adder{n} ( {a}, {b}, {c} );'
 mult_module = lambda n, a, b, c: f'mult multiplier{n} ( {a}, {b}, {c} );'
 div_module = lambda n, a, b, c: f'div divider{n} ( {a}, {b}, {c} );'
 
+def exp_module(n, a, b, c):
+    if a != 'e':
+        raise ValueError('Can only use "e" as base exponent')
+
+    return f'exp exponentiate{n} ( {b}, {c} );' # negative exp option if a = neg_e
+
 func_modules = {
     '+' : add_module, 
     '*' : mult_module,
     '/' : div_module,
+    '^' : exp_module,
 }
 
 module_types = {
     '+' : 'adder',
     '*' : 'mult',
     '/' : 'div',
+    '^' : 'exp',
 }
 
 def module_type_length(modules, module_type):
@@ -82,6 +94,8 @@ def get_operator(string):
         return '*'
     elif '/' in i:
         return '/'
+    elif '^' in i:
+        return '^'
 
     raise ValueError('Operator not found') 
 
@@ -149,7 +163,6 @@ for n in range(max_depth-1, -1, -1):
 
         update_modules(modules, op, first, second, intermediates[pre_replacement], pre_replacement)
 
-
 print(modules)
 print(intermediates)
 
@@ -159,7 +172,7 @@ del intermediates[last_term_key]
 modules = [i if last_term not in i else i.replace(last_term, out_variable) for i in modules]
 
 module_variables = ",\n\t".join(["input [N-1:0] " + i for i in variables])
-include_string = '`include "../ops.sv"\n\n'
+include_string = '`include "../ops.sv"\n\n\n'
 module_header = f'module {module_name} #(\n\tparameter N={N},\n\tparameter Q={fractional_bits}\n)(\n\t{module_variables},\n\toutput [N-1:0] {out_variable} \n);\n\t'
 intermediates_string = 'reg [N-1:0] ' + ', '.join(intermediates.values()) + ';\n\n\t'
 modules_string = '\n\t'.join(modules)
@@ -169,6 +182,9 @@ print(verilog_file)
 generate_random_vars = '\n\t'.join(f'{i} = np.random.randint(lower_bound, upper_bound)' for i in variables)
 generate_binary_values = '\n\t'.join(f'binary_{i} = decimal_to_fixed_point({i}, int_bits, frac_bits)' for i in variables)
 generate_seting_values = '\n\t'.join(f'dut.{i}.value = BinaryValue(binary_{i})' for i in variables)
+
+if any('exp' in i for i in modules):
+    eq = re.sub(r'e\W*\^', 'np.exp', eq)
 
 test_file = f'''import cocotb
 from cocotb.triggers import FallingEdge, Timer
@@ -194,13 +210,13 @@ async def exp_test(dut):
         await Timer(2, units="ns")
 
         output_value = fixed_point_to_decimal(str(dut.{out_variable}.value), int_bits, frac_bits)
-        actual = {eq} # unprocessed equation
+        actual = {eq}
 
         assert check_with_tolerance(
             actual,
             output_value, 
             {tolerance}
-        )
+        ), f'{{actual}} != {{output_value}}'
 '''
 
 test_file = test_file.replace('\t', '        ')
