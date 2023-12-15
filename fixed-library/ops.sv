@@ -407,6 +407,23 @@ module exp #(
 	end
 endmodule
 
+module exp_higher_precision #(
+	parameter N = 32
+) (
+	input [N-1:0] x,
+	output reg [N-1:0] out
+);
+	reg [N-1:0] intermediate;
+
+	mult multiplier(
+		x,
+		32'b00000000000000010111000101010100, // 1 / ln(2),
+		intermediate
+	);
+
+	assign out = 1 <<< intermediate;
+endmodule
+
 module fixed_point_cmp #(
     parameter N = 32
 ) (
