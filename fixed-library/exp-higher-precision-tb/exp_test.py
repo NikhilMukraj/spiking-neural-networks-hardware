@@ -10,10 +10,11 @@ import numpy as np
 async def exp_test(dut):
     int_bits = 16
     frac_bits = 16
-    bounds = 31
+    lower_bound = -31
+    upper_bound = 31
 
     for i in range(100):
-        x = np.random.randint(-bounds, bounds)
+        x = np.random.randint(lower_bound, upper_bound)
 
         binary_x = decimal_to_fixed_point(x, int_bits, frac_bits)    
         dut.x.value = BinaryValue(binary_x)
