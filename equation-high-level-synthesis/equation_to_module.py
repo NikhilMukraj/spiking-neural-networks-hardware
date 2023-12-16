@@ -195,7 +195,7 @@ import numpy as np
 
 
 @cocotb.test()
-async def exp_test(dut):
+async def test(dut):
     int_bits = {integer_bits}
     frac_bits = {fractional_bits}
     lower_bound, upper_bound = {lower_bound}, {upper_bound}
