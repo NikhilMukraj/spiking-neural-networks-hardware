@@ -408,7 +408,8 @@ module exp #(
 endmodule
 
 module exp_higher_precision #(
-	parameter N = 32
+	parameter N = 32,
+	parameter Q = 16
 ) (
 	input [N-1:0] x,
 	output reg [N-1:0] out
@@ -421,7 +422,9 @@ module exp_higher_precision #(
 		intermediate
 	);
 
-	assign out = 1 <<< intermediate;
+	assign out = 32'b00000000000000010000000000000000 << intermediate[N-1:Q];
+	// use lookup to determine e^msb of fractional bit
+	// multiply by e^rest using 2 degree taylor
 endmodule
 
 module fixed_point_cmp #(

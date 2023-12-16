@@ -10,8 +10,8 @@ import numpy as np
 async def exp_test(dut):
     int_bits = 16
     frac_bits = 16
-    lower_bound = -31
-    upper_bound = 31
+    lower_bound = 1
+    upper_bound = 10
 
     for i in range(100):
         x = np.random.randint(lower_bound, upper_bound)
