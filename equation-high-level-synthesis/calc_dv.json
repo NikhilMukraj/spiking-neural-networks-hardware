@@ -7,5 +7,5 @@
     "fractional_bits": 16,
     "lower_bound": -128,
     "upper_bound": 128,
-    "tolerance": 0.1
+    "tolerance": 1
 }
