@@ -436,7 +436,7 @@ module fixed_point_cmp #(
     output reg gt,
     output reg lt
 );
-    always_comb begin
+	always @ (*) begin
         if ((a[N-1] == 1'b0) && (b[N-1] == 1'b0)) begin
             if (a[N-2:0] > b[N-2:0]) begin
                 eq = 1'b0;
