@@ -6,6 +6,8 @@ from fixed_point_models import check_with_tolerance
 import numpy as np
 
 
+convert_to_binary = lambda x, integer_bits, fractional_bits : decimal_to_fixed_point(x, integer_bits, fractional_bits)
+
 @cocotb.test()
 async def test(dut):
     int_bits = 16
@@ -25,30 +27,27 @@ async def test(dut):
         c = -55
         d = 8.0
         apply = 1
+        rst = 1
 
-        binary_i = decimal_to_fixed_point(i, int_bits, frac_bits)
-        binary_v_init = decimal_to_fixed_point(v_init, int_bits, frac_bits)
-        binary_w_init = decimal_to_fixed_point(w_init, int_bits, frac_bits)    
-        binary_v_th = decimal_to_fixed_point(v_th, int_bits, frac_bits)
-        binary_dt = decimal_to_fixed_point(dt, int_bits, frac_bits)
-        binary_t = decimal_to_fixed_point(t, int_bits, frac_bits)
-        binary_a = decimal_to_fixed_point(a, int_bits, frac_bits)
-        binary_b = decimal_to_fixed_point(b, int_bits, frac_bits)
-        binary_c = decimal_to_fixed_point(c, int_bits, frac_bits)
-        binary_d = decimal_to_fixed_point(d, int_bits, frac_bits)
-        binary_apply = decimal_to_fixed_point(apply, 1, 0)
-        dut.i.value = BinaryValue(binary_x)
-        dut.v_init.value = BinaryValue(binary_y)
-        dut.v_th.value = BinaryValue(binary_vth)
-        dut.dt.value = BinaryValue(binary_dt)
-        dut.t.value = BinaryValue(binary_t)
-        dut.a.value = BinaryValue(binary_a)
-        dut.b.value = BinaryValue(binary_b)
-        dut.c.value = BinaryValue(binary_c)
-        dut.d.value = BinaryValue(binary_d)
+        dut.i.value = BinaryValue(convert_to_binary(i, int_bits, frac_bits))
+        dut.v_init.value = BinaryValue(convert_to_binary(v_init, int_bits, frac_bits))
+        dut.v_th.value = BinaryValue(convert_to_binary(v_th, int_bits, frac_bits))
+        dut.dt.value = BinaryValue(convert_to_binary(dt, int_bits, frac_bits))
+        dut.t.value = BinaryValue(convert_to_binary(t, int_bits, frac_bits))
+        dut.a.value = BinaryValue(convert_to_binary(a, int_bits, frac_bits))
+        dut.b.value = BinaryValue(convert_to_binary(b, int_bits, frac_bits))
+        dut.c.value = BinaryValue(convert_to_binary(c, int_bits, frac_bits))
+        dut.d.value = BinaryValue(convert_to_binary(d, int_bits, frac_bits))
+
+        dut.rst.value = BinaryValue(str(rst))
+        await Timer(2, units="ns")
+
+        rst = 0
+        dut.rst.value(str(rst))
+        await Timer(2, units="ns")
 
         for i in range(5):
-            dut.apply.value = BinaryValue(binary_apply)
+            dut.apply.value = BinaryValue(str(apply))
             await Timer(2, units="ns")
 
             output_voltage = fixed_point_to_decimal(str(dut.voltage.value), int_bits, frac_bits)
@@ -58,7 +57,5 @@ async def test(dut):
             dut._log.info(f'w: {output_w}')
 
             apply = 0
-            binary_apply = decimal_to_fixed_point(apply, 1, 0)
-            
-            dut.apply.value = BinaryValue(2, units="ns")
+            dut.apply.value = BinaryValue(str(apply), units="ns")
             await Timer(2, units="ns")
