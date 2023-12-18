@@ -10,10 +10,7 @@ import numpy as np
 async def reciprocal(dut):
     int_bits = 16
     frac_bits = 16
-    # bounds = 2 ** 15
     bounds = 128
-
-    with open('test2.txt', 'w+') as f: f.write('')
 
     for i in range(100):
         a = np.random.randint(-bounds, bounds)
