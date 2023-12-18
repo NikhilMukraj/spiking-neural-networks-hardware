@@ -1,6 +1,6 @@
-`include "ops.sv"
-`include "calc_dv.sv"
-`include "calc_dw.sv"
+`include "../ops.sv"
+`include "../calc_dv.sv"
+`include "../calc_dw.sv"
 
 
 module izhikevich_core #(
@@ -19,14 +19,13 @@ module izhikevich_core #(
 	input [N-1:0] d,
     // input calculate,
     input apply,
+    input rst,
 	output reg [N-1:0] voltage,
     output reg [N-1:0] w
 );
-    wire eq, gt, lt, apply_edge;
-    reg [N-1:0] dv, dw, new_voltage, new_w, actual_voltage, new_voltage;
-
-    assign voltage = v_init;
-    assign w = w_init;
+    wire eq, gt, lt;
+    reg apply_edge;
+    reg [N-1:0] dv, dw, new_voltage, new_w, actual_voltage, actual_w;
 
     fixed_point_cmp threshold ( actual_voltage, v_th, eq, gt, lt );
 
@@ -47,7 +46,13 @@ module izhikevich_core #(
     add adder2 ( actual_w, dw, new_w );
 
     always @ (*) begin
-        if (!apply) begin
+        if (rst) begin
+            actual_voltage = v_init;
+            actual_w = w_init;
+            voltage = v_init;
+            w = w_init;
+        end
+        else if (!apply) begin
             apply_edge <= 1; 
         end
         else if (apply_edge) begin
