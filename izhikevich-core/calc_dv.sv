@@ -1,6 +1,3 @@
-// `include "./ops.sv"
-
-
 module calc_dv #(
 	parameter N=32,
 	parameter Q=16
