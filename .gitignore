@@ -6,3 +6,6 @@
 /fixed-library/fixed-point-models/build
 /fixed-library/fixed-point-models/fixed_point_models.egg-info
 /equation-high-level-synthesis/module-*/*
+/izhikevich-core/izhikevich-tb/sim_build
+/izhikevich-core/izhikevich-tb/results.xml
+/izhikevich-core/izhikevich-tb/__pycache__
