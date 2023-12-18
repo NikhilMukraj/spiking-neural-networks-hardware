@@ -15,9 +15,7 @@ async def fcmp_test(dut):
     for i in range(100):
         a = np.random.randint(-bounds, bounds)
         b = np.random.randint(-bounds, bounds)
-        # a = np.random.randint(0, bounds)
-        # b = np.random.randint(0, bounds)
-
+       
         dut.a.value = BinaryValue(decimal_to_fixed_point(a, int_bits, frac_bits))
         dut.b.value = BinaryValue(decimal_to_fixed_point(b, int_bits, frac_bits))
 
