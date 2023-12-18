@@ -22,37 +22,46 @@ module izhikevich_core #(
 	output reg [N-1:0] voltage,
     output reg [N-1:0] w
 );
-    wire eq, gt, lt;
-    reg [N-1:0] dv, dw, new_voltage, new_w;
+    wire eq, gt, lt, apply_edge;
+    reg [N-1:0] dv, dw, new_voltage, new_w, actual_voltage, new_voltage;
 
     assign voltage = v_init;
     assign w = w_init;
 
-    fixed_point_cmp threshold ( voltage, v_th, eq, gt, lt );
+    fixed_point_cmp threshold ( actual_voltage, v_th, eq, gt, lt );
 
-    calc_dv calc_dv1 ( voltage, w, i, dv );
+    calc_dv calc_dv1 ( actual_voltage, w, i, dv );
     calc_dw calc_dw1 (
         a,
         b,
         c,
         d,
-        voltage,
-        w,
+        actual_voltage,
+        actual_voltage,
         dt,
         t,
         dw
     );
 
-    add adder1 ( voltage, dv, new_voltage );
-    add adder2 ( w, dw, new_w );
+    add adder1 ( actual_voltage, dv, new_voltage );
+    add adder2 ( actual_w, dw, new_w );
 
     always @ (*) begin
-        if (eq | gt) begin
-            voltage <= c;
-            w <= d;
-        end else if (apply) begin
-            voltage <= new_voltage;
-            w <= new_w;
+        if (!apply) begin
+            apply_edge <= 1; 
         end
+        else if (apply_edge) begin
+            if (eq | gt) begin
+                actual_voltage <= c;
+                actual_w <= d;
+            end else if (apply) begin
+                actual_voltage <= new_voltage;
+                actual_w <= new_w;
+            end
+            apply_edge <= 0; 
+        end
+
+        voltage <= actual_voltage;
+        w <= actual_w;
     end
 endmodule
