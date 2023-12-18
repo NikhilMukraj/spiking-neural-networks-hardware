@@ -15,10 +15,7 @@ async def mult_test(dut):
     for i in range(100):
         a = np.random.uniform(-bounds, bounds)
         b = np.random.uniform(-bounds, bounds)
-        # a = 2.0
-        # b = 0.0
-       
-        # converting to right precision
+
         a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
         b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits), int_bits, frac_bits)
 
