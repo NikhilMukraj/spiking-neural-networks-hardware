@@ -21,6 +21,9 @@ def check_with_tolerance(expected, actual, tolerance=1e-5):
     return np.abs(expected - actual) < tolerance
 
 def fixed_point_to_decimal(binary_str, integer_bits, fractional_bits):
+    if integer_bits + fractional_bits <= 3: 
+        raise NotImplementedError('Unimplemented for size of 3 and under')
+        
     sign_bit = int(binary_str[0], 2)
     
     integer_part = int(binary_str[1:integer_bits], 2)
@@ -30,6 +33,9 @@ def fixed_point_to_decimal(binary_str, integer_bits, fractional_bits):
     return result
 
 def decimal_to_fixed_point(number, integer_bits, fractional_bits):
+    if integer_bits + fractional_bits <= 3: 
+        raise NotImplementedError('Unimplemented for size of 3 and under')
+
     sign_bit = '1' if number < 0 else '0'
     
     integer_part = bin(abs(int(number)))[2:].zfill(integer_bits-1)
