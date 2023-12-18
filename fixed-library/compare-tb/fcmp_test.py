@@ -27,7 +27,8 @@ async def fcmp_test(dut):
         lt = dut.lt.value
         eq = dut.eq.value
 
-        with open('test.txt', 'w+') as f: f.write(f'gt : {gt} | lt : {lt} | eq : {eq} | a : {a}, b : {b}')
+        log_string = f'gt : {gt} | lt : {lt} | eq : {eq} | a : {a}, b : {b}'
+        dut._log.info(log_string)
 
         if a > b:
             assert str(lt) == '0'
