@@ -23,8 +23,7 @@ module izhikevich_core #(
 	output reg [N-1:0] voltage,
     output reg [N-1:0] w
 );
-    wire eq, gt, lt;
-    reg apply_edge;
+    reg eq, gt, lt, apply_edge;
     reg [N-1:0] dv, dw, new_voltage, new_w, actual_voltage, actual_w;
 
     fixed_point_cmp threshold ( actual_voltage, v_th, eq, gt, lt );
@@ -36,7 +35,7 @@ module izhikevich_core #(
         c,
         d,
         actual_voltage,
-        actual_voltage,
+        actual_w,
         dt,
         t,
         dw
