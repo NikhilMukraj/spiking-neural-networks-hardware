@@ -1,15 +1,22 @@
 import cocotb
-from cocotb.triggers import FallingEdge, Timer
+from cocotb.triggers import RisingEdge, Timer
 from cocotb.binary import BinaryValue
 from fixed_point_models import fixed_point_to_decimal, decimal_to_fixed_point
 from fixed_point_models import check_with_tolerance
 import numpy as np
 
 
-convert_to_binary = lambda x, integer_bits, fractional_bits : decimal_to_fixed_point(x, integer_bits, fractional_bits)
+async def generate_clock(dut):
+    for cycle in range(100):
+        dut.clk.value = 0
+        await Timer(4, units="ns")
+        dut.clk.value = 1
+        await Timer(4, units="ns")
 
 @cocotb.test()
 async def test(dut):
+    await cocotb.start(generate_clock(dut))
+    
     int_bits = 16
     frac_bits = 16
     tolerance = 0.1
@@ -25,44 +32,52 @@ async def test(dut):
     b = 0.25
     c = -55
     d = 8.0
-    apply = 1
+    apply = 0
     rst = 1
 
-    dut.i.value = BinaryValue(convert_to_binary(i, int_bits, frac_bits))
-    dut.v_init.value = BinaryValue(convert_to_binary(v_init, int_bits, frac_bits))
-    dut.w_init.value = BinaryValue(convert_to_binary(w_init, int_bits, frac_bits))
-    dut.v_th.value = BinaryValue(convert_to_binary(v_th, int_bits, frac_bits))
-    dut.dt.value = BinaryValue(convert_to_binary(dt, int_bits, frac_bits))
-    dut.t.value = BinaryValue(convert_to_binary(t, int_bits, frac_bits))
-    dut.a.value = BinaryValue(convert_to_binary(a, int_bits, frac_bits))
-    dut.b.value = BinaryValue(convert_to_binary(b, int_bits, frac_bits))
-    dut.c.value = BinaryValue(convert_to_binary(c, int_bits, frac_bits))
-    dut.d.value = BinaryValue(convert_to_binary(d, int_bits, frac_bits))
+    dut.i.value = BinaryValue(decimal_to_fixed_point(i, int_bits, frac_bits))
+    dut.v_init.value = BinaryValue(decimal_to_fixed_point(v_init, int_bits, frac_bits))
+    dut.w_init.value = BinaryValue(decimal_to_fixed_point(w_init, int_bits, frac_bits))
+    dut.v_th.value = BinaryValue(decimal_to_fixed_point(v_th, int_bits, frac_bits))
+    dut.dt.value = BinaryValue(decimal_to_fixed_point(dt, int_bits, frac_bits))
+    dut.t.value = BinaryValue(decimal_to_fixed_point(t, int_bits, frac_bits))
+    dut.a.value = BinaryValue(decimal_to_fixed_point(a, int_bits, frac_bits))
+    dut.b.value = BinaryValue(decimal_to_fixed_point(b, int_bits, frac_bits))
+    dut.c.value = BinaryValue(decimal_to_fixed_point(c, int_bits, frac_bits))
+    dut.d.value = BinaryValue(decimal_to_fixed_point(d, int_bits, frac_bits))
 
     dut.rst.value = BinaryValue(str(rst))
-    await Timer(2, units="ns")
+    await RisingEdge(dut.clk) 
 
     rst = 0
     dut.rst.value = BinaryValue(str(rst))
-    await Timer(2, units="ns")
+    await RisingEdge(dut.clk) 
 
     for _ in range(5):
+        apply = 1
         dut.apply.value = BinaryValue(str(apply))
-        await Timer(2, units="ns")
+        dut._log.info(f'apply: {dut.apply.value}')
+        await RisingEdge(dut.clk) 
 
-        # output_voltage = fixed_point_to_decimal(str(dut.voltage.value), int_bits, frac_bits)
-        # output_w = fixed_point_to_decimal(str(dut.w.value), int_bits, frac_bits)
+        output_voltage = fixed_point_to_decimal(str(dut.voltage.value), int_bits, frac_bits)
+        output_w = fixed_point_to_decimal(str(dut.w.value), int_bits, frac_bits)
+        output_dv = fixed_point_to_decimal(str(dut.dv.value), int_bits, frac_bits)
+        output_dw = fixed_point_to_decimal(str(dut.dw.value), int_bits, frac_bits)
+        output_new_voltage = fixed_point_to_decimal(str(dut.new_voltage.value), int_bits, frac_bits)
+        output_new_w = fixed_point_to_decimal(str(dut.new_w.value), int_bits, frac_bits)
+        rst_value = str(dut.rst.value)
 
-        output_voltage = dut.voltage.value
-        output_w = dut.w.value
-        output_dv = dut.dv.value
-        output_dw = dut.dw.value
-
-        dut._log.info(f'voltge: {output_voltage}')
+        dut._log.info(f'voltage: {output_voltage}')
         dut._log.info(f'w: {output_w}')
         dut._log.info(f'dv: {output_dv}')
         dut._log.info(f'dw: {output_dw}')
+        dut._log.info(f'new v: {output_new_voltage}')
+        dut._log.info(f'new w: {output_new_w}')
+        dut._log.info(f'rst value: {rst_value}')
+        dut._log.info(f'eq: {dut.eq.value}')
+        dut._log.info(f'gt: {dut.gt.value}')
 
         apply = 0
         dut.apply.value = BinaryValue(str(apply))
-        await Timer(2, units="ns")
+        dut._log.info(f'apply: {dut.apply.value}')
+        await RisingEdge(dut.clk) 
