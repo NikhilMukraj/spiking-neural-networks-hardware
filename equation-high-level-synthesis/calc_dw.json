@@ -5,7 +5,7 @@
     "out_variable": "out",
     "integer_bits": 16,
     "fractional_bits": 16,
-    "lower_bound": -128,
-    "upper_bound": 128,
+    "lower_bound": -4,
+    "upper_bound": 4,
     "tolerance": 1
 }
