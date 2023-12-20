@@ -1,6 +1,6 @@
 {
     "name": "calc_dw",
-    "equation": "((a*((b*v)+(-1*w)))*(step))",
+    "equation": "((a*((b*v)+(-1*w)))*step)",
     "variables": ["a", "b", "c", "d", "v", "w", "step"],
     "out_variable": "out",
     "integer_bits": 16,
