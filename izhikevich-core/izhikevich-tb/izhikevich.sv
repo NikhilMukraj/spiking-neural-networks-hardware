@@ -24,7 +24,7 @@ module izhikevich_core #(
     output reg [N-1:0] w
 );
     reg eq, gt, lt, apply_edge;
-    reg [N-1:0] dv, dw, new_voltage, new_w;
+    reg [N-1:0] dv, dw, new_voltage, new_w, w_at_th;
 
     fixed_point_cmp threshold ( voltage, v_th, eq, gt, lt );
 
@@ -42,6 +42,7 @@ module izhikevich_core #(
 
     add adder1 ( voltage, dv, new_voltage );
     add adder2 ( w, dw, new_w );
+    add adder3 ( w, d, w_at_th);
 
     always @ (posedge clk) begin
         if (rst) begin
@@ -52,7 +53,7 @@ module izhikevich_core #(
         if (apply) begin
             if (eq | gt) begin
                 voltage <= c;
-                w <= d;
+                w <= w_at_th;
             end else begin
                 voltage <= new_voltage;
                 w <= new_w;
