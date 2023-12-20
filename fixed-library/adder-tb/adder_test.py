@@ -10,11 +10,12 @@ import numpy as np
 async def adder_test(dut):
     int_bits = 16
     frac_bits = 16
-    bounds = 100
+    lower_bound = -100
+    upper_bound = 100
 
     for i in range(100):
-        a = np.random.uniform(-bounds, bounds)
-        b = np.random.uniform(-bounds, bounds)
+        a = np.random.uniform(lower_bound, upper_bound)
+        b = np.random.uniform(lower_bound, upper_bound)
        
         # converting to right precision
         a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
