@@ -12,8 +12,7 @@ module izhikevich_core #(
 	input [N-1:0] v_init,
 	input [N-1:0] w_init,
     input [N-1:0] v_th,
-    input [N-1:0] dt,
-    input [N-1:0] t,
+    input [N-1:0] step,
 	input [N-1:0] a,
 	input [N-1:0] b,
 	input [N-1:0] c,
@@ -29,7 +28,7 @@ module izhikevich_core #(
 
     fixed_point_cmp threshold ( voltage, v_th, eq, gt, lt );
 
-    calc_dv calc_dv1 ( voltage, w, i, dv );
+    calc_dv calc_dv1 ( voltage, w, i, step, dv );
     calc_dw calc_dw1 (
         a,
         b,
@@ -37,8 +36,7 @@ module izhikevich_core #(
         d,
         voltage,
         w,
-        dt,
-        t,
+        step,
         dw
     );
 
