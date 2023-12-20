@@ -176,7 +176,7 @@ include_string = '`include "../ops.sv"\n\n\n'
 module_header = f'module {module_name} #(\n\tparameter N={N},\n\tparameter Q={fractional_bits}\n)(\n\t{module_variables},\n\toutput [N-1:0] {out_variable} \n);\n\t'
 intermediates_string = 'reg [N-1:0] ' + ', '.join(intermediates.values()) + ';\n\n\t'
 modules_string = '\n\t'.join(modules)
-verilog_file = include_string + module_header + intermediates_string + modules_string + '\nendmodule'
+verilog_file = include_string + module_header + intermediates_string + modules_string + '\nendmodule\n'
 print(verilog_file)
 
 generate_random_vars = '\n\t'.join(f'{i} = np.random.randint(lower_bound, upper_bound)' for i in variables)
