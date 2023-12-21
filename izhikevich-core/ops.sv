@@ -66,6 +66,15 @@ module add #( // https://github.com/freecores/verilog_fixed_point_math_library/b
     end
 endmodule
 
+module negator #(
+	parameter N = 32
+)(
+	input logic signed [N-1:0] a,
+	output logic signed [N-1:0] out
+);	
+	assign out = {~a[N-1], a[N-2:0]};
+endmodule
+
 module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmetic/blob/master/multiplier.sv
     parameter N = 32,
     parameter F = 16
