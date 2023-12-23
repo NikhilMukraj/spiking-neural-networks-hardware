@@ -72,7 +72,13 @@ module negator #(
 	input logic signed [N-1:0] a,
 	output logic signed [N-1:0] out
 );	
-	assign out = {~a[N-1], a[N-2:0]};
+	always @ (*) begin
+		if (a == {(N-1){1'b0}}) begin
+			out = a;
+		end else begin
+			out = {~a[N-1], a[N-2:0]};
+		end
+	end
 endmodule
 
 module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmetic/blob/master/multiplier.sv

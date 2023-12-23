@@ -32,13 +32,12 @@ module add #( // https://github.com/freecores/verilog_fixed_point_math_library/b
     assign c = res;
 
     always @(a,b) begin
-        if(a[N-1] == b[N-1]) begin						
+        if (a[N-1] == b[N-1]) begin						
             res[N-2:0] = a[N-2:0] + b[N-2:0];		
             res[N-1] = a[N-1];							                                    
         end												
-        
         else if(a[N-1] == 0 && b[N-1] == 1) begin		
-            if( a[N-2:0] > b[N-2:0] ) begin					
+            if ( a[N-2:0] > b[N-2:0] ) begin					
                 res[N-2:0] = a[N-2:0] - b[N-2:0];			
                 res[N-1] = 0;										
             end
@@ -51,7 +50,7 @@ module add #( // https://github.com/freecores/verilog_fixed_point_math_library/b
             end
         end
         else begin												
-            if( a[N-2:0] > b[N-2:0] ) begin					
+            if ( a[N-2:0] > b[N-2:0] ) begin					
                 res[N-2:0] = a[N-2:0] - b[N-2:0];			
                 if (res[N-2:0] == 0)
                     res[N-1] = 0;										
@@ -72,7 +71,13 @@ module negator #(
 	input logic signed [N-1:0] a,
 	output logic signed [N-1:0] out
 );	
-	assign out = {~a[N-1], a[N-2:0]};
+	always @ (*) begin
+		if (a == {(N-1){1'b0}}) begin
+			out = a;
+		end else begin
+			out = {~a[N-1], a[N-2:0]};
+		end
+	end
 endmodule
 
 module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmetic/blob/master/multiplier.sv
