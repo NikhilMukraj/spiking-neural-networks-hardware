@@ -61,7 +61,19 @@ lower_bound, upper_bound = args['lower_bound'], args['upper_bound']
 tolerance = args['tolerance']
 
 add_module = lambda n, a, b, c: f'add adder{n} ( {a}, {b}, {c} );'
-mult_module = lambda n, a, b, c: f'mult multiplier{n} ( {a}, {b}, {c} );'
+basic_mult_module = lambda n, a, b, c: f'mult multiplier{n} ( {a}, {b}, {c} );'
+negator_module = lambda n, a, c:  f'negator negator{n} ( {a}, {c} );'
+
+binary_negative_one = f"{N}'b{decimal_to_fixed_point(-1, integer_bits, fractional_bits)}"
+
+def mult_module(n, a, b, c):
+    if a != binary_negative_one and b != binary_negative_one:
+        return basic_mult_module(n, a, b, c)
+    elif a == binary_negative_one:
+        return negator_module(n, b, c)
+    elif b == binary_negative_one:
+        return negator_module(n, a, c)
+
 div_module = lambda n, a, b, c: f'div divider{n} ( {a}, {b}, {c} );'
 
 def exp_module(n, a, b, c):
@@ -150,9 +162,7 @@ for n in range(max_depth-1, -1, -1):
 
         for _, key in parsed:
             if key in i and i != key:
-                print('here', i)
                 i = i.replace(key, intermediates[key])
-                print('after', i)
 
         op = get_operator(key)
 
