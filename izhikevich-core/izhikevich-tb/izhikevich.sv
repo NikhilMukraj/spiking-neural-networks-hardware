@@ -26,8 +26,6 @@ module izhikevich_core #(
     reg eq, gt, lt, apply_edge;
     reg [N-1:0] dv, dw, new_voltage, new_w, w_at_th;
 
-    fixed_point_cmp threshold ( voltage, v_th, eq, gt, lt );
-
     calc_dv calc_dv1 ( voltage, w, i, step, dv );
     calc_dw calc_dw1 (
         a,
@@ -51,7 +49,7 @@ module izhikevich_core #(
         end
 
         if (apply) begin
-            if (eq | gt) begin
+            if ($signed(voltage) > $signed(v_th)) begin
                 voltage <= c;
                 w <= w_at_th;
             end else begin
