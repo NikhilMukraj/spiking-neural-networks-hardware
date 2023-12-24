@@ -14,9 +14,9 @@
 //   including the chipkit/Arduino pins.
 //
 
-module impl_top (
+module au_top (
     input               clk     , // Top level system clock input.
-    input               rst    , // Slide switches.
+    input               rst_n    , // Asynchronous active low reset.
     input   wire        uart_rxd, // UART Recieve pin.
     output  wire        uart_txd, // UART transmit pin.
     output  wire [7:0]  led
@@ -44,7 +44,7 @@ module impl_top (
     assign uart_tx_en   = uart_rx_valid;
     
     always @(posedge clk) begin
-        if(!sw_0) begin
+        if(!rst_n) begin
             led_reg <= 8'hF0;
         end else if(uart_rx_valid) begin
             led_reg <= uart_rx_data[7:0];
@@ -62,7 +62,7 @@ module impl_top (
     .CLK_HZ  (CLK_HZ  )
     ) i_uart_rx(
     .clk          (clk          ), // Top level system clock input.
-    .resetn       (!rst         ), // Asynchronous active low reset.
+    .resetn       (rst_n         ), // Asynchronous active low reset.
     .uart_rxd     (uart_rxd     ), // UART Recieve pin.
     .uart_rx_en   (1'b1         ), // Recieve enable
     .uart_rx_break(uart_rx_break), // Did we get a BREAK message?
@@ -79,7 +79,7 @@ module impl_top (
     .CLK_HZ  (CLK_HZ  )
     ) i_uart_tx(
     .clk          (clk          ),
-    .resetn       (!rst         ),
+    .resetn       (rst_n         ),
     .uart_txd     (uart_txd     ),
     .uart_tx_en   (uart_tx_en   ),
     .uart_tx_busy (uart_tx_busy ),
