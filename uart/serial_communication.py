@@ -23,6 +23,6 @@ with serial.Serial(port, timeout=2) as ser:
         print(f'Sending: {i}')
         ser.write(i)
 
-    ret = ser.read(400)
+    ret = ser.read(256)
     
     print(f'Recieving: {ret}, length: {len(ret)}')
