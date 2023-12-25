@@ -1,9 +1,0 @@
-IO_LOC "clk" 4;
-IO_LOC "rst" 88;
-IO_LOC "uart_rxd" 70;
-IO_LOC "uart_txd" 69;
-
-IO_PORT "clk" IO_TYPE=LVCMOS33;
-IO_PORT "rst" IO_TYPE=LVCMOS33;
-IO_PORT "uart_rxd" IO_TYPE=LVCMOS33;
-IO_PORT "uart_txd" IO_TYPE=LVCMOS33;
