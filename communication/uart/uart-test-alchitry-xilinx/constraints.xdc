@@ -1,0 +1,10 @@
+# clk => 50000000Hz
+create_clock -period 5.0 -name clk_0 -waveform {0.000 5.000} [get_ports clk]
+set_property PACKAGE_PIN N14 [get_ports {clk}]
+set_property IOSTANDARD LVCMOS33 [get_ports {clk}]
+set_property PACKAGE_PIN P6 [get_ports {rst_n}]
+set_property IOSTANDARD LVCMOS33 [get_ports {rst_n}]
+set_property PACKAGE_PIN P15 [get_ports {usb_rx}]
+set_property IOSTANDARD LVCMOS33 [get_ports {usb_rx}]
+set_property PACKAGE_PIN P16 [get_ports {usb_tx}]
+set_property IOSTANDARD LVCMOS33 [get_ports {usb_tx}]
