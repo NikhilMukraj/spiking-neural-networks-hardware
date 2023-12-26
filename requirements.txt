@@ -1,4 +1,5 @@
 numpy==1.24.1
 matplotlib==3.5.1
 cocotb==1.8.1
+cocotbext-spi==0.4.0
 ./fixed-library/fixed-point-models
