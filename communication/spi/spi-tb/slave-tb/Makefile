@@ -14,7 +14,7 @@ VERILOG_SOURCES += $(PWD)/spi_peripheral_top.sv
 TOPLEVEL = spi_reciever
 
 # MODULE is the basename of the Python test file
-MODULE = spi_slave_tb.py
+MODULE = spi_peripheral_test
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim
