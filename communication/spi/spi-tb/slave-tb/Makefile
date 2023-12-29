@@ -11,7 +11,7 @@ VERILOG_SOURCES += $(PWD)/spi_peripheral_top.sv
 # use VHDL_SOURCES for VHDL files
 
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
-TOPLEVEL = spi_reciever
+TOPLEVEL = spi_peripheral
 
 # MODULE is the basename of the Python test file
 MODULE = spi_peripheral_test
