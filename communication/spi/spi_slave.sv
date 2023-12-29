@@ -23,7 +23,7 @@ module spi_slave(
 	assign done = done_q;
 	assign dout = dout_q;
 
-	always @(*) begin
+	always @ (*) begin
 		ss_d = ss;
 		mosi_d = mosi;
 		miso_d = miso_q;
@@ -53,7 +53,7 @@ module spi_slave(
 		end
 	end
 
-	always @(posedge clk) begin
+	always @ (posedge clk) begin
 		if (rst) begin
 			done_q <= 1'b0;
 			bit_ct_q <= 3'b0;
