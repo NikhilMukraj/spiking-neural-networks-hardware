@@ -197,7 +197,6 @@ if any('exp' in i for i in modules):
     eq = re.sub(r'e\W*\^', 'np.exp', eq)
 
 test_file = f'''import cocotb
-from cocotb.triggers import FallingEdge, Timer
 from cocotb.binary import BinaryValue
 from fixed_point_models import fixed_point_to_decimal, decimal_to_fixed_point
 from fixed_point_models import check_with_tolerance
