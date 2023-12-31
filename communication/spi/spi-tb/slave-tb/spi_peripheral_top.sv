@@ -1,5 +1,6 @@
 // `include "../../spi_slave.sv"
 
+
 module spi_peripheral(
 	input clk,
 	input rst,
@@ -19,7 +20,6 @@ module spi_peripheral(
 		if (ss) begin
 			bit_count <= 3'b000;
 		end else begin
-			// current_bit <= mosi;
 			bit_count <= bit_count + 1'b1;
 			data = {data[6:0], mosi};
 			if (bit_count == 3'b111) begin 
