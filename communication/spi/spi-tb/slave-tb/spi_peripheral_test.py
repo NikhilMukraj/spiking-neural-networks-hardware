@@ -21,6 +21,20 @@ async def generate_spi_clock(dut, timesteps):
         dut.sck.value = 1
         await Timer(4, units='ns')
 
+async def test_bit_string_recieve(dut, bit_string):
+    for step, i in enumerate(bit_string):
+        # await FallingEdge(dut.sck) 
+        dut.ss.value = BinaryValue(str('0'))
+        dut.mosi.value = BinaryValue(str(i))
+        await FallingEdge(dut.sck) 
+        dut._log.info(f'{step} | input value: {dut.mosi.value}')
+        dut._log.info(f'{step} | data value: {dut.data.value}')
+        dut._log.info(f'{step} | count value: {dut.bit_count.value}')
+        dut._log.info(f'{step} | done value: {dut.done.value}')
+
+    assert str(dut.dout.value) == bit_string and str(dut.done.value) == '1', \
+    f'{str(dut.dout.value)} != {bit_string}'
+
 @cocotb.test()
 async def spi_peripheral_test(dut):
     await cocotb.start(generate_clock(dut, 100))
@@ -41,17 +55,5 @@ async def spi_peripheral_test(dut):
     # dut._log.info(f'data value: {dut.data.value}')
     # await FallingEdge(dut.sck) 
 
-    bit_string = '10101010'
-
-    for step, i in enumerate(bit_string):
-        # await FallingEdge(dut.sck) 
-        dut.ss.value = BinaryValue(str('0'))
-        dut.mosi.value = BinaryValue(str(i))
-        await FallingEdge(dut.sck) 
-        dut._log.info(f'{step} | input value: {dut.mosi.value}')
-        dut._log.info(f'{step} | data value: {dut.data.value}')
-        dut._log.info(f'{step} | count value: {dut.bit_count.value}')
-        dut._log.info(f'{step} | done value: {dut.done.value}')
-
-    assert str(dut.dout.value) == bit_string and str(dut.done.value) == '1', \
-    f'{str(dut.dout.value)} != {bit_string}'
+    await test_bit_string_recieve(dut, '10101010')
+    await test_bit_string_recieve(dut, '11110000')
