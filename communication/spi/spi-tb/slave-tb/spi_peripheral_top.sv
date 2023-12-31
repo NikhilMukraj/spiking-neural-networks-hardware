@@ -11,10 +11,10 @@ module spi_peripheral(
 	input [7:0] din,
 	output reg [7:0] dout
 );
-	// reg current_bit;
 	reg [2:0] bit_count;
 	reg [7:0] data;
 
+	// impl transmission
 	always @ (posedge sck) begin 
 		if (ss) begin
 			bit_count <= 3'b000;
@@ -33,7 +33,7 @@ module spi_peripheral(
 
 	always @ (*) begin
 		if (rst) begin
-			// current_bit <= 1'b0;
+			done <= 1'b0;
 			bit_count <= 3'b000;
 			data <= 8'b00000000;
 		end
