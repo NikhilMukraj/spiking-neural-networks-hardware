@@ -1,6 +1,7 @@
 // `include "../../spi_slave.sv"
 
 
+// as soon as ss is selected, din should be filled with 0s 
 module spi_peripheral(
 	input clk,
 	input rst,
