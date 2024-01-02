@@ -22,6 +22,7 @@ async def generate_spi_clock(dut, timesteps):
         await Timer(4, units='ns')
 
 async def test_bit_string_recieve(dut, bit_string):
+    dut._log.info('-' * 30)
     for step, i in enumerate(bit_string):
         # await FallingEdge(dut.sck) 
         dut.ss.value = BinaryValue(str('0'))
@@ -35,19 +36,23 @@ async def test_bit_string_recieve(dut, bit_string):
     assert str(dut.dout.value) == bit_string and str(dut.done_rx.value) == '1', \
     f'{str(dut.dout.value)} != {bit_string}'
 
-# async def test_bit_string_transmit(dut, bit_string):
-#     for step, i in enumerate(bit_string):
-#         # await FallingEdge(dut.sck) 
-#         dut.ss.value = BinaryValue(str('0'))
-#         dut.miso.value = BinaryValue(str(i))
-#         await FallingEdge(dut.sck) 
-#         dut._log.info(f'{step} | output value: {dut.miso.value}')
-#         dut._log.info(f'{step} | data_tx value: {dut.data_tx.value}')
-#         dut._log.info(f'{step} | count_tx value: {dut.bit_count_tx.value}')
-#         dut._log.info(f'{step} | done_rx value: {dut.done_rx.value}')
+async def test_bit_string_transmit(dut, bit_string, buffer=''):
+    dut._log.info('-' * 30)
+    dut.din.value = BinaryValue(bit_string)
+    transmitted_bits = []
 
-#     assert str(dut.dout.value) == bit_string and str(dut.done_rx.value) == '1', \
-#     f'{str(dut.dout.value)} != {bit_string}'
+    for step, i in enumerate(bit_string + buffer):
+        # await FallingEdge(dut.sck) 
+        dut.ss.value = BinaryValue(str('0'))
+        await RisingEdge(dut.sck) 
+        transmitted_bits.append(str(dut.miso.value))
+        dut._log.info(f'{step} | output value: {dut.miso.value}')
+        dut._log.info(f'{step} | transmitted_bits: {"".join(transmitted_bits).rjust(8, "x")}')
+        dut._log.info(f'{step} | count_tx value: {dut.bit_count_tx.value}')
+        dut._log.info(f'{step} | done_tx value: {dut.done_tx.value}')
+
+    assert ''.join(transmitted_bits)[-8:] == bit_string and str(dut.done_tx.value) == '1', \
+    f'{"".join(transmitted_bits)[-8:]} != {bit_string}'
 
 @cocotb.test()
 async def spi_peripheral_test(dut):
@@ -72,5 +77,6 @@ async def spi_peripheral_test(dut):
     await test_bit_string_recieve(dut, '10101010')
     await test_bit_string_recieve(dut, '11110000')
 
-    # await test_bit_string_transmit(dut, '11110000')
-    # await test_bit_string_transmit(dut, '11110000')
+    await test_bit_string_transmit(dut, '11110000', 'z')
+    await test_bit_string_transmit(dut, '01010101')
+    await test_bit_string_transmit(dut, '11110000')
