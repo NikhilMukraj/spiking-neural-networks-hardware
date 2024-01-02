@@ -66,13 +66,8 @@ async def spi_peripheral_test(dut):
     dut.rst.value = BinaryValue(str('0'))
     await RisingEdge(dut.sck) 
 
-    # dut.ss.value = BinaryValue(str('0'))
     dut.mosi.value = BinaryValue(str('1'))
     await FallingEdge(dut.sck) 
-
-    # dut._log.info(f'select value: {dut.ss.value}')
-    # dut._log.info(f'data value: {dut.data.value}')
-    # await FallingEdge(dut.sck) 
 
     await test_bit_string_recieve(dut, '10101010')
     await test_bit_string_recieve(dut, '11110000')
