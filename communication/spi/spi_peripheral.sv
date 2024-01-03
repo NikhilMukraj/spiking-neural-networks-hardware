@@ -20,6 +20,7 @@ module spi_peripheral(
 		end else begin
 			bit_count_rx <= bit_count_rx + 1'b1;
 			data_rx = {data_rx[6:0], mosi};
+
 			if (bit_count_rx == 3'b111) begin 
 				done_rx <= 1'b1;
 				dout <= data_rx;
@@ -35,6 +36,7 @@ module spi_peripheral(
 		end else begin
 			bit_count_tx <= bit_count_tx + 1'b1;
 			miso <= din[~bit_count_tx];
+			
 			if (bit_count_tx == 3'b111) begin 
 				done_tx <= 1'b1;
 			end else begin
