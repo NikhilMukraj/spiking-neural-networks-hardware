@@ -1,3 +1,6 @@
+`include "../spi_peripheral.sv"
+
+
 module led_peripheral(
     input clk,
     input rst,
