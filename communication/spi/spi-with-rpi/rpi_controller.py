@@ -1,12 +1,17 @@
 import RPi.GPIO as GPIO
+import toml
 import time
 
 
 bit_string = '10101010'
 
-clock_pin = 4
-select_pin = 23
-copi_pin = 24
+with open('pins.toml', 'r') as f:
+    pins = toml.load(f)
+
+clock_pin = int(pins['pins']['clock_pin'])
+select_pin = int(pins['pins']['select_pin'])
+copi_pin = int(pins['pins']['copi_pin'])
+
 current_index = 0
 
 def spi_output():
