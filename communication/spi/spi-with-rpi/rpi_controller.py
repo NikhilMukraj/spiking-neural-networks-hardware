@@ -21,6 +21,8 @@ def spi_output():
 GPIO.setclock(clock_pin, 2) # could use slower hz for testing (500_000 for actual maybe) 
 GPIO.add_event_detect(clock_pin, GPIO.RISING, callback=spi_output) # might be falling edge
 
+# TRY IMPLEMENTING WITH PWM
+
 try:  
     while True: pass  
 except KeyboardInterrupt:
