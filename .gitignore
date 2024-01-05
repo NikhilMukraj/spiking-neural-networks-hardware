@@ -14,3 +14,6 @@
 /communication/spi/spi-tb/peripheral-tb/results.xml
 /communication/spi/spi-tb/peripheral-tb/__pycache__
 /communication/spi/spi-tb/peripheral-tb/sim_build
+/communication/spi/spi-4-byte-reciever/results.xml
+/communication/spi/spi-4-byte-reciever/__pycache__
+/communication/spi/spi-4-byte-reciever/sim_build
