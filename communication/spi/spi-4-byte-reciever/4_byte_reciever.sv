@@ -1,6 +1,43 @@
 `include "../spi_peripheral.sv"
 
 
+module bytes_reciever_top(
+    input clk,
+	input rst,
+	input ss,
+	input mosi,
+	input sck,
+    input apply,
+	output reg done_rx,
+	output reg done_tx,
+	output reg [31:0] out
+);
+    reg miso, done_bytes;
+    reg [7:0] temp_out;
+
+    spi_peripheral spi_peripheral1(
+        .clk(clk),
+        .rst(rst),
+        .ss(ss),
+        .mosi(mosi),
+        .miso(miso)
+        .sck(sck),
+        .done_rx(done_rx),
+        .done_tx(done_tx),
+        .din(8'b00000000),
+        .dout(temp_out)
+    );
+
+    bytes_reciever bytes_reciever1(
+        .rst(rst),
+        .done_rx(done_rx),
+        .apply(apply),
+        .recieved_byte(temp_out),
+        .out(out),
+        .done_bytes(done_bytes)
+    );
+endmodule
+
 module bytes_reciever(
     input rst,
     input done_rx,
