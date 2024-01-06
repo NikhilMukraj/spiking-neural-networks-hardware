@@ -20,7 +20,7 @@ module bytes_reciever_top(
         .rst(rst),
         .ss(ss),
         .mosi(mosi),
-        .miso(miso)
+        .miso(miso),
         .sck(sck),
         .done_rx(done_rx),
         .done_tx(done_tx),
@@ -42,9 +42,9 @@ module bytes_reciever(
     input rst,
     input done_rx,
     input apply,
-    input reg [7:0] recieved_byte,
+    input [7:0] recieved_byte,
     output reg [31:0] out,
-    output done_bytes
+    output reg done_bytes
 );
     reg [1:0] bytes_count;
     reg [32:0] data;
@@ -63,7 +63,7 @@ module bytes_reciever(
 				done_bytes <= 1'b1;
 				out <= data;
 			end else begin
-				done_rx <= 1'b0;
+				done_bytes <= 1'b0;
 			end
         end
     end
