@@ -3,7 +3,6 @@
 
 // as soon as ss is selected, din should be filled with 0s 
 module spi_peripheral(
-	input clk,
 	input rst,
 	input ss,
 	input mosi,
