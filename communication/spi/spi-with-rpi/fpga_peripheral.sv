@@ -2,7 +2,6 @@
 
 
 module led_peripheral(
-    input clk,
     input rst,
     input sck,
     input ss,
@@ -13,7 +12,6 @@ module led_peripheral(
     reg done_rx, done_tx;
 
     spi_peripheral spi_peripheral1(
-        .clk(clk),
         .rst(rst),
         .ss(ss),
         .mosi(mosi),
