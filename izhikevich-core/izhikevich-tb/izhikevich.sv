@@ -30,8 +30,6 @@ module izhikevich_core #(
     calc_dw calc_dw1 (
         a,
         b,
-        c,
-        d,
         voltage,
         w,
         step,
