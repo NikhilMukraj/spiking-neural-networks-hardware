@@ -4,8 +4,6 @@ module calc_dw #(
 )(
 	input [N-1:0] a,
 	input [N-1:0] b,
-	input [N-1:0] c,
-	input [N-1:0] d,
 	input [N-1:0] v,
 	input [N-1:0] w,
 	input [N-1:0] step,
