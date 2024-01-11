@@ -17,7 +17,6 @@ module izhikevich_core #(
 	input [N-1:0] b,
 	input [N-1:0] c,
 	input [N-1:0] d,
-    // input calculate,
     input apply,
     input rst,
 	output reg [N-1:0] voltage,
