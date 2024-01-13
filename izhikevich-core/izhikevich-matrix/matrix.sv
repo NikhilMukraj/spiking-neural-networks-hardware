@@ -12,17 +12,24 @@
 
 module add_if_enabled(
     input clk,
-    input [7:0] input_data,
-    input on,
+    input [7:0] data1,
+    input [7:0] data2,
+    input [7:0] data3,
+    input [1:0] on,
     output reg [7:0] output_data
 );
     always @ (posedge clk) begin
-        output_data = on ? output_data + input_data : output_data;
+        case (on)
+            2'b00 : output_data = output_data;
+            2'b01 : output_data = output_data + data1;  
+            2'b10 : output_data = output_data + data1;  
+            2'b11 : output_data = output_data + data3;  
+        endcase
     end
 endmodule
 
 // test effectiveness of this
-// try to create a system to store which connections are pulsed when
+// try to create a system to store which connections are pulsed when (maybe adjacency matrix)
 // test how many luts this uses as it scales
 module matrix_flow (
     input clk,
@@ -31,21 +38,10 @@ module matrix_flow (
     inout [7:0] data2,
     inout [7:0] data3,
     inout [7:0] data4,
-    input on[3:0]
+    input on[1:0]
 );
-    add_if_enabled adder1_1 ( clk, data2, on[1], data1 );
-    add_if_enabled adder1_2 ( clk, data3, on[2], data1 );
-    add_if_enabled adder1_3 ( clk, data4, on[3], data1 );
-
-    add_if_enabled adder2_1 ( clk, data1, on[0], data2 );
-    add_if_enabled adder2_2 ( clk, data3, on[2], data2 );
-    add_if_enabled adder2_3 ( clk, data4, on[3], data2 );
-
-    add_if_enabled adder3_1 ( clk, data1, on[0], data3 );
-    add_if_enabled adder3_2 ( clk, data2, on[1], data3 );
-    add_if_enabled adder3_3 ( clk, data4, on[3], data3 );
-
-    add_if_enabled adder4_1 ( clk, data1, on[0], data4 );
-    add_if_enabled adder4_2 ( clk, data2, on[1], data4 );
-    add_if_enabled adder4_3 ( clk, data3, on[2], data4 );
+    add_if_enabled adder1 ( clk, data2, data3, data4, on, data1 );
+    add_if_enabled adder2 ( clk, data1, data3, data4, on, data2 );
+    add_if_enabled adder3 ( clk, data1, data2, data4, on, data3 );
+    add_if_enabled adder4 ( clk, data1, data2, data3, on, data4 );
 endmodule
