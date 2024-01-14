@@ -38,10 +38,13 @@ module matrix_flow (
     inout [7:0] data2,
     inout [7:0] data3,
     inout [7:0] data4,
-    input on[1:0]
+    input on1[1:0],
+    input on2[1:0],
+    input on3[1:0],
+    input on4[1:0]
 );
-    add_if_enabled adder1 ( clk, data2, data3, data4, on, data1 );
-    add_if_enabled adder2 ( clk, data1, data3, data4, on, data2 );
-    add_if_enabled adder3 ( clk, data1, data2, data4, on, data3 );
-    add_if_enabled adder4 ( clk, data1, data2, data3, on, data4 );
+    add_if_enabled adder1 ( clk, data2, data3, data4, on1, data1 );
+    add_if_enabled adder2 ( clk, data1, data3, data4, on2, data2 );
+    add_if_enabled adder3 ( clk, data1, data2, data4, on3, data3 );
+    add_if_enabled adder4 ( clk, data1, data2, data3, on4, data4 );
 endmodule
