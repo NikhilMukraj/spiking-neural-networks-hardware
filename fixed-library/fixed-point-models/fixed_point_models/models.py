@@ -27,7 +27,10 @@ def fixed_point_to_decimal(binary_str: str, integer_bits: int, fractional_bits: 
     sign_bit = int(binary_str[0], 2)
     
     integer_part = int(binary_str[1:integer_bits], 2)
-    fractional_part = int(binary_str[integer_bits:], 2) / (2 ** fractional_bits)
+    if fractional_bits > 0:
+        fractional_part = int(binary_str[integer_bits:], 2) / (2 ** fractional_bits)
+    else:
+        fractional_part = 0
     
     result = (-1) ** sign_bit * (integer_part + fractional_part)
     return result
