@@ -39,8 +39,11 @@ def decimal_to_fixed_point(number, integer_bits, fractional_bits):
     sign_bit = '1' if number < 0 else '0'
     
     integer_part = bin(abs(int(number)))[2:].zfill(integer_bits-1)
-    fractional_part = bin(int(abs((number - int(number)) * (2 ** fractional_bits))))[2:].zfill(fractional_bits)
-    
+    if fractional_bits > 0:
+        fractional_part = bin(int(abs((number - int(number)) * (2 ** fractional_bits))))[2:].zfill(fractional_bits)
+    else:
+        fractional_part = ''
+
     return sign_bit + integer_part + fractional_part
 
 def adder_model(a: int, b: int, n_bits: int = 4) -> int:
