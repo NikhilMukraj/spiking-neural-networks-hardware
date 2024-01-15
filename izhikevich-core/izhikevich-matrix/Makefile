@@ -6,7 +6,7 @@ VERILOG_SOURCES += $(PWD)/matrix.sv
 # use VHDL_SOURCES for VHDL files
 
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
-TOPLEVEL = matrix
+TOPLEVEL = matrix_flow
 
 # MODULE is the basename of the Python test file
 MODULE = matrix_test
