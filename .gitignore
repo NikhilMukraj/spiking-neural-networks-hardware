@@ -11,6 +11,9 @@
 /izhikevich-core/izhikevich-tb/__pycache__
 /izhikevich-core/izhikevich-tb/output.log
 /izhikevich-core/izhikevich-tb/temp.sv
+/izhikevich-core/izhikevich-matrix/sim_build
+/izhikevich-core/izhikevich-matrix/results.xml
+/izhikevich-core/izhikevich-matrix/__pycache__
 /communication/spi/spi-tb/peripheral-tb/results.xml
 /communication/spi/spi-tb/peripheral-tb/__pycache__
 /communication/spi/spi-tb/peripheral-tb/sim_build
