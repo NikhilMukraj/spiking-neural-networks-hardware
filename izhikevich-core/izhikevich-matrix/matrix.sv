@@ -18,13 +18,16 @@ module add_if_enabled(
     input [1:0] on,
     output reg [7:0] output_data
 );
+    reg [7:0] added;
+
     always @ (posedge clk) begin
         case (on)
-            2'b00 : output_data = output_data;
-            2'b01 : output_data = output_data + data1;  
-            2'b10 : output_data = output_data + data1;  
-            2'b11 : output_data = output_data + data3;  
+            2'b00 : added = 8'b00000000;
+            2'b01 : added = data1;  
+            2'b10 : added = data1;  
+            2'b11 : added = data3;  
         endcase
+        output_data <= output_data + added;
     end
 endmodule
 
@@ -38,10 +41,10 @@ module matrix_flow (
     inout [7:0] data2,
     inout [7:0] data3,
     inout [7:0] data4,
-    input on1[1:0],
-    input on2[1:0],
-    input on3[1:0],
-    input on4[1:0]
+    input [1:0] on1,
+    input [1:0] on2,
+    input [1:0] on3,
+    input [1:0] on4
 );
     add_if_enabled adder1 ( clk, data2, data3, data4, on1, data1 );
     add_if_enabled adder2 ( clk, data1, data3, data4, on2, data2 );
