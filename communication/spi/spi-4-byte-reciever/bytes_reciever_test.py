@@ -31,8 +31,12 @@ async def test_bit_string_recieve(dut, bit_string):
         await FallingEdge(dut.sck) 
         dut._log.info(f'{step} | input value: {dut.mosi.value}')
         dut._log.info(f'{step} | temp_out value: {dut.temp_out.value}')
+        dut._log.info(f'{step} | data value: {dut.data.value}')
         dut._log.info(f'{step} | bytes_count value: {dut.bytes_count.value}')
         dut._log.info(f'{step} | done_bytes value: {dut.done_bytes.value}')
+
+    await FallingEdge(dut.sck) 
+    dut._log.info(f'final | data value: {dut.data.value}')
 
     assert str(dut.out.value) == bit_string and str(dut.done_bytes.value) == '1', \
     f'{str(dut.out.value)} != {bit_string}'
