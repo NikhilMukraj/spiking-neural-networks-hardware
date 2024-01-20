@@ -1,7 +1,7 @@
 `include "../spi_peripheral.sv"
 
 
-module bytes_reciever_top(
+module bytes_reciever(
     input clk,
 	input rst,
 	input ss,
@@ -14,9 +14,10 @@ module bytes_reciever_top(
 );
     reg miso, done_bytes;
     reg [7:0] temp_out;
+    reg [1:0] bytes_count;
+    reg [32:0] data;
 
     spi_peripheral spi_peripheral1(
-        .clk(clk),
         .rst(rst),
         .ss(ss),
         .mosi(mosi),
@@ -28,28 +29,7 @@ module bytes_reciever_top(
         .dout(temp_out)
     );
 
-    bytes_reciever bytes_reciever1(
-        .rst(rst),
-        .done_rx(done_rx),
-        .apply(apply),
-        .recieved_byte(temp_out),
-        .out(out),
-        .done_bytes(done_bytes)
-    );
-endmodule
-
-module bytes_reciever(
-    input rst,
-    input done_rx,
-    input apply,
-    input [7:0] recieved_byte,
-    output reg [31:0] out,
-    output reg done_bytes
-);
-    reg [1:0] bytes_count;
-    reg [32:0] data;
-
-    always @ (*) begin
+    always @ (posedge sck) begin
         if (rst) begin
             bytes_count = 2'b00;
             done_bytes = 1'b0;
@@ -57,7 +37,7 @@ module bytes_reciever(
         end
         if (done_rx & apply) begin
             bytes_count <= bytes_count + 1'b1;
-			data = {data[23:0], recieved_byte};
+			data = {data[23:0], temp_out}; 
 
 			if (bytes_count == 2'b11) begin 
 				done_bytes <= 1'b1;
