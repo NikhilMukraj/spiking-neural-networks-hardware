@@ -20,3 +20,6 @@
 /communication/spi/spi-4-byte-reciever/results.xml
 /communication/spi/spi-4-byte-reciever/__pycache__
 /communication/spi/spi-4-byte-reciever/sim_build
+/ram/ram-tb/__pycache__
+/ram/ram-tb/sim_build
+/ram/ram-tb/results.xml
