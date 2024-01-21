@@ -37,7 +37,7 @@ module izhikevich_core #(
 
     add adder1 ( voltage, dv, new_voltage );
     add adder2 ( w, dw, new_w );
-    add adder3 ( w, d, w_at_th);
+    add adder3 ( w, d, w_at_th );
 
     always @ (posedge clk) begin
         if (rst) begin
