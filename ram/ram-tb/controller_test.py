@@ -15,5 +15,5 @@ async def generate_clock(dut, timesteps):
 def ram_model_test(dut):
     await generate_clock(dut, 100)
 
-    raise NotImplementedError("Example unfinished")
+    raise NotImplementedError('Example unfinished')
     
