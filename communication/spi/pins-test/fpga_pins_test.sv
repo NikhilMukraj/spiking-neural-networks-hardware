@@ -12,7 +12,7 @@ module top(
             leds[7:4] = 1'b0000;
         end
         if (in2) begin 
-            leds[3:0] = 1'b0000;
+            leds[3:0] = 1'b1111;
         end else begin
             leds[3:0] = 1'b0000;
         end
