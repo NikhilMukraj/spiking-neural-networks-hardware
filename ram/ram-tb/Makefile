@@ -9,7 +9,7 @@ VERILOG_SOURCES += $(PWD)/../controller.sv
 TOPLEVEL = controller
 
 # MODULE is the basename of the Python test file
-MODULE = controller_test.py
+MODULE = controller_test
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim
