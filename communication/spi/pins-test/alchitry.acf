@@ -9,3 +9,5 @@ pin led[7] LED7;
 
 pin in1 A2;
 pin in2 A3;
+
+pin rst_n RESET;
