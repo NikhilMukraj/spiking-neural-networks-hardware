@@ -22,11 +22,21 @@
 ## todo
 
 - [ ] equation high level synthesis
+  - [ ] high precision $e^x$
   - [ ] preprocessing of equation
 - [x] izhikevich core
 - [ ] hodgkin huxley core
+- [ ] ram interface
 - [ ] communication protocol
+  - [ ] fpga side communication
+  - [ ] raspberry pi side communication
+  - [ ] distributed communication
 - [ ] izhikevich matrix
+- [ ] stdp
+- [ ] r-stdp
+  - [ ] input values to layered version
+  - [ ] classifier
+  - [ ] fit to eeg signaling
 
 ## notes
 
