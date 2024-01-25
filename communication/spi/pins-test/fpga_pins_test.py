@@ -1,7 +1,6 @@
 import cocotb
-from cocotb.triggers import FallingEdge, RisingEdge, Timer
+from cocotb.triggers import Timer
 from cocotb.binary import BinaryValue
-import numpy as np
 
 
 @cocotb.test()
