@@ -10,9 +10,6 @@ async def generate_clock(dut, timesteps):
         dut.clk.value = 1
         await Timer(4, units='ns')
 
-# if always (*) is replaced with always (posedge clk) and 
-# timer for sck is not a multiple of clk,
-# bits are shifted in
 async def generate_spi_clock(dut, timesteps):
     for cycle in range(timesteps):
         dut.sck.value = 0
@@ -23,7 +20,6 @@ async def generate_spi_clock(dut, timesteps):
 async def test_bit_string_recieve(dut, bit_string):
     dut._log.info('-' * 30)
     for step, i in enumerate(bit_string):
-        # await FallingEdge(dut.sck) 
         dut.ss.value = BinaryValue(str('0'))
         dut.mosi.value = BinaryValue(str(i))
         await FallingEdge(dut.sck) 
@@ -41,7 +37,6 @@ async def test_bit_string_transmit(dut, bit_string, buffer=''):
     transmitted_bits = []
 
     for step, i in enumerate(bit_string + buffer):
-        # await FallingEdge(dut.sck) 
         dut.ss.value = BinaryValue(str('0'))
         await RisingEdge(dut.sck) 
         transmitted_bits.append(str(dut.miso.value))
