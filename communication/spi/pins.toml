@@ -1,0 +1,6 @@
+[pins]
+clock_pin = 4
+select_pin = 23
+copi_pin = 24
+in1_pin = 23
+in2_pin = 24
