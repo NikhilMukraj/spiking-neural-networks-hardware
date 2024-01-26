@@ -5,7 +5,7 @@ import time
 
 bit_string = '10101010'
 
-with open('pins.toml', 'r') as f:
+with open('../pins.toml', 'r') as f:
     pins = toml.load(f)
 
 clock_pin = int(pins['pins']['clock_pin'])
