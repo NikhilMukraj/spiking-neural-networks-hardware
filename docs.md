@@ -45,7 +45,52 @@ python3 equation_to_module.py <filename>.json
 
 ### Calculate Voltage Change
 
+```verilog
+module calc_dv #( parameter N=32, parameter Q=16 ) ( input [N-1:0] v, input [N-1:0] w, input [N-1:0] i, input [N-1:0] step, output [N-1:0] out )
+```
+
+- `v` : Current voltage
+- `w` : Current adaptive value
+- `i` : Input voltage
+- `step` : Timestep value divided by ${\tau}_{m}$
+- `out` : Calculated change in voltage
+
 ### Calculate Adaptive Change
+
+```verilog
+module calc_dw #( parameter N=32, parameter Q=16 )( input [N-1:0] a, input [N-1:0] b, input [N-1:0] v, input [N-1:0] w, input [N-1:0] step, output [N-1:0] out )
+```
+
+- `a` : Alpha value
+- `b` : Beta value
+- `c` : C value
+- `d` : D value
+- `v` : Current voltage
+- `w` : Current adaptive value
+- `i` : Input voltage
+- `step` : Timestep value divided by ${\tau}_{m}$
+- `out` : Calculated change in adaptive value
+
+### Izhikevich Neuron
+
+```verilog
+module izhikevich_core #( parameter N=32, parameter Q=16 )( input clk, input [N-1:0] i, input [N-1:0] v_init, input [N-1:0] w_init, input [N-1:0] v_th, input [N-1:0] step, input [N-1:0] a, input [N-1:0] b, input [N-1:0] c, input [N-1:0] d, input apply, input rst, output reg [N-1:0] voltage, output reg [N-1:0] w )
+```
+
+- `clk` : Clock signal
+- `i` : Input voltage
+- `v_init` : Initial voltage value
+- `w_init` : Initial adaptive value
+- `v_th` : Voltage reset threshold
+- `step` : Timestep value divided by ${\tau}_{m}$
+- `a` : Alpha value
+- `b` : Beta value
+- `c` : C value
+- `d` : D value
+- `apply` : Whether to change voltage and adaptive value this clock cycle
+- `rst` : Active high reset back to initial voltage and adaptive values
+- `voltage` : Current voltage
+- `w` : Current adaptive value
 
 ## RAM
 
