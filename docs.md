@@ -100,6 +100,20 @@ module izhikevich_core #( parameter N=32, parameter Q=16 )( input clk, input [N-
 
 ### SPI FPGA Peripheral
 
+```verilog
+module spi_peripheral ( input rst, input ss, input mosi, output reg miso, input sck, output reg done_rx, output reg done_tx, input [7:0] din, output reg [7:0] dout )
+```
+
+- `rst` : Active high reset
+- `ss` : Select signal
+- `mosi` : Bit from controller to peripheral
+- `miso` : Bit from peripheral to controller
+- `sck` : Controller clock signal
+- `done_rx` : Whether byte is recieved
+- `done_tx` : Whether byte is transmitted
+- `din` : Byte to send
+- `dout` : Byte received
+
 ### SPI CPU Controller
 
 ## AXI Interface
