@@ -15,6 +15,81 @@ Should be named `hardware-tb`
 
 ## Fixed Library
 
+### Adder
+
+```verilog
+module add #( parameter N=32, parameter Q=16 )( input [N-1:0] a, input [N-1:0] b, output [N-1:0] c )
+```
+
+$a + b = c$
+
+- `[N-1:0] a` : First fixed point term
+- `[N-1:0] b` : Second fixed point term
+- `[N-1:0] c` : Output in fixed point form
+
+### Negator
+
+```verilog
+module negator #( parameter N = 32 )( input logic signed [N-1:0] a, output logic signed [N-1:0] out )
+```
+
+$-1 * a = out$
+
+- `[N-1:0] a` : Input fixed point term
+- `[N-1:0] out` : Output in fixed point form
+
+### Multiplier
+
+```verilog
+module mult #( parameter N = 32, parameter F = 16 )( input logic [N-1:0] a, input logic [N-1:0] b, output logic [N-1:0] c )
+```
+
+$a * b = c$
+
+- `[N-1:0] a` : First fixed point term
+- `[N-1:0] b` : Second fixed point term
+- `[N-1:0] c` : Output in fixed point form
+
+### Reciprocal
+
+```verilog
+module reciprocal #( parameter N = 32 )( input [N-1:0] a, output reg [N-1:0] out )
+```
+
+$\frac{1}{a} = out$
+
+(not implemented for N != 32)
+(need to refactor with `casez` and `genvar`)
+
+- `[N-1:0] a` : Input fixed point term
+- `[N-1:0] out` : Output in fixed point form
+
+### Division
+
+```verilog
+module div #( parameter N = 32, parameter F = 16 )( input logic [N-1:0] a, input logic [N-1:0] b, output logic [N-1:0] c )
+```
+
+$\frac{a}{b} = c$
+
+- `[N-1:0] a` : First fixed point term
+- `[N-1:0] b` : Second fixed point term
+- `[N-1:0] c` : Output in fixed point form
+
+### Exponentiate
+
+```verilog
+module exp #( parameter N = 32 )( input [N-1:0] x, output reg [N-1:0] out )
+```
+
+${e}^{x}$
+
+(not implemented for N != 32)
+(needs to be re-implemented for higher precision)
+
+- `[N-1:0] x` : Input fixed point term
+- `[N-1:0] out` : Output in fixed point form
+
 ## Equation High Level Synthesis
 
 ### Run from CLI
@@ -49,11 +124,11 @@ python3 equation_to_module.py <filename>.json
 module calc_dv #( parameter N=32, parameter Q=16 ) ( input [N-1:0] v, input [N-1:0] w, input [N-1:0] i, input [N-1:0] step, output [N-1:0] out )
 ```
 
-- `v` : Current voltage
-- `w` : Current adaptive value
-- `i` : Input voltage
-- `step` : Timestep value divided by ${\tau}_{m}$
-- `out` : Calculated change in voltage
+- `[N-1:0] v` : Current voltage
+- `[N-1:0] w` : Current adaptive value
+- `[N-1:0] i` : Input voltage
+- `[N-1:0] step` : Timestep value divided by ${\tau}_{m}$
+- `[N-1:0] out` : Calculated change in voltage
 
 ### Calculate Adaptive Change
 
@@ -61,15 +136,15 @@ module calc_dv #( parameter N=32, parameter Q=16 ) ( input [N-1:0] v, input [N-1
 module calc_dw #( parameter N=32, parameter Q=16 )( input [N-1:0] a, input [N-1:0] b, input [N-1:0] v, input [N-1:0] w, input [N-1:0] step, output [N-1:0] out )
 ```
 
-- `a` : Alpha value
-- `b` : Beta value
-- `c` : C value
-- `d` : D value
-- `v` : Current voltage
-- `w` : Current adaptive value
-- `i` : Input voltage
-- `step` : Timestep value divided by ${\tau}_{m}$
-- `out` : Calculated change in adaptive value
+- `[N-1:0] a` : Alpha value
+- `[N-1:0] b` : Beta value
+- `[N-1:0] c` : C value
+- `[N-1:0] d` : D value
+- `[N-1:0] v` : Current voltage
+- `[N-1:0] w` : Current adaptive value
+- `[N-1:0] i` : Input voltage
+- `[N-1:0] step` : Timestep value divided by ${\tau}_{m}$
+- `[N-1:0] out` : Calculated change in adaptive value
 
 ### Izhikevich Neuron
 
@@ -78,19 +153,19 @@ module izhikevich_core #( parameter N=32, parameter Q=16 )( input clk, input [N-
 ```
 
 - `clk` : Clock signal
-- `i` : Input voltage
-- `v_init` : Initial voltage value
-- `w_init` : Initial adaptive value
-- `v_th` : Voltage reset threshold
-- `step` : Timestep value divided by ${\tau}_{m}$
-- `a` : Alpha value
-- `b` : Beta value
-- `c` : C value
-- `d` : D value
+- `[N-1:0] i` : Input voltage
+- `[N-1:0] v_init` : Initial voltage value
+- `[N-1:0] w_init` : Initial adaptive value
+- `[N-1:0] v_th` : Voltage reset threshold
+- `[N-1:0] step` : Timestep value divided by ${\tau}_{m}$
+- `[N-1:0] a` : Alpha value
+- `[N-1:0] b` : Beta value
+- `[N-1:0] c` : C value
+- `[N-1:0] d` : D value
 - `apply` : Whether to change voltage and adaptive value this clock cycle
 - `rst` : Active high reset back to initial voltage and adaptive values
-- `voltage` : Current voltage
-- `w` : Current adaptive value
+- `[N-1:0] voltage` : Current voltage
+- `[N-1:0] w` : Current adaptive value
 
 ## RAM
 
