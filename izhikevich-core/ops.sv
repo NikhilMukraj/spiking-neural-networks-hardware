@@ -19,8 +19,8 @@ module div #(
 endmodule
 
 module add #( // https://github.com/freecores/verilog_fixed_point_math_library/blob/master/qadd.v
-	parameter Q = 16,
-	parameter N = 32
+	parameter N = 32,
+	parameter Q = 16
 )(
     input [N-1:0] a,
     input [N-1:0] b,
@@ -105,13 +105,14 @@ endmodule
 module reciprocal #(
 	parameter N = 32,
 	parameter Q = 16
-) (
+)(
 	input [N-1:0] a,
 	output reg [N-1:0] out
 );
 	reg [N-1:0] estimate;
 	reg [4:0] msb;
 	reg [5:0] signed_msb;
+
 	always @ (a) begin
 		msb = 5'b00000;
 	
@@ -346,7 +347,7 @@ endmodule
 
 module exp #(
 	parameter N = 32
-) (
+)(
 	input [N-1:0] x,
 	output reg [N-1:0] out
 );
@@ -422,26 +423,6 @@ module exp #(
 	end
 endmodule
 
-module exp_higher_precision #(
-	parameter N = 32,
-	parameter Q = 16
-) (
-	input [N-1:0] x,
-	output reg [N-1:0] out
-);
-	reg [N-1:0] intermediate;
-
-	mult multiplier(
-		x,
-		32'b00000000000000010111000101010100, // 1 / ln(2),
-		intermediate
-	);
-
-	assign out = 32'b00000000000000010000000000000000 << intermediate[N-1:Q];
-	// use lookup to determine e^msb of fractional bit
-	// multiply by e^rest using 2 degree taylor
-endmodule
-
 module fixed_point_cmp #(
     parameter N = 32
 ) (
@@ -451,7 +432,7 @@ module fixed_point_cmp #(
     output reg gt,
     output reg lt
 );
-    always @ (*) begin
+	always @ (*) begin
         if ((a[N-1] == 1'b0) && (b[N-1] == 1'b0)) begin
             if (a[N-2:0] > b[N-2:0]) begin
                 eq = 1'b0;
