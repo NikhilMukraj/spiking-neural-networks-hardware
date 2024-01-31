@@ -19,8 +19,8 @@ module div #(
 endmodule
 
 module add #( // https://github.com/freecores/verilog_fixed_point_math_library/blob/master/qadd.v
-	parameter Q = 16,
-	parameter N = 32
+	parameter N = 32,
+	parameter Q = 16
 )(
     input [N-1:0] a,
     input [N-1:0] b,
@@ -105,13 +105,14 @@ endmodule
 module reciprocal #(
 	parameter N = 32,
 	parameter Q = 16
-) (
+)(
 	input [N-1:0] a,
 	output reg [N-1:0] out
 );
 	reg [N-1:0] estimate;
 	reg [4:0] msb;
 	reg [5:0] signed_msb;
+
 	always @ (a) begin
 		msb = 5'b00000;
 	
@@ -346,7 +347,7 @@ endmodule
 
 module exp #(
 	parameter N = 32
-) (
+)(
 	input [N-1:0] x,
 	output reg [N-1:0] out
 );
