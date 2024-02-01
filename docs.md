@@ -11,6 +11,8 @@ Should be named `hardware-tb`
 └── test.py
 ```
 
+When testing in CocoTB, use `dut._log.info(string)` for logging during the simulation
+
 (hardware verilog file within directory is optional)
 
 ## Fixed Library
@@ -89,6 +91,33 @@ ${e}^{x}$
 
 - `[N-1:0] x` : Input fixed point term
 - `[N-1:0] out` : Output in fixed point form
+
+## Fixed Point Models Package
+
+- `fixed_point_to_decimal(binary_str: str, integer_bits: int, fractional_bits: int)` : Converts a fixed point represention of a number into a decimal
+  - `binary_str: str` : Fixed point representation of a number as a string
+  - `integer_bits: int` : Number of integer bits in fixed point representation
+  - `fractional_bits: int` : Number of fractional bits in fixed point representation
+- `decimal_to_fixed_point(number: float, integer_bits: float, fractional_bits: float)` : Converts a decimal to a fixed point representation
+  - `number: float` : Number to convert to a fixed point representation
+  - `integer_bits: int` : Number of integer bits in fixed point representation
+  - `fractional_bits: int` : Number of fractional bits in fixed point representation
+- `check_with_tolerance(expected: float, actual: float, tolerance=1e-5)` : Checks how close an expected value is to an actual given tolerance with overflow
+  - `expected: float` : Expected numeric value
+  - `actual: float` : Actual numeric value
+  - `tolerance: float` : Degree of acceptable error
+- `adder_model(a: int, b: int, n_bits: int = 4) -> int` : Performs fixed point addition on two integers with overflow
+  - `a: int` : First integer term
+  - `b: int` : Second integer term
+  - `n_bits: int` : Number of bits in binary representation (must be >=1)
+- `multiplier_model(a: int, b: int, n_bits: int = 4) -> int` : Performs fixed point multiplication on two integers with overflow
+  - `a: int` : First integer term
+  - `b: int` : Second integer term
+  - `n_bits: int` : Number of bits in binary representation (must be >=1)
+- `divider_model(a: int, b: int, n_bits: int = 4) -> int` : Performs fixed point division on two integers with overflow
+  - `a: int` : First integer term
+  - `b: int` : Second integer term
+  - `n_bits: int` : Number of bits in binary representation (must be >=1)
 
 ## Equation High Level Synthesis
 
