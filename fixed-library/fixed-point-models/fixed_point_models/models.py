@@ -2,7 +2,7 @@ import struct
 import numpy as np
 
 
-def float_to_hex(float_value):
+def float_to_hex(float_value: float):
     packed_data = struct.pack('!f', float_value)
     hex_string = hex(struct.unpack('!I', packed_data)[0])
     hex_string = hex_string[2:]
@@ -11,7 +11,7 @@ def float_to_hex(float_value):
 
 hex_to_float = lambda x: struct.unpack('!f', bytes.fromhex(x))[0]
 
-def float_to_int(float_value):
+def float_to_int(float_value: float):
     packed_data = struct.pack('!f', float_value)
     integer_value = struct.unpack('!I', packed_data)[0]
     
