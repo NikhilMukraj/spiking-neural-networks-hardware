@@ -37,7 +37,3 @@
   - [ ] input values to layered version
   - [ ] classifier
   - [ ] fit to eeg signaling
-
-## notes
-
-- use `dut._log.info(string)` for logging cocotb simulations
