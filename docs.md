@@ -127,7 +127,7 @@ ${e}^{x}$
 python3 equation_to_module.py <filename>.json
 ```
 
-\<filename>.json example
+\<filename>.json example:
 
 ```json
 {
@@ -145,6 +145,8 @@ python3 equation_to_module.py <filename>.json
 
 ### Preprocessing
 
+- **todo**
+
 ## Izhikevich Core
 
 ### Calculate Voltage Change
@@ -152,6 +154,10 @@ python3 equation_to_module.py <filename>.json
 ```verilog
 module calc_dv #( parameter N=32, parameter Q=16 ) ( input [N-1:0] v, input [N-1:0] w, input [N-1:0] i, input [N-1:0] step, output [N-1:0] out )
 ```
+
+$$
+dv_m = (0.04V_m(t)^2 + 5V_m(t) + 140 - w)(\frac{dt}{\tau_m})
+$$
 
 - `[N-1:0] v` : Current voltage
 - `[N-1:0] w` : Current adaptive value
@@ -164,6 +170,10 @@ module calc_dv #( parameter N=32, parameter Q=16 ) ( input [N-1:0] v, input [N-1
 ```verilog
 module calc_dw #( parameter N=32, parameter Q=16 )( input [N-1:0] a, input [N-1:0] b, input [N-1:0] v, input [N-1:0] w, input [N-1:0] step, output [N-1:0] out )
 ```
+
+$$
+dw = \alpha(\beta V_m(t) - w)(\frac{dt}{\tau_m})
+$$
 
 - `[N-1:0] a` : Alpha value
 - `[N-1:0] b` : Beta value
@@ -180,6 +190,8 @@ module calc_dw #( parameter N=32, parameter Q=16 )( input [N-1:0] a, input [N-1:
 ```verilog
 module izhikevich_core #( parameter N=32, parameter Q=16 )( input clk, input [N-1:0] i, input [N-1:0] v_init, input [N-1:0] w_init, input [N-1:0] v_th, input [N-1:0] step, input [N-1:0] a, input [N-1:0] b, input [N-1:0] c, input [N-1:0] d, input apply, input rst, output reg [N-1:0] voltage, output reg [N-1:0] w )
 ```
+
+Given Izhikevich neuron parameters, does iterations on the neuron at each clock cycle if `apply` signal is on
 
 - `clk` : Clock signal
 - `[N-1:0] i` : Input voltage
@@ -207,6 +219,8 @@ module izhikevich_core #( parameter N=32, parameter Q=16 )( input clk, input [N-
 ```verilog
 module spi_peripheral ( input rst, input ss, input mosi, output reg miso, input sck, output reg done_rx, output reg done_tx, input [7:0] din, output reg [7:0] dout )
 ```
+
+Peripheral for an SPI interface that writes and recieves one byte at a time and depends on the `sck` clock signal from a controller
 
 - `rst` : Active high reset
 - `ss` : Select signal
