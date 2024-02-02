@@ -177,8 +177,6 @@ $$
 
 - `[N-1:0] a` : Alpha value
 - `[N-1:0] b` : Beta value
-- `[N-1:0] c` : C value
-- `[N-1:0] d` : D value
 - `[N-1:0] v` : Current voltage
 - `[N-1:0] w` : Current adaptive value
 - `[N-1:0] i` : Input voltage
