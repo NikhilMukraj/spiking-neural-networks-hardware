@@ -206,9 +206,17 @@ Given Izhikevich neuron parameters, does iterations on the neuron at each clock 
 - `[N-1:0] voltage` : Current voltage
 - `[N-1:0] w` : Current adaptive value
 
+## Hodgkin Huxley Core
+
+- **tod**
+
 ## RAM
 
+- **todo**
+
 ## Lattice
+
+- **todo**
 
 ## SPI Interface
 
@@ -232,8 +240,16 @@ Peripheral for an SPI interface that writes and recieves one byte at a time and 
 
 ### SPI CPU Controller
 
+- **todo**
+
 ## AXI Interface
+
+- **todo**
 
 ## Ethernet Interface
 
+- **todo**
+
 ## RGB Display
+
+- **todo**
