@@ -208,15 +208,26 @@ Given Izhikevich neuron parameters, does iterations on the neuron at each clock 
 
 ## Hodgkin Huxley Core
 
-- **tod**
+- **todo**
+- Needs to calculate each gate current
+- Needs to update each gate state
+- Needs to add gate currents together
+- Needs to encapsulate ligand gated channel currents
 
 ## RAM
 
 - **todo**
+- Needs getting addresses and data
+- Needs editing addresses and data
 
 ## Lattice
 
 - **todo**
+- Needs to generate neurons in a grid
+- Calculate neuron inputs based off voltages and connected inputs
+  - How neurons are connected stored in RAM
+- Apply voltage and adaptive value changes on clock cycle and apply signal
+- Needs to be adaptable to allow an input layer and feedforward structure
 
 ## SPI Interface
 
@@ -241,15 +252,23 @@ Peripheral for an SPI interface that writes and recieves one byte at a time and 
 ### SPI CPU Controller
 
 - **todo**
+- Needs to transmit bytes
+- Needs to receive bytes
+- Needs to transmit and recieve to multiple peripherals
 
 ## AXI Interface
 
 - **todo**
+- Needs to interface a CPU via AXI (test with Raspberry Pi Pico/Zero)
+- Needs to transmit data
+- Needs to recieve data
 
 ## Ethernet Interface
 
 - **todo**
+- Either needs to transmit and recieve ethernet data from CPU through AXI or directly interface it with the FPGA
 
 ## RGB Display
 
 - **todo**
+- Needs to display voltages of lattice as iterations progress
