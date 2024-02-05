@@ -1,10 +1,14 @@
 # spiking-neural-networks-hardware
 
+## for docs see docs.md
+
 ## requirements
 
 - requires wsl or ubuntu linux
 - run `pip install -r requirements.txt`
 - requires icarus verilog, run `sudo apt-get install iverilog`
+- vivado studio for loading fpga programs
+- thonny for testing raspberry pi
 
 ## general flow
 
