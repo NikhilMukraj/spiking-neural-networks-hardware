@@ -78,6 +78,16 @@ $\frac{a}{b} = c$
 - `[N-1:0] b` : Second fixed point term
 - `[N-1:0] c` : Output in fixed point form
 
+### Absolute Value
+
+```verilog
+// todo
+```
+
+$|x| = out$
+
+- **todo**
+
 ### Exponentiate
 
 ```verilog
