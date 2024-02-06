@@ -1,0 +1,11 @@
+{
+    "name": "update_weight_neg",
+    "equation": "(-1 * (a_minus * (e^(-1. * (abs(t_pre - t_post)) / tau_minus))))",
+    "variables": ["t_pre", "t_post", "a_minus", "tau_minus"],
+    "out_variable": "weight_change",
+    "integer_bits": 16,
+    "fractional_bits": 16,
+    "lower_bound": -4,
+    "upper_bound": 4,
+    "tolerance": 1
+}
