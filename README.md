@@ -26,6 +26,7 @@
 ## todo
 
 - [ ] equation high level synthesis
+  - [ ] absolute value
   - [ ] high precision $e^x$
   - [ ] preprocessing of equation
 - [x] izhikevich core
