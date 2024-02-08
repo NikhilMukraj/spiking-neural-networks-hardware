@@ -2,9 +2,9 @@
 
 ## Requirements
 
-- Requires wsl or ubuntu linux
+- Requires WSL or Ubuntu Linux
 - Run `pip install -r requirements.txt`
-- Requires icarus verilog, run `sudo apt-get install iverilog`
+- Requires Icarus Verilog, run `sudo apt-get install iverilog`
 - Vivado Studio for loading FPGA programs
 - Thonny for Raspberry Pi Pico
 
