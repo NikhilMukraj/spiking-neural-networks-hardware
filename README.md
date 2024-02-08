@@ -23,23 +23,30 @@
 
 ## Todo
 
-- [ ] equation high level synthesis
-  - [ ] absolute value
-  - [ ] high precision $e^x$
-  - [ ] preprocessing of equation
-- [x] izhikevich core
-- [ ] hodgkin huxley core
-- [ ] ram interface
-- [ ] communication protocol
-  - [ ] fpga side communication
-  - [ ] raspberry pi side communication
-  - [ ] distributed communication
-- [ ] izhikevich matrix
-- [ ] stdp
-- [ ] r-stdp
-  - [ ] input values to layered version
-  - [ ] classifier
-  - [ ] fit to eeg signaling
+- [ ] Equation high level synthesis
+  - [x] Addition/Subtraction
+  - [x] Multiplication
+  - [x] Negation
+  - [x] Reciprocal
+  - [x] Division
+  - [ ] Absolute value
+  - [ ] High precision $e^x$
+  - [ ] Preprocessing of equation
+- [x] Izhikevich core
+  - [x] Voltage change
+  - [x] Adaptive value change
+- [ ] Hodgkin huxley core
+- [ ] RAM interface
+- [ ] Communication protocol
+  - [ ] RPGA side communication
+  - [ ] Raspberry Pi side communication
+  - [ ] Distributed communication
+- [ ] Izhikevich matrix
+- [ ] STDP
+- [ ] R-STDP
+  - [ ] Input values to feed forward version
+  - [ ] Classifier
+  - [ ] Fit to eeg signaling
 
 ## Hardware Documentation
 
