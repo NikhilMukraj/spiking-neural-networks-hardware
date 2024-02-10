@@ -203,9 +203,19 @@ python3 equation_to_module.py <filename>.json
 }
 ```
 
+Operations (all operations must be enclosed by parentheses):
+
+- Addition/Subtraction : `(x+y)`
+- Negation : `(-1*x)` or `(x*-1)`
+- Multiplication : `(x*y)`
+- Division : `(x/y)`
+- Exponentation : `(e^x)`
+- (todo) Absolute value: `(abs|x)`
+
 ### Preprocessing
 
 - **todo**
+- Should take in regular plain text or Latex equation and convert it to one parseable by the CLI tool
 
 ### Izhikevich Core
 
