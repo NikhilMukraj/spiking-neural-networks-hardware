@@ -1,6 +1,6 @@
 {
     "name": "update_weight_pos",
-    "equation": "(a_plus * (e^(-1. * (abs(t_pre - t_post)) / tau_plus)))",
+    "equation": "(a_plus * (e^(-1. * (abs|(t_pre - t_post)) / tau_plus)))",
     "variables": ["t_pre", "t_post", "a_plus", "tau_plus"],
     "out_variable": "weight_change",
     "integer_bits": 16,
