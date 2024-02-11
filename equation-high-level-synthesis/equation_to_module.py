@@ -41,9 +41,9 @@ if any(type(i) != str for i in args['variables']):
     print(f'{RED}All items in "variables" must be strings{NC}')
     sys.exit(1)
 
-# if any(i == 'e' for i in args['variables']):
-#     print(f'{RED}"e" is a reserved variable name{NC}')
-#     sys.exit(1)
+if any(i == 'e' for i in args['variables']):
+    print(f'{RED}"e" is a reserved variable name{NC}')
+    sys.exit(1)
 
 module_name = args['name']
 
