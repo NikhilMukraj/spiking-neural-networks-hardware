@@ -203,7 +203,19 @@ python3 equation_to_module.py <filename>.json
 }
 ```
 
-Operations (all operations must be enclosed by parentheses):
+- `name: String` : Name of module
+- `equation: String` : Equation to translate to hardware (see [operations](#operations))
+- `variables: Array[String]` : Variables within equation (`e` is a reserved variable)
+- `out_variable: String` : What to name output register
+- `integer_bits: Integer` : Number of integer bits in fixed point representation
+- `fractional_bits: Integer` : Number of fractional bits in fixed point representation
+- `lower_bound: Float` : Lower bound of numbers to test in simulation
+- `upper_bound: Float` : Upper bound of numbers to test in simulation
+- `tolerance: Float` : Maximum error allowed within test
+
+##### Operations
+
+All operations must be enclosed by parentheses
 
 - Addition/Subtraction : `(x+y)`
 - Negation : `(-1*x)` or `(x*-1)`
