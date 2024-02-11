@@ -215,7 +215,7 @@ python3 equation_to_module.py <filename>.json
 
 ##### Operations
 
-All operations must be enclosed by parentheses
+All operations must be enclosed by parentheses, `x` and `y` can either be variables specified in the `.json` file, constants within the specified `integer_bits` and `fractional_bits` minimum and maximum, or the result of other nested operations
 
 - Addition/Subtraction : `(x+y)`
 - Negation : `(-1*x)` or `(x*-1)`
