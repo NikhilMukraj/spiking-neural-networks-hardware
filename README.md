@@ -152,6 +152,17 @@ ${e}^{x}$
 - `[N-1:0] x` : Input fixed point term
 - `[N-1:0] out` : Output in fixed point form
 
+#### Power
+
+```verilog
+// todo
+module exp #( parameter N = 32, parameter P=power )( input [N-1:0] x, output reg [N-1:0] out )
+```
+
+${x}^{n}$
+
+- **todo**
+
 ### Fixed Point Models Package
 
 - `fixed_point_to_decimal(binary_str: str, integer_bits: int, fractional_bits: int)` : Converts a fixed point represention of a number into a decimal
@@ -223,6 +234,7 @@ All operations must be enclosed by parentheses, `x` and `y` can either be variab
 - Division : `(x/y)`
 - Exponentation : `(e^x)`
 - (todo) Absolute value: `(abs|x)`
+- (todo) Power: `(x^n)` where `n` must be a constant
 
 ### Preprocessing
 
