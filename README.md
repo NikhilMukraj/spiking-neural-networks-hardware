@@ -137,6 +137,7 @@ $\frac{a}{b} = c$
 $|x| = out$
 
 - **todo**
+- Should just convert first bit to 0
 
 #### Exponentiate
 
@@ -162,6 +163,15 @@ module exp #( parameter N = 32, parameter P=power )( input [N-1:0] x, output reg
 ${x}^{n}$
 
 - **todo**
+- Should be expanded to a processable form in the equation high level synthesis
+- Expansion process:
+  - `x^1` should just be `x`
+  - `x^2` should be `(x*x)`
+  - `x^3` should be `((x*x)*x)`
+  - `x^4` should be `((x*x)*(x*x))`
+  - `x^5` should be `(((x*x)*(x*x))*x)`
+  - `x^6` should be `(((x*x)*(x*x))*(x*x))`
+  - ... etc
 
 ### Fixed Point Models Package
 
