@@ -318,6 +318,14 @@ Given Izhikevich neuron parameters, does iterations on the neuron at each clock 
 - Needs to add gate currents together
 - Needs to encapsulate ligand gated channel currents
 
+#### Ion Channel Calculations
+
+#### Multicompartment Current Calculations
+
+#### Ligand Gated Ion Channel Calculations
+
+#### Neurotransmitter Dynamics Calculations
+
 ### RAM
 
 - **todo**
@@ -328,10 +336,12 @@ Given Izhikevich neuron parameters, does iterations on the neuron at each clock 
 
 - **todo**
 - Needs to generate neurons in a grid
+  - Implementation must allow for Verilog to automatically generate different grid sizes on build
 - Calculate neuron inputs based off voltages and connected inputs
   - How neurons are connected stored in RAM
 - Apply voltage and adaptive value changes on clock cycle and apply signal
 - Needs to be adaptable to allow an input layer and feedforward structure
+- Potentially needs to be able to allow certain constants to change depending on neurotransmitter
 
 ### SPI Interface
 
