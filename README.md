@@ -24,6 +24,10 @@
 ## Todo
 
 - [ ] Equation high level synthesis
+  - [ ] Preprocessing
+    - [ ] To the power of an integer expansion
+    - [ ] Simplification of expressions with only constants
+    - [ ] Nest equations correctly based on order of operations
   - [x] Addition/Subtraction
   - [x] Multiplication
   - [x] Negation
@@ -42,6 +46,11 @@
   - [ ] Raspberry Pi side communication
   - [ ] Distributed communication
 - [ ] Izhikevich matrix
+  - [ ] Interwoven matrix
+    - [ ] Get where input neurons are from memory
+    - [ ] Send voltage values back to controller for visualization/history
+    - [ ] Send other variables (neurotransmission values, `a`, `b`, `c`, and `d` values)
+  - [ ] Feedforward network
 - [ ] STDP
 - [ ] R-STDP
   - [ ] Input values to feed forward version
@@ -165,6 +174,7 @@ ${x}^{n}$
 - **todo**
 - Should be expanded to a processable form in the equation high level synthesis
 - Expansion process:
+  - `x^0` should be `1`
   - `x^1` should just be `x`
   - `x^2` should be `(x*x)`
   - `x^3` should be `((x*x)*x)`
