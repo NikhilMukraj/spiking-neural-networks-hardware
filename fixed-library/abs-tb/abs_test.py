@@ -7,7 +7,7 @@ import numpy as np
 
 
 @cocotb.test()
-async def adder_test(dut):
+async def abs_test(dut):
     int_bits = 16
     frac_bits = 16
     lower_bound = -100
