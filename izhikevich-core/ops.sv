@@ -102,6 +102,15 @@ module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmeti
 	end
 endmodule
 
+module abs #(
+	parameter N = 32
+)(
+	input [N-1:0] x,
+	output reg [N-1:0] out
+);
+	assign out = {1'b0, x[N-2:0]};
+endmodule
+
 module reciprocal #(
 	parameter N = 32,
 	parameter Q = 16
