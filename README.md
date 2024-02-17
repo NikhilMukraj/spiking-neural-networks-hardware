@@ -140,13 +140,13 @@ $\frac{a}{b} = c$
 #### Absolute Value
 
 ```verilog
-// todo
+module abs #( parameter N = 32 )( input [N-1:0] x, output reg [N-1:0] out )
 ```
 
 $|x| = out$
 
-- **todo**
-- Should just convert first bit to 0
+- `[N-1:0] x` : Input fixed point term
+- `[N-1:0] out` : Output in fixed point form
 
 #### Exponentiate
 
