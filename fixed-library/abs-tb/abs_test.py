@@ -22,7 +22,7 @@ async def abs_test(dut):
 
         await Timer(2, units="ns")
 
-        output = fixed_point_to_decimal(str(dut.x.value), int_bits, frac_bits)
+        output = fixed_point_to_decimal(str(dut.out.value), int_bits, frac_bits)
         result = np.abs(x)
 
         assert check_with_tolerance(output, result, 1e-3), \
