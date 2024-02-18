@@ -158,6 +158,7 @@ ${e}^{x}$
 
 (not implemented for N != 32)
 (needs to be re-implemented for higher precision)
+([relevant link to cordic method](https://stackoverflow.com/questions/32409022/how-can-i-calculate-exponential-using-cordic-for-numbers-outside-1-1))
 
 - `[N-1:0] x` : Input fixed point term
 - `[N-1:0] out` : Output in fixed point form
