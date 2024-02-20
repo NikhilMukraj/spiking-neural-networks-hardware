@@ -158,7 +158,7 @@ ${e}^{x}$
 
 (not implemented for N != 32)
 (needs to be re-implemented for higher precision)
-([relevant link to cordic method](https://stackoverflow.com/questions/32409022/how-can-i-calculate-exponential-using-cordic-for-numbers-outside-1-1), calculate q by taking integer part of x, multiply by $\frac{1}{ln(2)}$, calculate r and ${e}^{r}$ with a look up table)
+([relevant link to cordic method](https://stackoverflow.com/questions/32409022/how-can-i-calculate-exponential-using-cordic-for-numbers-outside-1-1), calculate q by taking integer part of x * 1/ln(2), multiply by $\frac{1}{ln(2)}$, calculate r and ${e}^{r}$ with a look up table, r will always be between 0 and 1 so ${e}^{r}$ will only need to be from 0 to 1)
 
 - `[N-1:0] x` : Input fixed point term
 - `[N-1:0] out` : Output in fixed point form
