@@ -437,17 +437,54 @@ module exp_higher_precision #(
 	input [N-1:0] x,
 	output reg [N-1:0] out
 );
-	reg [N-1:0] intermediate;
+	reg [N-1:0] q_intermediate, q, q_minus_one, r_intermediate, neg_r_intermediate, r;
 
-	mult multiplier(
-		x,
+	// x / ln(2)
+	mult multiplier1(
+		x, 
 		32'b00000000000000010111000101010100, // 1 / ln(2),
-		intermediate
+		q_intermediate
 	);
 
+	// q = floor(x / ln(2))
+	assign q = {x[N-1:Q], 16{1'b0}}; // gets floor
+
+	// q - 1
+	adder adder1(
+		q, 
+		32'b10000000000000010000000000000000, // -1
+		q_minus_one
+	);
+
+	// 2^q
+	// assign out 32'b00000000000000010000000000000000 << q_minus_one;
+
+	// r = x - q * ln(2)
+
+	// q * ln(2)
+	mult multiplier2(
+		q,
+		32'b00000000000000001011000101110010, // ln(2)
+		r_intermediate
+	);
+
+	// - q * ln(2)
+	negator negate(
+		r_intermediate,
+		neg_r_intermediate
+	);
+
+	// r = x - q * ln(2)
+	adder adder2(
+		x, 
+		neg_r_intermediate,
+		r
+	);
+
+	// calculate e^r for 0 to 1
+	// use msb and lookup table to get e^r
+
 	assign out = 32'b00000000000000010000000000000000 << intermediate[N-1:Q];
-	// use lookup to determine e^msb of fractional bit
-	// multiply by e^rest using 2 degree taylor
 endmodule
 
 module fixed_point_cmp #(
