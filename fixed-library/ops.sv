@@ -437,7 +437,7 @@ module exp_higher_precision #(
 	input [N-1:0] x,
 	output reg [N-1:0] out
 );
-	reg [N-1:0] q_intermediate, q, q_minus_one, r_intermediate, neg_r_intermediate, r;
+	reg [N-1:0] q_intermediate, q, q_minus_one, two_power, r_intermediate, neg_r_intermediate, r, exp_r;
 
 	// x / ln(2)
 	mult multiplier1(
@@ -484,7 +484,44 @@ module exp_higher_precision #(
 	// calculate e^r for 0 to 1
 	// use msb and lookup table to get e^r
 
-	assign out = 32'b00000000000000010000000000000000 << intermediate[N-1:Q];
+	// string = '0' * 16
+	// [string] + [string[:i] + '1' + string[i + 1:] for i in range(16)]
+	// nums = [string] + [string[:i] + '1' + string[i + 1:] for i in range(16)]
+	// lookup = {
+	// 	i: fpm.decimal_to_fixed_point(np.exp(fpm.fixed_point_to_decimal(string + i, 16, 16)), 16, 16) for i in nums
+	// }
+
+	always @ (r) begin
+		case (r)
+			16'b0000000000000000: exp_r = 32'b00000000000000010000000000000000;
+			16'b1000000000000000: exp_r = 32'b00000000000000011010011000010010;
+			16'b0100000000000000: exp_r = 32'b00000000000000010100100010110101;
+			16'b0010000000000000: exp_r = 32'b00000000000000010010001000010110;
+			16'b0001000000000000: exp_r = 32'b00000000000000010001000010000010;
+			16'b0000100000000000: exp_r = 32'b00000000000000010000100000100000;
+			16'b0000010000000000: exp_r = 32'b00000000000000010000010000001000;
+			16'b0000001000000000: exp_r = 32'b00000000000000010000001000000010;
+			16'b0000000100000000: exp_r = 32'b00000000000000010000000100000000;
+			16'b0000000010000000: exp_r = 32'b00000000000000010000000010000000;
+			16'b0000000001000000: exp_r = 32'b00000000000000010000000001000000;
+			16'b0000000000100000: exp_r = 32'b00000000000000010000000000100000;
+			16'b0000000000010000: exp_r = 32'b00000000000000010000000000010000;
+			16'b0000000000001000: exp_r = 32'b00000000000000010000000000001000;
+			16'b0000000000000100: exp_r = 32'b00000000000000010000000000000100;
+			16'b0000000000000010: exp_r = 32'b00000000000000010000000000000010;
+			16'b0000000000000001: exp_r = 32'b00000000000000010000000000000001;
+		endcase
+	end
+
+	assign two_power = 32'b00000000000000010000000000000000 << q_minus_one;
+
+	mult multiplier3(
+		two_power,
+		exp_r,
+		out
+	);
+
+	// should be tested between -15 and 15
 endmodule
 
 module fixed_point_cmp #(
