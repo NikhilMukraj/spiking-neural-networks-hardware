@@ -47,7 +47,9 @@
   - [ ] Distributed communication
 - [ ] Izhikevich matrix
   - [ ] Interwoven matrix
-    - [ ] Get where input neurons are from memory
+    - [ ] Save each output of neuron to memory
+    - [ ] Calculate inputs for each neuron by row from memory and save to hardware matrix
+    - [ ] Run iteration of lattice
     - [ ] Send voltage values back to controller for visualization/history
     - [ ] Send other variables (neurotransmission values, `a`, `b`, `c`, and `d` values)
   - [ ] Feedforward network
