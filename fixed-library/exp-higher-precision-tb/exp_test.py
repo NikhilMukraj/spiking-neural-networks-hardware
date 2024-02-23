@@ -2,7 +2,7 @@ import cocotb
 from cocotb.triggers import Timer
 from cocotb.binary import BinaryValue
 from fixed_point_models import fixed_point_to_decimal, decimal_to_fixed_point
-from fixed_point_models import adder_model, check_with_tolerance
+from fixed_point_models import check_with_tolerance
 import numpy as np
 
 
@@ -10,8 +10,8 @@ import numpy as np
 async def exp_test(dut):
     int_bits = 16
     frac_bits = 16
-    lower_bound = 1
-    upper_bound = 10
+    lower_bound = -12
+    upper_bound = 12
 
     for i in range(100):
         x = np.random.randint(lower_bound, upper_bound)
