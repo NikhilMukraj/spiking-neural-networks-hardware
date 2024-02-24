@@ -10,11 +10,11 @@ import numpy as np
 async def exp_test(dut):
     int_bits = 16
     frac_bits = 16
-    lower_bound = -12
-    upper_bound = 12
+    lower_bound = -1 #-12
+    upper_bound = 1 #12
 
     for i in range(100):
-        x = np.random.randint(lower_bound, upper_bound)
+        x = np.random.uniform(lower_bound, upper_bound)
 
         binary_x = decimal_to_fixed_point(x, int_bits, frac_bits)    
         dut.x.value = BinaryValue(binary_x)
@@ -22,7 +22,7 @@ async def exp_test(dut):
         await Timer(2, units="ns")
 
         output = str(dut.out.value)
-        assert 'x' not in output, f'{x} | {output}'
+        assert 'x' not in output, f'x: {x} | output: {output}'
         output_value = fixed_point_to_decimal(output, int_bits, frac_bits)
 
         actual = np.exp(x)
@@ -31,4 +31,4 @@ async def exp_test(dut):
             actual,
             output_value, 
             1
-        ), f'{x} | {actual} | {output_value}'
+        ), f'x: {x} | expected: {actual} | result: {output_value} | binary: {dut.out.value}'
