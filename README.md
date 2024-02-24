@@ -54,6 +54,7 @@
     - [ ] Send other variables (neurotransmission values, `a`, `b`, `c`, and `d` values)
   - [ ] Feedforward network
 - [ ] STDP
+  - [ ] Since spikes are not likely to occur at the same time, spikes can be handled by a single module being fed the spike times
 - [ ] R-STDP
   - [ ] Input values to feed forward version
   - [ ] Classifier
