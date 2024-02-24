@@ -437,7 +437,8 @@ module exp_higher_precision #(
 	input [N-1:0] x,
 	output reg [N-1:0] out
 );
-	reg [N-1:0] q_intermediate, q, q_minus_one, two_power, r_intermediate, neg_r_intermediate, r, exp_r;
+	reg [N-1:0] q_intermediate, q, q_minus_one, two_power;
+	reg [N-1:0] r_intermediate, neg_r_intermediate, r, m_x, exp_r;
 
 	// x / ln(2)
 	mult multiplier1(
@@ -447,10 +448,10 @@ module exp_higher_precision #(
 	);
 
 	// q = floor(x / ln(2))
-	assign q = {x[N-1:Q], 16{1'b0}}; // gets floor
+	assign q = {x[N-1:Q], 16'b0}; // gets floor
 
 	// q - 1
-	adder adder1(
+	add adder1(
 		q, 
 		32'b10000000000000010000000000000000, // -1
 		q_minus_one
@@ -475,47 +476,40 @@ module exp_higher_precision #(
 	);
 
 	// r = x - q * ln(2)
-	adder adder2(
+	add adder2(
 		x, 
 		neg_r_intermediate,
 		r
 	);
 
-	// calculate e^r for 0 to 1
-	// use msb and lookup table to get e^r
+	// e^r approximated linearly, y = 1.71828182846 * x + 1
+	// if r is negative then y = 0.632120558829 * x + 1
 
-	// string = '0' * 16
-	// [string] + [string[:i] + '1' + string[i + 1:] for i in range(16)]
-	// nums = [string] + [string[:i] + '1' + string[i + 1:] for i in range(16)]
-	// lookup = {
-	// 	i: fpm.decimal_to_fixed_point(np.exp(fpm.fixed_point_to_decimal(string + i, 16, 16)), 16, 16) for i in nums
-	// }
+	reg [N-1:0] m;
 
 	always @ (r) begin
-		case (r)
-			16'b0000000000000000: exp_r = 32'b00000000000000010000000000000000;
-			16'b1000000000000000: exp_r = 32'b00000000000000011010011000010010;
-			16'b0100000000000000: exp_r = 32'b00000000000000010100100010110101;
-			16'b0010000000000000: exp_r = 32'b00000000000000010010001000010110;
-			16'b0001000000000000: exp_r = 32'b00000000000000010001000010000010;
-			16'b0000100000000000: exp_r = 32'b00000000000000010000100000100000;
-			16'b0000010000000000: exp_r = 32'b00000000000000010000010000001000;
-			16'b0000001000000000: exp_r = 32'b00000000000000010000001000000010;
-			16'b0000000100000000: exp_r = 32'b00000000000000010000000100000000;
-			16'b0000000010000000: exp_r = 32'b00000000000000010000000010000000;
-			16'b0000000001000000: exp_r = 32'b00000000000000010000000001000000;
-			16'b0000000000100000: exp_r = 32'b00000000000000010000000000100000;
-			16'b0000000000010000: exp_r = 32'b00000000000000010000000000010000;
-			16'b0000000000001000: exp_r = 32'b00000000000000010000000000001000;
-			16'b0000000000000100: exp_r = 32'b00000000000000010000000000000100;
-			16'b0000000000000010: exp_r = 32'b00000000000000010000000000000010;
-			16'b0000000000000001: exp_r = 32'b00000000000000010000000000000001;
-		endcase
+		if (r[N-1] == 1'b0) begin
+			m = 32'b00000000000000011011011111100001; // 1.71828182846
+		end else begin
+		m = 32'b00000000000000001010000111010010; // 0.632120558829
+		end
 	end
 
-	assign two_power = 32'b00000000000000010000000000000000 << q_minus_one;
-
 	mult multiplier3(
+		m, 
+		r,
+		m_x
+	);
+
+	add adder3(
+		32'b00000000000000010000000000000000, // 1
+		m_x,
+		exp_r
+	);
+
+	assign two_power = 32'b00000000000000000000000000000001 << q_minus_one; // 2 << q-1
+
+	mult multiplier4(
 		two_power,
 		exp_r,
 		out
