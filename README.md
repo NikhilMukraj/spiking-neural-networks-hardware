@@ -55,6 +55,10 @@
   - [ ] Feedforward network
 - [ ] STDP
   - [ ] Since spikes are not likely to occur at the same time, spikes can be handled by a single module being fed the spike times
+  - [ ] There should be an iteration counter, every time a spike occurs, the time is equal to the iteration counter
+    - [ ] Iteration counter is 15 bits + sign bit, when inputting spike time into any equation it is shifted to -1 to 1 range in a 32 bit number
+    - [ ] If the iteration counter resets, any spike that has occured before the reset is set to the spike time - maximum integer value
+    - [ ] If the spike is still negative, it is set to the maximum negative value
 - [ ] R-STDP
   - [ ] Input values to feed forward version
   - [ ] Classifier
