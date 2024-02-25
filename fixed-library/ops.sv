@@ -519,6 +519,9 @@ module exp_higher_precision #(
 	end
 
 	// replace above always block with a lookup
+	// or linear interpolation
+
+	// create function for e^x but only between -1 and 1
 
 	// assign two_power = 32'b00000000000000000000000000000001 << q_minus_one; // 2 << q-1
 
