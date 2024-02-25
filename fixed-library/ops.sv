@@ -507,7 +507,20 @@ module exp_higher_precision #(
 		exp_r
 	);
 
-	assign two_power = 32'b00000000000000000000000000000001 << q_minus_one; // 2 << q-1
+	always @ (q_minus_one) begin
+		if (x[N-2:Q] == 15'b000000000000000) begin
+			two_power = 32'b00000000000000010000000000000000; // 1
+		end else if (x[N-1:Q] != 16'b0000000000000000 & q[N-1] == 1'b0) begin
+			two_power = 32'b00000000000000000000000000000001 << q; // 2 << q-1
+		end else begin
+			// needs to be negated after
+			// two_power = 32'b01000000000000000000000000000000 >> {1'b0, q_minus_one[N-2:0]}; // max >> q-1
+		end
+	end
+
+	// replace above always block with a lookup
+
+	// assign two_power = 32'b00000000000000000000000000000001 << q_minus_one; // 2 << q-1
 
 	mult multiplier4(
 		two_power,
