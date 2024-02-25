@@ -11,7 +11,7 @@ async def exp_test(dut):
     int_bits = 16
     frac_bits = 16
     lower_bound = -1 #-12
-    upper_bound = 1 #12
+    upper_bound = 2 #12
 
     for i in range(100):
         x = np.random.uniform(lower_bound, upper_bound)
@@ -27,8 +27,12 @@ async def exp_test(dut):
 
         actual = np.exp(x)
 
+        dut._log.info(dut.two_power.value)
+
         assert check_with_tolerance(
             actual,
             output_value, 
             1
-        ), f'x: {x} | expected: {actual} | result: {output_value} | binary: {dut.out.value}'
+        ), f'''x: {x} | expected: {actual} | result: {output_value} | binary: {dut.out.value}
+        | two: {dut.two_power.value} | x: {dut.x.value} 
+        | q_minus_one: {dut.q_minus_one.value} | q: {dut.q.value}''' 
