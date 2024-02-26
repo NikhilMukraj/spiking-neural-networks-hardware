@@ -64,6 +64,8 @@
   - [ ] Input values to feed forward version
   - [ ] Classifier
   - [ ] Fit to eeg signaling
+- [ ] Neurotransmission
+  - [ ] Neurotranmission module per row of neurons to handle entire row's calculations
 
 ## Hardware Documentation
 
