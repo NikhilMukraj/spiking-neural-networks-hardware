@@ -173,7 +173,31 @@ ${e}^{x}$
 - `[N-1:0] x` : Input fixed point term
 - `[N-1:0] out` : Output in fixed point form
 
-#### Limited Range Exponentiate
+#### Linear Piecewise
+
+```verilog
+module linear_piecewise #( parameter N = 32 ) ( input [N-1:0] x, input [N-1:0] m1, input [N-1:0] m2, input [N-1:0] b1, input [N-1:0] b2, input [N-1:0] split, output [N-1:0] out )
+````
+
+$
+f(x)=
+    \begin{cases}
+        {m}_{1}x + {b}_{1} & x < q\\
+        {m}_{2}x + {b}_{2} & x \geq q\\
+    \end{cases}
+$
+
+- (unfinished)
+- `[N-1:0] x` : Input to function in fixed point representation
+- `[N-1:0] m1` : Fixed point slope of first half
+- `[N-1:0] m2` : Fixed point slope of second half
+- `[N-1:0] b1` : Fixed point intercept of first half
+- `[N-1:0] b2` : Fixed point intercept of second
+- `[N-1:0] split` : Where to split piecewise in fixed point form ($q$)
+- `[N-1:0] out` : Output in fixed point form
+
+<!-- should be special case of linear piecewise>
+<!-- #### Limited Range Exponentiate
 
 ```verilog
 module exp #( parameter N = 32 )( input [N-1:0] x, output reg [N-1:0] out )
@@ -184,7 +208,7 @@ ${e}^{x}, x \in [-1, 0]$
 (should be calculated by linear interpolation)
 
 - `[N-1:0] x` : Input fixed point term
-- `[N-1:0] out` : Output in fixed point form
+- `[N-1:0] out` : Output in fixed point form -->
 
 #### Power
 
