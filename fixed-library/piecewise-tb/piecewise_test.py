@@ -21,8 +21,12 @@ async def piecewise_test(dut):
         b2 = np.random.uniform(lower_bound, upper_bound)
         split = np.random.uniform(lower_bound, upper_bound)
 
-        binary_x = decimal_to_fixed_point(x, int_bits, frac_bits)    
-        dut.x.value = BinaryValue(binary_x)
+        dut.x.value = BinaryValue(decimal_to_fixed_point(x, int_bits, frac_bits))
+        dut.m1.value = BinaryValue(decimal_to_fixed_point(m1, int_bits, frac_bits))
+        dut.m2.value = BinaryValue(decimal_to_fixed_point(m2, int_bits, frac_bits))
+        dut.b1.value = BinaryValue(decimal_to_fixed_point(b1, int_bits, frac_bits))
+        dut.b2.value = BinaryValue(decimal_to_fixed_point(b2, int_bits, frac_bits))
+        dut.split.value = BinaryValue(decimal_to_fixed_point(split, int_bits, frac_bits))
 
         await Timer(2, units="ns")
 
@@ -32,10 +36,11 @@ async def piecewise_test(dut):
 
         actual = m1 * x + b1 if x < split else m2 * x + b2
 
-        dut._log.info(dut.two_power.value)
-
         assert check_with_tolerance(
             actual,
             output_value, 
             1
-        ), f'''x: {x} | expected: {actual} | result: {output_value} | binary: {dut.out.value}''' 
+        ), f'''
+        x: {x} | split: {split} | {m1} * {x} + {b1} = {m1 * x + b1} | {m2} * {x} + {b2} = {m2 * x + b2}
+        | expected: {actual} | result: {output_value} | binary: {dut.out.value}
+        ''' 
