@@ -187,7 +187,7 @@ f(x)=
     \end{cases}
 $
 
-- (unfinished)
+- (can be refactored to use leess LUTs)
 - `[N-1:0] x` : Input to function in fixed point representation
 - `[N-1:0] m1` : Fixed point slope of first half
 - `[N-1:0] m2` : Fixed point slope of second half
