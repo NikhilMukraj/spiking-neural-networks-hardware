@@ -543,7 +543,7 @@ module linear_piecewise #(
 	input [N-1:0] b1,
 	input [N-1:0] b2,
 	input [N-1:0] split,
-	output [N-1:0] out
+	output reg [N-1:0] out
 );
 	reg [N-1:0] mx1, mx2, mxb1, mxb2;
 
@@ -575,11 +575,22 @@ module linear_piecewise #(
 		mxb2
 	);
 
+	reg eq, gt, lt;
+
+	// see if can be simplified
+	fixed_point_cmp cmp1(
+		x,
+		split,
+		eq,
+		gt,
+		lt
+	);
+
 	always @ (*) begin
-		if ($signed(x) < $signed(split)) begin
-			out = mxb1;
+		if (lt) begin
+			out <= mxb1;
 		end else begin
-			out = mxb2;
+			out <= mxb2;
 		end
 	end
 endmodule
