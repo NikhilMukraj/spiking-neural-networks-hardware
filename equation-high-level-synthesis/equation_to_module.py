@@ -51,6 +51,21 @@ if any(i not in string.ascii_letters + string.digits + '_' for i in module_name)
     print(f'{RED}All characters in "module_name" must be alphanumeric{NC}')
     sys.exit(1)
 
+piecewise_vars = ['m1', 'm2', 'b1', 'b2', 'split']
+valid_piecewise_vars = sum([i in args for i in piecewise_vars])
+
+if piecewise_vars == len(piecewise_vars):
+    do_piecewise = True
+elif piecewise_vars == 0:
+    do_piecewise = False
+else:
+    print(f'{RED}Must enter a value for "m1", "m2", "b1", "b2", and "split" if using piecewise{NC}')
+    sys.exit(1)
+
+if do_piecewise and any([type(args[i]) not in [float, int] for i in piecewise_vars]):
+    print(f'{RED}Value for "m1", "m2", "b1", "b2", and "split" must be "float" or "int" if using piecewise{NC}')
+    sys.exit(1)
+
 eq = args['equation']
 integer_bits = args['integer_bits']
 fractional_bits = args['fractional_bits']
@@ -76,11 +91,32 @@ def mult_module(n, a, b, c):
 
 div_module = lambda n, a, b, c: f'div divider{n} ( {a}, {b}, {c} );'
 
+def convert_decimals(string):
+    if re.match(r'^-*(\d|\.)+$', string):
+        return f"{N}'b{decimal_to_fixed_point(float(string), integer_bits, fractional_bits)}"
+    else: 
+        return string
+
 def exp_module(n, a, b, c):
     if a != 'e':
         raise ValueError('Can only use "e" as base exponent')
 
-    return f'exp exponentiate{n} ( {b}, {c} );' # negative exp option if a = neg_e
+    if not piecewise:
+        return f'exp exponentiate{n} ( {b}, {c} );' # negative exp option if a = neg_e
+    if piecewise:
+        m1 = convert_decimals(args['m1'])
+        b1 = convert_decimals(args['b1'])
+        m2 = convert_decimals(args['m2'])
+        b2 = convert_decimals(args['b2'])
+        split = convert_decimals(args['split'])
+
+        return f'linear_piecewise piecewise{n} ( {b}, {m1}, {m2}, {b1}, {b2}, {split}, {c} );'
+
+def abs_module(n, a, b, c):
+    if a != 'abs':
+        raise ValueError('Must specify "|" operator is "abs"')
+    
+    return f'abs absolute_value{n} ( {b}, {c} );'
 
 func_modules = {
     '+' : add_module, 
@@ -131,12 +167,6 @@ lowest = [i for i in parsed if i[0] == max_depth]
 
 modules = []
 intermediates = {}
-
-def convert_decimals(string):
-    if re.match(r'^-*(\d|\.)+$', string):
-        return f"{N}'b{decimal_to_fixed_point(float(string), integer_bits, fractional_bits)}"
-    else: 
-        return string
 
 def update_modules(modules, op, first, second, out, comment):
     module_to_use = func_modules[op]
