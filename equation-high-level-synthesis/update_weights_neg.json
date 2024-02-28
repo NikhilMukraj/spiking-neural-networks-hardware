@@ -3,9 +3,14 @@
     "equation": "(-1 * (a_minus * (e^(-1. * (abs|(t_pre - t_post)) / tau_minus))))",
     "variables": ["t_pre", "t_post", "a_minus", "tau_minus"],
     "out_variable": "weight_change",
+    "m1": 0.468078577392,
+    "m2": 3.45865886705,
+    "b1": 0.504709855169,
+    "b2": 2,
+    "split": -0.5,
     "integer_bits": 16,
     "fractional_bits": 16,
-    "lower_bound": -4,
-    "upper_bound": 4,
-    "tolerance": 1
+    "lower_bound": -1,
+    "upper_bound": 0,
+    "tolerance": 0.1
 }
