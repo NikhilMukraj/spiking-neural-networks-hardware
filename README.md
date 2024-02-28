@@ -187,7 +187,7 @@ f(x)=
     \end{cases}
 $
 
-- (can be refactored to use leess LUTs)
+- (can be refactored to use less LUTs)
 - `[N-1:0] x` : Input to function in fixed point representation
 - `[N-1:0] m1` : Fixed point slope of first half
 - `[N-1:0] m2` : Fixed point slope of second half
@@ -301,7 +301,8 @@ All operations must be enclosed by parentheses, `x` and `y` can either be variab
 - Multiplication : `(x*y)`
 - Division : `(x/y)`
 - Exponentation : `(e^x)`
-- (todo) Absolute value: `(abs|x)`
+  - To use a linear piecewise approximation of $e^x$, specify $m_1$, $m_2$, $b_1$, $b_2$, and `split` in arguments
+- Absolute value: `(abs|x)`
 - (todo) Power: `(x^n)` where `n` must be a constant
 
 ### Preprocessing
