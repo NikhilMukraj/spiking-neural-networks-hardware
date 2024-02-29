@@ -54,9 +54,9 @@ if any(i not in string.ascii_letters + string.digits + '_' for i in module_name)
 piecewise_vars = ['m1', 'm2', 'b1', 'b2', 'split']
 valid_piecewise_vars = sum([i in args for i in piecewise_vars])
 
-if piecewise_vars == len(piecewise_vars):
+if valid_piecewise_vars == len(piecewise_vars):
     do_piecewise = True
-elif piecewise_vars == 0:
+elif valid_piecewise_vars == 0:
     do_piecewise = False
 else:
     print(f'{RED}Must enter a value for "m1", "m2", "b1", "b2", and "split" if using piecewise{NC}')
@@ -91,9 +91,11 @@ def mult_module(n, a, b, c):
 
 div_module = lambda n, a, b, c: f'div divider{n} ( {a}, {b}, {c} );'
 
+num_to_binary_string = lambda string: f"{N}'b{decimal_to_fixed_point(float(string), integer_bits, fractional_bits)}"
+
 def convert_decimals(string):
     if re.match(r'^-*(\d|\.)+$', string):
-        return f"{N}'b{decimal_to_fixed_point(float(string), integer_bits, fractional_bits)}"
+        return num_to_binary_string(string)
     else: 
         return string
 
@@ -101,14 +103,14 @@ def exp_module(n, a, b, c):
     if a != 'e':
         raise ValueError('Can only use "e" as base exponent')
 
-    if not piecewise:
+    if not do_piecewise:
         return f'exp exponentiate{n} ( {b}, {c} );' # negative exp option if a = neg_e
-    if piecewise:
-        m1 = convert_decimals(args['m1'])
-        b1 = convert_decimals(args['b1'])
-        m2 = convert_decimals(args['m2'])
-        b2 = convert_decimals(args['b2'])
-        split = convert_decimals(args['split'])
+    if do_piecewise:
+        m1 = num_to_binary_string(args['m1'])
+        b1 = num_to_binary_string(args['b1'])
+        m2 = num_to_binary_string(args['m2'])
+        b2 = num_to_binary_string(args['b2'])
+        split = num_to_binary_string(args['split'])
 
         return f'linear_piecewise piecewise{n} ( {b}, {m1}, {m2}, {b1}, {b2}, {split}, {c} );'
 
@@ -123,6 +125,7 @@ func_modules = {
     '*' : mult_module,
     '/' : div_module,
     '^' : exp_module,
+    '|' : abs_module,
 }
 
 module_types = {
@@ -130,20 +133,23 @@ module_types = {
     '*' : 'mult',
     '/' : 'div',
     '^' : 'exp',
+    '|' : 'abs',
 }
 
 def module_type_length(modules, module_type):
     return len([i for i in modules if module_type in i]) + 1
 
 def get_operator(string):
-    if '+' in i:
+    if '+' in string:
         return '+'
-    elif '*' in i:
+    elif '*' in string:
         return '*'
-    elif '/' in i:
+    elif '/' in string:
         return '/'
-    elif '^' in i:
+    elif '^' in string:
         return '^'
+    elif '|' in string:
+        return '|'
 
     raise ValueError('Operator not found') 
 
@@ -191,11 +197,13 @@ for n in range(max_depth-1, -1, -1):
         intermediates[i] = f'term{len(intermediates)+1}'
 
         for _, key in parsed:
+            print('key:', key, '| i:', i)
             if key in i and i != key:
                 i = i.replace(key, intermediates[key])
 
-        op = get_operator(key)
+        op = get_operator(i)
 
+        print(i.split(op), op, key)
         first, second = i.split(op)
         first = first.strip('()')
         second = second.strip('()')
@@ -225,6 +233,8 @@ generate_seting_values = '\n\t'.join(f'dut.{i}.value = BinaryValue(binary_{i})' 
 
 if any('exp' in i for i in modules):
     eq = re.sub(r'e\W*\^', 'np.exp', eq)
+if any('abs' in i for i in modules):
+    eq = re.sub(r'abs\W*\^', 'np.abs', eq)
 
 test_file = f'''import cocotb
 from cocotb.triggers import Timer
