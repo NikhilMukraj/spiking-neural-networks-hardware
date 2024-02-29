@@ -432,6 +432,67 @@ module exp #(
 	end
 endmodule
 
+module linear_piecewise #(
+	parameter N = 32
+) (
+	input [N-1:0] x,
+	input [N-1:0] m1,
+	input [N-1:0] m2,
+	input [N-1:0] b1,
+	input [N-1:0] b2,
+	input [N-1:0] split,
+	output reg [N-1:0] out
+);
+	reg [N-1:0] mx1, mx2, mxb1, mxb2;
+
+	// m1 * x
+	mult multiplier1(
+		m1,
+		x,
+		mx1
+	);
+
+	// m1 * x + b1
+	add adder1(
+		mx1,
+		b1,
+		mxb1
+	);
+
+	// m2 * x
+	mult multiplier2(
+		m2,
+		x,
+		mx2
+	);
+
+	// m2 * x + b1	
+	add adder2(
+		mx2,
+		b2,
+		mxb2
+	);
+
+	reg eq, gt, lt;
+
+	// see if can be simplified
+	fixed_point_cmp cmp1(
+		x,
+		split,
+		eq,
+		gt,
+		lt
+	);
+
+	always @ (*) begin
+		if (lt) begin
+			out <= mxb1;
+		end else begin
+			out <= mxb2;
+		end
+	end
+endmodule
+
 module fixed_point_cmp #(
     parameter N = 32
 ) (
