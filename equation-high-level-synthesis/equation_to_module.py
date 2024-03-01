@@ -66,6 +66,14 @@ if do_piecewise and any([type(args[i]) not in [float, int] for i in piecewise_va
     print(f'{RED}Value for "m1", "m2", "b1", "b2", and "split" must be "float" or "int" if using piecewise{NC}')
     sys.exit(1)
 
+if 'generate_floats' in args and type(args['generate_floats']) == bool:
+    generation_type = 'uniform' if args['generate_floats'] else 'randint'
+elif 'generate_floats' in args and type(args['generate_floats']) != bool:
+    print(f'{RED}"generate_floats" argument must be a boolean{NC}')
+    sys.exit(1)
+else:
+    generation_type = 'randint'
+
 eq = args['equation']
 integer_bits = args['integer_bits']
 fractional_bits = args['fractional_bits']
@@ -227,14 +235,14 @@ modules_string = '\n\t'.join(modules)
 verilog_file = include_string + module_header + intermediates_string + modules_string + '\nendmodule\n'
 print(verilog_file)
 
-generate_random_vars = '\n\t'.join(f'{i} = np.random.randint(lower_bound, upper_bound)' for i in variables)
+generate_random_vars = '\n\t'.join(f'{i} = np.random.{generation_type}(lower_bound, upper_bound)' for i in variables)
 generate_binary_values = '\n\t'.join(f'binary_{i} = decimal_to_fixed_point({i}, int_bits, frac_bits)' for i in variables)
-generate_seting_values = '\n\t'.join(f'dut.{i}.value = BinaryValue(binary_{i})' for i in variables)
+generate_setting_values = '\n\t'.join(f'dut.{i}.value = BinaryValue(binary_{i})' for i in variables)
 
-if any('exp' in i for i in modules):
+if any('exp' in i or 'linear_piecewise' in i for i in modules):
     eq = re.sub(r'e\W*\^', 'np.exp', eq)
 if any('abs' in i for i in modules):
-    eq = re.sub(r'abs\W*\^', 'np.abs', eq)
+    eq = re.sub(r'abs\W*\|', 'np.abs', eq)
 
 test_file = f'''import cocotb
 from cocotb.triggers import Timer
@@ -255,7 +263,7 @@ async def test(dut):
         {generate_random_vars}
 
         {generate_binary_values}    
-        {generate_seting_values}
+        {generate_setting_values}
 
         await Timer(2, units="ns")
 
