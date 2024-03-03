@@ -55,6 +55,8 @@
     - [ ] Send other variables (neurotransmission values, `a`, `b`, `c`, and `d` values)
   - [ ] Feedforward network
 - [ ] STDP
+  - [ ] Internals of update weight functionality should be fit to specific $\tau_{-}$ and $\tau_{+}$ values to linear piecewise functions
+    - In this scheme the linear piecewise function parameters should take the place of $\tau_{-}$ and $\tau_{+}$
   - [ ] Since spikes are not likely to occur at the same time, spikes can be handled by a single module being fed the spike times
   - [ ] There should be an iteration counter, every time a spike occurs, the time is equal to the iteration counter
     - [ ] Iteration counter is 15 bits + sign bit, when inputting spike time into any equation it is shifted to -1 to 1 range in a 32 bit number
