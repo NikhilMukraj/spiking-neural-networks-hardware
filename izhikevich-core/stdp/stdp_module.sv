@@ -16,8 +16,18 @@ module stdp #(
     input [N-1:0] tau_minus,
     output [N-1:0] dw
 );
-    reg [N-1:0] pos_change, neg_change;
+    reg [N-1:0] pos_change, neg_change, inverted_m1, inverted_m2;
     reg eq, gt, lt;
+
+    negator negator1(
+        m1,
+        inverted_m1
+    );
+
+    negator negator2(
+        m2,
+        inverted_m2
+    );
 
     fixed_point_cmp fcmp(
         t_change,
@@ -30,13 +40,21 @@ module stdp #(
     update_weight_neg update_weight1(
         t_change,
         a_minus,
-        tau_minus,
+        tau_minus, // tau minus should be removed
+        m1,
+        m2,
+        b1,
+        b2,        
         neg_change
     );
     update_weight_pos update_weight2(
         t_change,
         a_plus,
-        tau_plus,
+        tau_plus, // tau plus should be removed
+        inverted_m1,
+        inverted_m2,
+        b1,
+        b2,
         pos_change
     );
 
