@@ -1,5 +1,11 @@
 # Spiking Neural Networks Hardware
 
+## Overview
+
+- Uses Izhikevich integrate and fire model to simulate neurons
+  - [Interactive simulation of Izhikevich core](https://digitaljs.tilk.eu/#891a434a0269d8e4fd26f32404c611812ac38307fe5bd61336abb40b0e96dc8f)
+- (todo...)
+
 ## Requirements
 
 - Requires WSL or Ubuntu Linux
