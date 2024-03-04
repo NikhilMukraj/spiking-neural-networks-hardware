@@ -72,7 +72,7 @@ module negator #(
 	output logic signed [N-1:0] out
 );	
 	always @ (*) begin
-		if (a == {(N-1){1'b0}}) begin
+		if (a == {N{1'b0}}) begin
 			out = a;
 		end else begin
 			out = {~a[N-1], a[N-2:0]};

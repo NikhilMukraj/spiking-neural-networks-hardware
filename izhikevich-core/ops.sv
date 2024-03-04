@@ -19,8 +19,8 @@ module div #(
 endmodule
 
 module add #( // https://github.com/freecores/verilog_fixed_point_math_library/blob/master/qadd.v
-	parameter N = 32,
-	parameter Q = 16
+	parameter Q = 16,
+	parameter N = 32
 )(
     input [N-1:0] a,
     input [N-1:0] b,
@@ -32,13 +32,12 @@ module add #( // https://github.com/freecores/verilog_fixed_point_math_library/b
     assign c = res;
 
     always @(a,b) begin
-        if(a[N-1] == b[N-1]) begin						
+        if (a[N-1] == b[N-1]) begin						
             res[N-2:0] = a[N-2:0] + b[N-2:0];		
             res[N-1] = a[N-1];							                                    
         end												
-        
         else if(a[N-1] == 0 && b[N-1] == 1) begin		
-            if( a[N-2:0] > b[N-2:0] ) begin					
+            if ( a[N-2:0] > b[N-2:0] ) begin					
                 res[N-2:0] = a[N-2:0] - b[N-2:0];			
                 res[N-1] = 0;										
             end
@@ -51,7 +50,7 @@ module add #( // https://github.com/freecores/verilog_fixed_point_math_library/b
             end
         end
         else begin												
-            if( a[N-2:0] > b[N-2:0] ) begin					
+            if ( a[N-2:0] > b[N-2:0] ) begin					
                 res[N-2:0] = a[N-2:0] - b[N-2:0];			
                 if (res[N-2:0] == 0)
                     res[N-1] = 0;										
@@ -73,7 +72,7 @@ module negator #(
 	output logic signed [N-1:0] out
 );	
 	always @ (*) begin
-		if (a == {(N-1){1'b0}}) begin
+		if (a == {N{1'b0}}) begin
 			out = a;
 		end else begin
 			out = {~a[N-1], a[N-2:0]};
@@ -114,14 +113,13 @@ endmodule
 module reciprocal #(
 	parameter N = 32,
 	parameter Q = 16
-)(
+) (
 	input [N-1:0] a,
 	output reg [N-1:0] out
 );
 	reg [N-1:0] estimate;
 	reg [4:0] msb;
 	reg [5:0] signed_msb;
-
 	always @ (a) begin
 		msb = 5'b00000;
 	
@@ -356,7 +354,7 @@ endmodule
 
 module exp #(
 	parameter N = 32
-)(
+) (
 	input [N-1:0] x,
 	output reg [N-1:0] out
 );
@@ -430,6 +428,110 @@ module exp #(
 			out = term5;
 		end
 	end
+endmodule
+
+module exp_higher_precision #(
+	parameter N = 32,
+	parameter Q = 16
+) (
+	input [N-1:0] x,
+	output reg [N-1:0] out
+);
+	reg [N-1:0] q_intermediate, q, q_minus_one, two_power;
+	reg [N-1:0] r_intermediate, neg_r_intermediate, r, m_x, exp_r;
+
+	// x / ln(2)
+	mult multiplier1(
+		x, 
+		32'b00000000000000010111000101010100, // 1 / ln(2),
+		q_intermediate
+	);
+
+	// q = floor(x / ln(2))
+	assign q = {x[N-1:Q], 16'b0}; // gets floor
+
+	// q - 1
+	add adder1(
+		q, 
+		32'b10000000000000010000000000000000, // -1
+		q_minus_one
+	);
+
+	// 2^q
+	// assign out 32'b00000000000000010000000000000000 << q_minus_one;
+
+	// r = x - q * ln(2)
+
+	// q * ln(2)
+	mult multiplier2(
+		q,
+		32'b00000000000000001011000101110010, // ln(2)
+		r_intermediate
+	);
+
+	// - q * ln(2)
+	negator negate(
+		r_intermediate,
+		neg_r_intermediate
+	);
+
+	// r = x - q * ln(2)
+	add adder2(
+		x, 
+		neg_r_intermediate,
+		r
+	);
+
+	// e^r approximated linearly, y = 1.71828182846 * x + 1
+	// if r is negative then y = 0.632120558829 * x + 1
+
+	reg [N-1:0] m;
+
+	always @ (r) begin
+		if (r[N-1] == 1'b0) begin
+			m = 32'b00000000000000011011011111100001; // 1.71828182846
+		end else begin
+		m = 32'b00000000000000001010000111010010; // 0.632120558829
+		end
+	end
+
+	mult multiplier3(
+		m, 
+		r,
+		m_x
+	);
+
+	add adder3(
+		32'b00000000000000010000000000000000, // 1
+		m_x,
+		exp_r
+	);
+
+	always @ (q_minus_one) begin
+		if (x[N-2:Q] == 15'b000000000000000) begin
+			two_power = 32'b00000000000000010000000000000000; // 1
+		end else if (x[N-1:Q] != 16'b0000000000000000 & q[N-1] == 1'b0) begin
+			two_power = 32'b00000000000000000000000000000001 << q; // 2 << q-1
+		end else begin
+			// needs to be negated after
+			// two_power = 32'b01000000000000000000000000000000 >> {1'b0, q_minus_one[N-2:0]}; // max >> q-1
+		end
+	end
+
+	// replace above always block with a lookup
+	// or linear interpolation
+
+	// create function for e^x but only between -1 and 1
+
+	// assign two_power = 32'b00000000000000000000000000000001 << q_minus_one; // 2 << q-1
+
+	mult multiplier4(
+		two_power,
+		exp_r,
+		out
+	);
+
+	// should be tested between -15 and 15
 endmodule
 
 module linear_piecewise #(
