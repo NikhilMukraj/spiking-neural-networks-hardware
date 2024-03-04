@@ -3,8 +3,9 @@
 ## Overview
 
 - Uses Izhikevich integrate and fire model to simulate neurons
-  - [Interactive simulation of Izhikevich core](https://digitaljs.tilk.eu/#891a434a0269d8e4fd26f32404c611812ac38307fe5bd61336abb40b0e96dc8f)
+  - [Interactive simulation of Izhikevich core](https://digitaljs.tilk.eu/#151d9328ba8167cb317f220abd64ed396b5fa4aeef076a222a88ef91dcde7637)
 - (todo...)
+- (describe how everything works)
 
 ## Requirements
 
