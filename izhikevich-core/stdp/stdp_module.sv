@@ -10,10 +10,14 @@ module stdp #(
     input clk,
     input apply,
     input [N-1:0] t_change,
-    input [N-1:0] a_plus,
-    input [N-1:0] a_minus,
-    input [N-1:0] tau_plus,
-    input [N-1:0] tau_minus,
+    // input [N-1:0] a_plus,
+    // input [N-1:0] a_minus,
+    // input [N-1:0] tau_plus,
+    // input [N-1:0] tau_minus,
+    input [N-1:0] m1,
+    input [N-1:0] m2,
+    input [N-1:0] b1,
+    input [N-1:0] m2,
     output [N-1:0] dw
 );
     reg [N-1:0] pos_change, neg_change, inverted_m1, inverted_m2;
@@ -37,10 +41,12 @@ module stdp #(
         lt
     );
 
+    // a and tau values should be prefit for in the linear piecewise
+
     update_weight_neg update_weight1(
         t_change,
-        a_minus,
-        tau_minus, // tau minus should be removed
+        // a_minus,
+        // tau_minus,
         m1,
         m2,
         b1,
@@ -49,8 +55,8 @@ module stdp #(
     );
     update_weight_pos update_weight2(
         t_change,
-        a_plus,
-        tau_plus, // tau plus should be removed
+        // a_plus,
+        // tau_plus,
         inverted_m1,
         inverted_m2,
         b1,
