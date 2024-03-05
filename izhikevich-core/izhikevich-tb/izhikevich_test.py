@@ -3,7 +3,6 @@ from cocotb.triggers import RisingEdge, Timer
 from cocotb.binary import BinaryValue
 from fixed_point_models import fixed_point_to_decimal, decimal_to_fixed_point
 from fixed_point_models import check_with_tolerance
-import numpy as np
 import os
 
 
