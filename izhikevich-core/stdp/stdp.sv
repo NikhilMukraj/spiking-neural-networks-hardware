@@ -1,6 +1,7 @@
 `include "../ops.sv"
-`include "update_weight_neg.sv"
-`includee "update_weight_pos.sv"
+// `include "update_weight_neg.sv"
+// `include "update_weight_pos.sv"
+`include "update_weight.sv"
 
 
 module stdp #(
@@ -20,7 +21,7 @@ module stdp #(
     input [N-1:0] m2,
     output [N-1:0] dw
 );
-    reg [N-1:0] pos_change, neg_change, inverted_m1, inverted_m2;
+    reg [N-1:0] pos_change, neg_change, neg_change_intermediate, inverted_m1, inverted_m2;
     reg eq, gt, lt;
 
     negator negator1(
@@ -43,25 +44,47 @@ module stdp #(
 
     // a and tau values should be prefit for in the linear piecewise
 
-    update_weight_neg update_weight1(
+    // update_weight_neg update_weight1(
+    //     t_change,
+    //     // a_minus,
+    //     // tau_minus,
+    //     m1,
+    //     m2,
+    //     b1,
+    //     b2,        
+    //     neg_change
+    // );
+    // update_weight_pos update_weight2(
+    //     t_change,
+    //     // a_plus,
+    //     // tau_plus,
+    //     inverted_m1,
+    //     inverted_m2,
+    //     b1,
+    //     b2,
+    //     pos_change
+    // );
+
+    update_weight update_weight1(
         t_change,
-        // a_minus,
-        // tau_minus,
         m1,
         m2,
         b1,
-        b2,        
-        neg_change
+        b2,
+        neg_change_intermediate
     );
-    update_weight_pos update_weight2(
+    update_weight update_weight2(
         t_change,
-        // a_plus,
-        // tau_plus,
         inverted_m1,
         inverted_m2,
         b1,
         b2,
         pos_change
+    );
+
+    negator negator3(
+        neg_change_intermediate,
+        neg_change
     );
 
     always @ (posedge clk) begin
