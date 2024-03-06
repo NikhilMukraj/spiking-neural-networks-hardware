@@ -1,7 +1,7 @@
-`include "../ops.sv"
+`include "./../../ops.sv"
 // `include "update_weight_neg.sv"
 // `include "update_weight_pos.sv"
-`include "update_weight.sv"
+`include "./../update_weight.sv"
 
 
 module stdp #(
@@ -18,20 +18,20 @@ module stdp #(
     input [N-1:0] m1,
     input [N-1:0] m2,
     input [N-1:0] b1,
-    input [N-1:0] m2,
-    output [N-1:0] dw
+    input [N-1:0] b2,
+    output reg [N-1:0] dw
 );
-    reg [N-1:0] pos_change, neg_change, neg_change_intermediate, inverted_m1, inverted_m2;
+    reg [N-1:0] pos_change, neg_change, neg_change_intermediate, inverted_b1, inverted_b2;
     reg eq, gt, lt;
 
     negator negator1(
-        m1,
-        inverted_m1
+        b1,
+        inverted_b1
     );
 
     negator negator2(
-        m2,
-        inverted_m2
+        b2,
+        inverted_b2
     );
 
     fixed_point_cmp fcmp(
@@ -44,41 +44,22 @@ module stdp #(
 
     // a and tau values should be prefit for in the linear piecewise
 
-    // update_weight_neg update_weight1(
-    //     t_change,
-    //     // a_minus,
-    //     // tau_minus,
-    //     m1,
-    //     m2,
-    //     b1,
-    //     b2,        
-    //     neg_change
-    // );
-    // update_weight_pos update_weight2(
-    //     t_change,
-    //     // a_plus,
-    //     // tau_plus,
-    //     inverted_m1,
-    //     inverted_m2,
-    //     b1,
-    //     b2,
-    //     pos_change
-    // );
-
     update_weight update_weight1(
         t_change,
         m1,
         m2,
         b1,
         b2,
+        32'b10000000000000001000000000000000, // -0.5
         neg_change_intermediate
     );
     update_weight update_weight2(
         t_change,
-        inverted_m1,
-        inverted_m2,
+        m1,
+        m2,
         b1,
         b2,
+        32'b10000000000000001000000000000000, // -0.5
         pos_change
     );
 
@@ -87,11 +68,13 @@ module stdp #(
         neg_change
     );
 
-    always @ (posedge clk) begin
-        if (lt & apply) begin
+    always @ (*) begin
+        if (lt & !eq & apply) begin
             dw <= neg_change;
-        end else if (!lt & apply) begin
-            dw <= pos_change
-        end else
+        end else if (!lt & !eq & apply) begin
+            dw <= pos_change;
+        end //else if (!lt & eq & apply) begin
+            //dw <= 32'b00000000000000000000000000000000; // 0, return 0 if no difference in spike times
+        //end
     end
 endmodule
