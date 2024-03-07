@@ -19,6 +19,7 @@ module izhikevich_core #(
 	input [N-1:0] d,
     input apply,
     input rst,
+    // output reg is_spiking,
 	output reg [N-1:0] voltage,
     output reg [N-1:0] w
 );
@@ -49,9 +50,11 @@ module izhikevich_core #(
             if ($signed(voltage) > $signed(v_th)) begin
                 voltage <= c;
                 w <= w_at_th;
+                // is_spiking <= 1'b1;
             end else begin
                 voltage <= new_voltage;
                 w <= new_w;
+                // is_spiking <= 1'b0;
             end
         end
     end
