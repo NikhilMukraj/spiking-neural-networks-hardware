@@ -69,12 +69,12 @@ module stdp #(
     );
 
     always @ (*) begin
-        if (lt & !eq & apply) begin
+        if (gt & !eq & apply) begin
             dw <= neg_change;
-        end else if (!lt & !eq & apply) begin
+        end else if (!gt & !eq & apply) begin
             dw <= pos_change;
-        end //else if (!lt & eq & apply) begin
-            //dw <= 32'b00000000000000000000000000000000; // 0, return 0 if no difference in spike times
-        //end
+        end else if (!gt & eq & apply) begin
+            dw <= 32'b00000000000000000000000000000000; // 0, return 0 if no difference in spike times
+        end
     end
 endmodule
