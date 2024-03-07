@@ -44,9 +44,10 @@
   - [ ] High precision $e^x$
   - [ ] Limited range $e^x$
   - [ ] Preprocessing of equation
-- [x] Izhikevich core
+- [ ] Izhikevich core
   - [x] Voltage change
   - [x] Adaptive value change
+  - [ ] Is spiking indicator
 - [ ] Hodgkin huxley core
 - [ ] RAM interface
 - [ ] Communication protocol
@@ -70,6 +71,7 @@
     - [ ] Iteration counter is 15 bits + sign bit, when inputting spike time into any equation it is shifted to -1 to 1 range in a 32 bit number
     - [ ] If the iteration counter resets, any spike that has occured before the reset is set to the spike time - maximum integer value
     - [ ] If the spike is still negative, it is set to the maximum negative value
+    - [ ] Coupled test
 - [ ] R-STDP
   - [ ] Input values to feed forward version
   - [ ] Classifier
