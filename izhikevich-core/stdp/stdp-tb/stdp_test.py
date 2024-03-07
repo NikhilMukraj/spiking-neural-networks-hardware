@@ -38,7 +38,7 @@ correct_precision = lambda x, int_bits, frac_bits: fixed_point_to_decimal(
 to_binary = lambda x, int_bits, frac_bits: BinaryValue(decimal_to_fixed_point(x, int_bits, frac_bits))
 
 def get_weight(t_change, a_plus, a_minus, tau_plus, tau_minus):
-    if t_change > 0:
+    if t_change < 0:
         return a_plus * np.exp(np.abs(t_change * tau_plus) * -1)
     else:
         return -1 * a_minus * np.exp(np.abs(t_change * tau_minus) * -1)
