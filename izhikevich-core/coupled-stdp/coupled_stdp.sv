@@ -27,6 +27,8 @@ module top #(
 )(
     input clk,
     input apply,
+    input rst,
+    input [N-1:0] i, // input current not voltage
     input [N-1:0] v_init,
     input [N-1:0] v_th,
     input [N-1:0] w_init,
@@ -35,6 +37,7 @@ module top #(
     input [N-1:0] c,
     input [N-1:0] d,
     input [N-1:0] dt,
+    input [N-1:0] step,
     input [N-1:0] weight_init,
     input [N-1:0] m1,
     input [N-1:0] m2,
