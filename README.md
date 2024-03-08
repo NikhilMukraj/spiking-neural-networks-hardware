@@ -56,6 +56,7 @@
   - [ ] Distributed communication
 - [ ] Izhikevich matrix
   - [ ] Interwoven matrix
+    - Potentially could refactor with asynchronous execution of neurons and crossbar mechanisms in mind
     - [ ] Save each output of neuron to memory
     - [ ] Calculate inputs for each neuron by row from memory and save to hardware matrix
     - [ ] Run iteration of lattice
