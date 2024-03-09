@@ -17,10 +17,8 @@ async def generate_clock(dut, timesteps):
 async def test(dut):
     timesteps = 1000
 
-    try:
-        os.remove('output.log')
-    except OSError:
-        pass
+    with open('output.log', 'w+') as f:
+        f.write('voltage,w,is_spiking\n')
 
     await cocotb.start(generate_clock(dut, timesteps * 2 + 20))
     
@@ -85,11 +83,11 @@ async def test(dut):
         with open('output.log', 'a+') as f:
             output_voltage = fixed_point_to_decimal(str(dut.voltage.value), int_bits, frac_bits)
             output_w = fixed_point_to_decimal(str(dut.w.value), int_bits, frac_bits)
-            f.write(f'{output_voltage}, {output_w}\n')
+            f.write(f'{output_voltage}, {output_w}, {dut.is_spiking.value}\n')
 
         apply = 0
         dut.apply.value = BinaryValue(str(apply))
         # dut._log.info(f'apply: {dut.apply.value}')
         await RisingEdge(dut.clk) 
 
-        dut._log.info(f'timestep: {current_step}')
+        # dut._log.info(f'timestep: {current_step}')
