@@ -55,6 +55,7 @@ module top #(
     // generate two izhikevich neurons
     // iterate at each clk and apply signal
     // if they are spiking do stdp
+    // spike time is recorded as iterator current timestep - 1
 
     // use current as input
     // izhikevich neurons need to be modified to output dv change
