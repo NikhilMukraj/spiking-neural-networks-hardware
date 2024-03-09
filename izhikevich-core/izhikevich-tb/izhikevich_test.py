@@ -59,26 +59,7 @@ async def test(dut):
     for current_step in range(timesteps):
         apply = 1
         dut.apply.value = BinaryValue(str(apply))
-        # dut._log.info(f'apply: {dut.apply.value}')
         await RisingEdge(dut.clk) 
-
-        # output_voltage = fixed_point_to_decimal(str(dut.voltage.value), int_bits, frac_bits)
-        # output_w = fixed_point_to_decimal(str(dut.w.value), int_bits, frac_bits)
-        # output_dv = fixed_point_to_decimal(str(dut.dv.value), int_bits, frac_bits)
-        # output_dw = fixed_point_to_decimal(str(dut.dw.value), int_bits, frac_bits)
-        # output_new_voltage = fixed_point_to_decimal(str(dut.new_voltage.value), int_bits, frac_bits)
-        # output_new_w = fixed_point_to_decimal(str(dut.new_w.value), int_bits, frac_bits)
-        # rst_value = str(dut.rst.value)
-
-        # dut._log.info(f'voltage: {output_voltage}')
-        # dut._log.info(f'w: {output_w}')
-        # dut._log.info(f'dv: {output_dv}')
-        # dut._log.info(f'dw: {output_dw}')
-        # dut._log.info(f'new v: {output_new_voltage}')
-        # dut._log.info(f'new w: {output_new_w}')
-        # dut._log.info(f'rst value: {rst_value}')
-        # dut._log.info(f'eq: {dut.eq.value}')
-        # dut._log.info(f'gt: {dut.gt.value}')
 
         with open('output.log', 'a+') as f:
             output_voltage = fixed_point_to_decimal(str(dut.voltage.value), int_bits, frac_bits)
@@ -87,7 +68,4 @@ async def test(dut):
 
         apply = 0
         dut.apply.value = BinaryValue(str(apply))
-        # dut._log.info(f'apply: {dut.apply.value}')
         await RisingEdge(dut.clk) 
-
-        # dut._log.info(f'timestep: {current_step}')
