@@ -1,8 +1,10 @@
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
-with open('output.log', 'r') as f:
-    contents = f.read()
+df = pd.read_csv('output.log')
+spike_times = [(i[0]-1, df['voltage'][i[0]-1]) for i in df.iterrows() if i[1]['is_spiking'] == 1]
 
-plt.plot([float(i.split(',')[0].strip()) for i in contents.split('\n') if i != ''])
+plt.plot(df['voltage'])
+plt.scatter(*zip(*spike_times))
 plt.show()
