@@ -1,5 +1,6 @@
 numpy==1.24.1
 matplotlib==3.5.1
+pandas==1.5.3
 cocotb==1.8.1
 toml==0.10.2
 ./fixed-library/fixed-point-models
