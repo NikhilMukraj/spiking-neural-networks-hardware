@@ -42,15 +42,26 @@
   - [x] Division
   - [x] Absolute value
   - [ ] High precision $e^x$
-  - [ ] Limited range $e^x$
+  - [X] Limited range $e^x$
   - [ ] Preprocessing of equation
+- [ ] Operations verification on chip
+  - [ ] Addition/Subtraction
+  - [ ] Multiplication
+  - [ ] Negation
+  - [ ] Reciprocal
+  - [ ] Division
+  - [ ] Absolute value
+  - [ ] Limited range $e^x$
 - [ ] Izhikevich core
   - [x] Voltage change
   - [x] Adaptive value change
   - [ ] Is spiking indicator
+  - [ ] Verification on chip
 - [ ] Hodgkin huxley core
 - [ ] RAM interface
 - [ ] Communication protocol
+  - [ ] SPI
+    - [ ] On chip verification
   - [ ] RPGA side communication
   - [ ] Raspberry Pi side communication
   - [ ] Distributed communication
