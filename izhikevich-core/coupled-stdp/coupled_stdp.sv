@@ -58,6 +58,7 @@ module top #(
     // spike time is recorded as iterator current timestep - 1
 
     // use current as input
+    // use last dv for current
     // izhikevich neurons need to be modified to output dv change
     // eventually try using multiple automatically generated neurons as input
     // potentially could use sign
