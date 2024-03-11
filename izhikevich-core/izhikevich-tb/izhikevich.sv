@@ -21,7 +21,8 @@ module izhikevich_core #(
     input rst,
     output reg is_spiking,
 	output reg [N-1:0] voltage,
-    output reg [N-1:0] w
+    output reg [N-1:0] w,
+    output reg [N-1:0] last_dv
 );
     reg eq, gt, lt, apply_edge;
     reg [N-1:0] dv, dw, new_voltage, new_w, w_at_th;
@@ -45,6 +46,7 @@ module izhikevich_core #(
             voltage = v_init;
             w = w_init;
             is_spiking <= 1'b0;
+            last_dv <= 32'b00000000000000000000000000000000; // 0
         end
 
         if (apply) begin
@@ -52,10 +54,12 @@ module izhikevich_core #(
                 voltage <= c;
                 w <= w_at_th;
                 is_spiking <= 1'b1;
+                last_dv <= dv;
             end else begin
                 voltage <= new_voltage;
                 w <= new_w;
                 is_spiking <= 1'b0;
+                last_dv <= dv;
             end
         end
     end
