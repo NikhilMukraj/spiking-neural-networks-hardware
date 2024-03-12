@@ -14,11 +14,13 @@ module voltage_to_current #(
     parameter Q=16
 )(
     input [N-1:0] dv,
-    input [N-1:0] dt,
+    input [N-1:0] dt_reciprocal,
     input [N-1:0] cm_reciprocal,
     output reg [N-1:0] current
 );
-    // multiple by reciprocal instead of dividing
+    reg [N-1:0] term1;
+    mult multiplier1(dv, dt_reciprocal, term1);
+    mult multiplier2(term1, cm_reciprocal, current);
 endmodule
 
 module top #(
