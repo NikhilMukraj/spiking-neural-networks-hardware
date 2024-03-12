@@ -76,7 +76,7 @@
   - [ ] Feedforward network
 - [ ] Fast Fourier transform
   - [ ] On chip comparison of spectral analyses
-    - This can either be done by finding the most prominent frequency and comparing, binning the analyses and comparing with mean squared error, or approximating the earth-moving-distance
+    - This can either be done by finding the most prominent frequency and comparing, binning the analyses and comparing with mean squared error, or approximating the earth-moving-distance (or calculate by solving transport problem)
 - [ ] STDP
   - [ ] Internals of update weight functionality should be fit to specific $\tau_{-}$ and $\tau_{+}$ values to linear piecewise functions
     - [x] In this scheme the linear piecewise function parameters should take the place of $\tau_{-}$ and $\tau_{+}$ as well as $a_{-}$ and $a_{+}$
