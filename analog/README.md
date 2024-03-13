@@ -15,8 +15,8 @@
 - [ ] Digital to analog conversions
 - [ ] LM324N testing
   - [ ] Test simple addition
-    - Power supply can just use arduino for now
-    - (1k and 10k resistors used for $R_a$ and $R_b$, everything else used 1k)
+    - Power supply can just use Arduino for now
+    - (10k and 1k resistors used for $R_a$ and $R_b$, everything else used 1k)
 - [ ] AD633 testing
 - [ ] Scaling Izhikevich equations between 3 volt range
 - [ ] Linking adders and multipliers together
