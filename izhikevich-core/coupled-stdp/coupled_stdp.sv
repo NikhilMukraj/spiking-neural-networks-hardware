@@ -70,6 +70,8 @@ module top #(
     // eventually try using multiple automatically generated neurons as input
     // potentially could use sign
 
+    // STDP SHOULD ONLY OCCUR ON STDP ENABLED SIGNAL
+    // allows for testing of coupled with and without stdp
 
     // beginning of coupled neurons
 
