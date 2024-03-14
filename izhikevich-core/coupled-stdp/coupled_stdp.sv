@@ -1,3 +1,5 @@
+`include "../izhikevich-tb/izhikevich.sv"
+
 module iterator #(
     parameter N=32,
     parameter Q=16
@@ -39,6 +41,8 @@ module top #(
     input [N-1:0] c,
     input [N-1:0] d,
     input [N-1:0] dt,
+    input [N-1:0] dt_reciprocal,
+    input [N-1:0] cm_reciprocal,
     input [N-1:0] step,
     input [N-1:0] weight_init,
     input [N-1:0] m1,
@@ -64,4 +68,56 @@ module top #(
     // izhikevich neurons need to be modified to output dv change
     // eventually try using multiple automatically generated neurons as input
     // potentially could use sign
+
+
+    // beginning of coupled neurons
+
+    reg is_spiking1, is_spiking2;
+    reg [N-1:0] voltage1, w1, last_dv1, voltage2, w2, last_dv2;
+    reg [N-1:0] input_current;
+
+    izhikevich_core neuron1(
+        clk,
+        i,
+        v_init,
+        w_init,
+        v_th,
+        step,
+        a,
+        b,
+        c,
+        d,
+        apply,
+        rst,
+        is_spiking1,
+        voltage1,
+        w1,
+        last_dv1
+    );
+
+    voltage_to_current converter1(
+        last_dv1,
+        dt_reciprocal,
+        cm_reciprocal,
+        input_current
+    );
+
+    izhikevich_core neuron1(
+        clk,
+        input_current,
+        v_init,
+        w_init,
+        v_th,
+        step,
+        a,
+        b,
+        c,
+        d,
+        apply,
+        rst,
+        is_spiking2,
+        voltage2,
+        w2,
+        last_dv2
+    );
 endmodule
