@@ -42,7 +42,7 @@
   - [x] Division
   - [x] Absolute value
   - [ ] High precision $e^x$
-  - [X] Limited range $e^x$
+  - [x] Limited range $e^x$
   - [ ] Preprocessing of equation
 - [ ] Operations verification on chip
   - [ ] Addition/Subtraction
@@ -55,8 +55,10 @@
 - [ ] Izhikevich core
   - [x] Voltage change
   - [x] Adaptive value change
-  - [ ] Is spiking indicator
+  - [x] Is spiking indicator
   - [ ] Verification on chip
+    - [ ] Preliminary core testing
+    - [ ] Full plotting
 - [ ] Hodgkin huxley core
 - [ ] RAM interface
 - [ ] Communication protocol
