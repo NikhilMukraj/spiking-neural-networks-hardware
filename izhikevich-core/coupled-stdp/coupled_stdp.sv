@@ -31,6 +31,7 @@ module top #(
 )(
     input clk,
     input apply,
+    input enable_stdp,
     input rst,
     input [N-1:0] i, // input current not voltage
     input [N-1:0] v_init,
