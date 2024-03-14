@@ -12,12 +12,16 @@
 ## Todo
 
 - [ ] Schematics
+  - [ ] Digital to analog
+  - [ ] Voltage adder
+    - [X] With disconnected power supplies
+    - [ ] With singular power supply
+  - [ ] Voltage multiplier
 - [ ] Digital to analog conversions
 - [ ] LM324N testing
   - [ ] Test simple addition
     - Power supply can just use Arduino for now
-    - (10k and 1k resistors used for $R_a$ and $R_b$, everything else used 1k)
 - [ ] AD633 testing
-- [ ] Scaling Izhikevich equations between 3 volt range
+- [ ] Scaling Izhikevich equations between 5 volt range
 - [ ] Linking adders and multipliers together
 - [ ] Reset circuit
