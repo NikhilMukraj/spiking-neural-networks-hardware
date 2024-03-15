@@ -59,6 +59,7 @@
   - [ ] Verification on chip
     - [ ] Preliminary core testing
     - [ ] Full plotting
+  - [ ] Coupled Izhikevich cores
 - [ ] Hodgkin huxley core
 - [ ] RAM interface
 - [ ] Communication protocol
