@@ -57,6 +57,7 @@
   - [x] Adaptive value change
   - [x] Is spiking indicator
   - [ ] Verification on chip
+    - [ ] Vivado synthesis
     - [ ] Preliminary core testing
     - [ ] Full plotting
   - [ ] Coupled Izhikevich cores
