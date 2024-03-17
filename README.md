@@ -31,6 +31,7 @@
 ## Todo
 
 - [ ] Equation high level synthesis
+  - [ ] Fix synthesis to use wires instead of registers as intermediates
   - [ ] Preprocessing
     - [ ] To the power of an integer expansion
     - [ ] Simplification of expressions with only constants
@@ -58,7 +59,11 @@
   - [x] Is spiking indicator
   - [ ] Verification on chip
     - [ ] Vivado synthesis
+      - [x] Without pins
+      - [ ] With pins
     - [ ] Preliminary core testing
+      - [ ] Voltage change calculation
+      - [ ] Adaptive value change calculation
     - [ ] Full plotting
   - [ ] Coupled Izhikevich cores
 - [ ] Hodgkin huxley core
