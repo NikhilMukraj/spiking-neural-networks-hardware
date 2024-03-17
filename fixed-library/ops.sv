@@ -68,8 +68,8 @@ endmodule
 module negator #(
 	parameter N = 32
 )(
-	input logic signed [N-1:0] a,
-	output logic signed [N-1:0] out
+	input [N-1:0] a,
+	output [N-1:0] out
 );	
 	always @ (*) begin
 		if (a == {N{1'b0}}) begin
@@ -84,11 +84,12 @@ module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmeti
     parameter N = 32,
     parameter F = 16
 )(
-	input logic [N-1:0]	a, b,
-	output logic [N-1:0] c
+	input [N-1:0] a, 
+	input [N-1:0] b,
+	output [N-1:0] c
 );
-	logic [2*N-1:0]	result;
-	logic [N-1:0] finalresult;
+	reg [2*N-1:0] result;
+	reg [N-1:0] finalresult;
 	assign c = finalresult;
 
 	always @ (*) begin						
