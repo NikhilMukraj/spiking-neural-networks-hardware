@@ -8,7 +8,7 @@ module calc_dv #(
 	input [N-1:0] step,
 	output [N-1:0] out 
 );
-	reg [N-1:0] term1, term2, term3, term4, term5, term6, term7, term8;
+	wire [N-1:0] term1, term2, term3, term4, term5, term6, term7, term8;
 
 	mult multiplier1 ( v, v, term1 ); // v*v
 	mult multiplier2 ( 32'b00000000000000000000101000111101, term1, term2 ); // 0.04*(v*v)

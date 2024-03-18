@@ -9,7 +9,7 @@ module calc_dw #(
 	input [N-1:0] step,
 	output [N-1:0] out 
 );
-	reg [N-1:0] term1, term2, term3, term4;
+	wire [N-1:0] term1, term2, term3, term4;
 
 	mult multiplier1 ( b, v, term1 ); // b*v
 	negator negator2 ( w, term2 ); // -1*w
