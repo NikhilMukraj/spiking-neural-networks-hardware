@@ -230,7 +230,7 @@ modules = [i if last_term not in i else i.replace(last_term, out_variable) for i
 module_variables = ",\n\t".join(["input [N-1:0] " + i for i in variables])
 include_string = '`include "../ops.sv"\n\n\n'
 module_header = f'module {module_name} #(\n\tparameter N={N},\n\tparameter Q={fractional_bits}\n)(\n\t{module_variables},\n\toutput [N-1:0] {out_variable} \n);\n\t'
-intermediates_string = 'reg [N-1:0] ' + ', '.join(intermediates.values()) + ';\n\n\t'
+intermediates_string = 'wire [N-1:0] ' + ', '.join(intermediates.values()) + ';\n\n\t'
 modules_string = '\n\t'.join(modules)
 verilog_file = include_string + module_header + intermediates_string + modules_string + '\nendmodule\n'
 print(verilog_file)
