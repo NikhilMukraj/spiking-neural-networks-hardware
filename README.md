@@ -58,9 +58,10 @@
   - [x] Adaptive value change
   - [x] Is spiking indicator
   - [ ] Verification on chip
-    - [ ] Vivado synthesis
+    - [x] Vivado synthesis
       - [x] Without pins
-      - [ ] With pins
+      - [x] With pins
+    - [ ] Vivado synthesis redo with specification of which is the top module
     - [ ] Preliminary core testing
       - [ ] Voltage change calculation
       - [ ] Adaptive value change calculation
