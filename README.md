@@ -32,12 +32,15 @@
 
 - [ ] Equation high level synthesis
   - [ ] Fix synthesis to use wires instead of registers as intermediates
+  - [ ] Configurable number of bits
   - [ ] Preprocessing
     - [ ] To the power of an integer expansion
     - [ ] Simplification of expressions with only constants
     - [ ] Nest equations correctly based on order of operations
   - [x] Addition/Subtraction
-  - [x] Multiplication
+  - [ ] Multiplication
+    - [ ] Basic multiplication
+    - [ ] Optimized for LUTs (Booth's algorithm)
   - [x] Negation
   - [x] Reciprocal
   - [x] Division
