@@ -69,7 +69,7 @@ module negator #(
 	parameter N = 32
 )(
 	input [N-1:0] a,
-	output [N-1:0] out
+	output reg [N-1:0] out
 );	
 	always @ (*) begin
 		if (a == {N{1'b0}}) begin
