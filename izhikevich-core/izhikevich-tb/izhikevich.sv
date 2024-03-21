@@ -25,7 +25,7 @@ module izhikevich_core #(
     output reg [N-1:0] last_dv
 );
     reg eq, gt, lt, apply_edge;
-    reg [N-1:0] dv, dw, new_voltage, new_w, w_at_th;
+    wire [N-1:0] dv, dw, new_voltage, new_w, w_at_th;
 
     calc_dv calc_dv1 ( voltage, w, i, step, dv );
     calc_dw calc_dw1 (
@@ -49,18 +49,16 @@ module izhikevich_core #(
             last_dv <= 32'b00000000000000000000000000000000; // 0
         end
 
-        if (apply) begin
-            if ($signed(voltage) > $signed(v_th)) begin
-                voltage <= c;
-                w <= w_at_th;
-                is_spiking <= 1'b1;
-                last_dv <= dv;
-            end else begin
-                voltage <= new_voltage;
-                w <= new_w;
-                is_spiking <= 1'b0;
-                last_dv <= dv;
-            end
+        if (apply & ($signed(voltage) > $signed(v_th))) begin
+            voltage <= c;
+            w <= w_at_th;
+            is_spiking <= 1'b1;
+            last_dv <= dv;
+        end else if (apply) begin
+            voltage <= new_voltage;
+            w <= new_w;
+            is_spiking <= 1'b0;
+            last_dv <= dv;
         end
     end
 endmodule
