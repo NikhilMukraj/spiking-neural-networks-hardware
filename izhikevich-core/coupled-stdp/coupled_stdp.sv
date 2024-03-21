@@ -6,9 +6,20 @@ module iterator #(
 )(
     input clk,
     input apply,
-    output reg [Q-1:0] iteration_count
+    output reg [Q-1:0] iteration_count,
+    output rollover_occuring
 );
     // iterate over until you loop back around
+    always @ (posedge clk) begin
+        if (apply) begin
+            iteration_count <= iteration_count + 1'b1;
+        end
+        if (iteration_count == 16'b1111111111111111) begin
+            rollover_occuring <= 1'b1;
+        end else begin
+            rollover_occuring <= 1'b0;
+        end
+    end
 endmodule
 
 module voltage_to_current #(
