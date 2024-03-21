@@ -73,7 +73,9 @@
 - [ ] Hodgkin huxley core
 - [ ] RAM interface
 - [ ] Communication protocol
+  - [ ] Basic pin testing
   - [ ] SPI
+    - [ ] Synthesis
     - [ ] On chip verification
   - [ ] RPGA side communication
   - [ ] Raspberry Pi side communication
