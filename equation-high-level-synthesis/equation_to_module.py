@@ -83,9 +83,9 @@ out_variable = args['out_variable']
 lower_bound, upper_bound = args['lower_bound'], args['upper_bound']
 tolerance = args['tolerance']
 
-add_module = lambda n, a, b, c: f'add adder{n} #(N={N}, Q={fractional_bits}) ( {a}, {b}, {c} );'
-basic_mult_module = lambda n, a, b, c: f'mult multiplier{n} #(N={N}, Q={fractional_bits}) ( {a}, {b}, {c} );'
-negator_module = lambda n, a, c:  f'negator negator{n} #(N={N}, Q={fractional_bits}) ( {a}, {c} );'
+add_module = lambda n, a, b, c: f'add #(.N({N}), .Q({fractional_bits})) adder{n} ( {a}, {b}, {c} );'
+basic_mult_module = lambda n, a, b, c: f'mult #(.N({N}), .Q({fractional_bits})) multiplier{n} ( {a}, {b}, {c} );'
+negator_module = lambda n, a, c:  f'negator #(.N({N}), .Q({fractional_bits})) negator{n} ( {a}, {c} );'
 
 binary_negative_one = f"{N}'b{decimal_to_fixed_point(-1, integer_bits, fractional_bits)}"
 
@@ -97,7 +97,7 @@ def mult_module(n, a, b, c):
     elif b == binary_negative_one:
         return negator_module(n, a, c)
 
-div_module = lambda n, a, b, c: f'div divider{n} #(N={N}, Q={fractional_bits}) ( {a}, {b}, {c} );'
+div_module = lambda n, a, b, c: f'div #(.N({N}), .Q({fractional_bits})) divider{n} ( {a}, {b}, {c} );'
 
 num_to_binary_string = lambda string: f"{N}'b{decimal_to_fixed_point(float(string), integer_bits, fractional_bits)}"
 
@@ -112,7 +112,7 @@ def exp_module(n, a, b, c):
         raise ValueError('Can only use "e" as base exponent')
 
     if not do_piecewise:
-        return f'exp exponentiate{n} ( {b}, {c} );' # negative exp option if a = neg_e
+        return f'exp #(.N({N}), .Q({fractional_bits})) exponentiate{n} ( {b}, {c} );' # negative exp option if a = neg_e
     if do_piecewise:
         m1 = num_to_binary_string(args['m1'])
         b1 = num_to_binary_string(args['b1'])
@@ -120,13 +120,13 @@ def exp_module(n, a, b, c):
         b2 = num_to_binary_string(args['b2'])
         split = num_to_binary_string(args['split'])
 
-        return f'linear_piecewise piecewise{n} #(N={N}, Q={fractional_bits}) ( {b}, {m1}, {m2}, {b1}, {b2}, {split}, {c} );'
+        return f'linear_piecewise #(.N({N}), .Q({fractional_bits})) piecewise{n} ( {b}, {m1}, {m2}, {b1}, {b2}, {split}, {c} );'
 
 def abs_module(n, a, b, c):
     if a != 'abs':
         raise ValueError('Must specify "|" operator is "abs"')
     
-    return f'abs absolute_value{n} #(N={N}, Q={fractional_bits}) ( {b}, {c} );'
+    return f'abs #(.N({N}), .Q({fractional_bits})) absolute_value{n} ( {b}, {c} );'
 
 func_modules = {
     '+' : add_module, 
@@ -230,7 +230,10 @@ modules = [i if last_term not in i else i.replace(last_term, out_variable) for i
 module_variables = ",\n\t".join(["input [N-1:0] " + i for i in variables])
 include_string = '`include "../ops.sv"\n\n\n'
 module_header = f'module {module_name} #(\n\tparameter N={N},\n\tparameter Q={fractional_bits}\n)(\n\t{module_variables},\n\toutput [N-1:0] {out_variable} \n);\n\t'
-intermediates_string = 'wire [N-1:0] ' + ', '.join(intermediates.values()) + ';\n\n\t'
+if intermediates.values():
+    intermediates_string = 'wire [N-1:0] ' + ', '.join(intermediates.values()) + ';\n\n\t'
+else:
+    intermediates_string = ''
 modules_string = '\n\t'.join(modules)
 verilog_file = include_string + module_header + intermediates_string + modules_string + '\nendmodule\n'
 print(verilog_file)
