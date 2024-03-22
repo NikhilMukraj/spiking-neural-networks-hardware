@@ -1,0 +1,11 @@
+{
+    "name": "smaller_bits_test",
+    "equation": "((x+y)+z)",
+    "variables": ["x", "y", "z"],
+    "out_variable": "out",
+    "integer_bits": 8,
+    "fractional_bits": 8,
+    "lower_bound": -8,
+    "upper_bound": 8,
+    "tolerance": 0.1
+}
