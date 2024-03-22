@@ -31,8 +31,10 @@
 ## Todo
 
 - [ ] Equation high level synthesis
-  - [ ] Fix synthesis to use wires instead of registers as intermediates
+  - [x] Fix synthesis to use wires instead of registers as intermediates
   - [ ] Configurable number of bits
+    - [x] Generation
+    - [ ] Multiplication with configurable number of bits
   - [ ] Preprocessing
     - [ ] To the power of an integer expansion
     - [ ] Simplification of expressions with only constants
