@@ -25,3 +25,10 @@
 - [ ] Scaling Izhikevich equations between 5 volt range
 - [ ] Linking adders and multipliers together
 - [ ] Reset circuit
+
+## Basic Flow
+
+- 5 analog ouputs
+  - $a$, $b$, $voltage$, $w$, $i$
+- Integrator at the end to add
+- If sum is greater than threshold execute spike logic
