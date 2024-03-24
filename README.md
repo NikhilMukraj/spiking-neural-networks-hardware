@@ -41,8 +41,10 @@
     - [ ] Nest equations correctly based on order of operations
   - [x] Addition/Subtraction
   - [ ] Multiplication
-    - [ ] Basic multiplication
+    - [x] Basic multiplication
     - [ ] Optimized for LUTs (Booth's algorithm)
+      - [x] Code simulation
+      - [ ] Hardware simulation
   - [x] Negation
   - [x] Reciprocal
   - [x] Division
