@@ -102,6 +102,53 @@ module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmeti
 	end
 endmodule
 
+// module booth_mult #(
+// 	parameter N = 32,
+// 	parameter Q = 16
+// )(
+// 	input clk,
+// 	input rst,
+// 	input [N-1:0] a,
+// 	input [N-1:0] b,
+// 	output [N-1:0] c,
+// 	output done
+// );
+// 	reg [N-1:0] two_comp_m;
+
+// 	add adder1( ~m, {(N-1){1'b0}} & 1'b1, two_comp_m );
+
+// 	reg [N * 2 + 1:0] a, s, p_initial, p, p_new;
+
+// 	assign a = { m, {(N+1){1'b0}} };
+// 	assign s = { two_comp_m, {(N+1){1'b0}} }
+// 	assign p_initial = { {(N+1){1'b0}}, r };
+
+// 	reg [4:0] count;
+// 	reg [4:0] max_count = $bits(N);
+
+// 	always @ (posedge clk) begin
+// 		if (rst) begin
+// 			p <= p_initial;
+// 			count <= 4'b000;
+// 			done <= 1'b0;
+// 		end
+
+// 		// if this doesnt work try routing s or a to a single reg in an adder
+// 		case (p[1:0])
+// 			2'b10 : p_new <= p + s;
+// 			2'b01 : p_new <= p + a;
+// 			// 2'b00 :
+// 			// 2'b11 :
+// 			default : begin end
+// 		endcase
+
+// 		p <= { p_new[N-1], p[N-1:1] };
+// 		count <= count + 1;
+
+// 		done <= count == max_count;
+// 	end
+// endmodule
+
 module abs #(
 	parameter N = 32
 )(
