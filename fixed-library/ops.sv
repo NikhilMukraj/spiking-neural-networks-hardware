@@ -117,8 +117,9 @@ endmodule
 
 // 	add adder1( ~m, {(N-1){1'b0}} & 1'b1, two_comp_m );
 
-// 	reg [N * 2 + 1:0] a, s, p_initial, p, p_new;
+// 	reg [N * 2 + 1:0] a, s, p_initial, p, to_add, p_new;
 
+//	// if N+1 or N * 2 + 1 does not compile when used as repeater then write it to a parameter
 // 	assign a = { m, {(N+1){1'b0}} };
 // 	assign s = { two_comp_m, {(N+1){1'b0}} }
 // 	assign p_initial = { {(N+1){1'b0}}, r };
@@ -126,26 +127,28 @@ endmodule
 // 	reg [4:0] count;
 // 	reg [4:0] max_count = $bits(N);
 
+	// add adder2( p, to_add, p_new )
+
 // 	always @ (posedge clk) begin
 // 		if (rst) begin
 // 			p <= p_initial;
 // 			count <= 4'b000;
 // 			done <= 1'b0;
 // 		end
-
-// 		// if this doesnt work try routing s or a to a single reg in an adder
+	// if (!done) begin
 // 		case (p[1:0])
-// 			2'b10 : p_new <= p + s;
-// 			2'b01 : p_new <= p + a;
+// 			2'b10 : to_add <= s;
+// 			2'b01 : to_add <= a;
 // 			// 2'b00 :
 // 			// 2'b11 :
-// 			default : begin end
+// 			default : to_add <= {(N * 2 + 1){1'b0}};
 // 		endcase
 
 // 		p <= { p_new[N-1], p[N-1:1] };
 // 		count <= count + 1;
 
 // 		done <= count == max_count;
+	// end
 // 	end
 // endmodule
 
