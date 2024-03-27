@@ -22,9 +22,12 @@
   - [ ] Test simple addition
     - Power supply can just use Arduino for now
 - [ ] AD633 testing
-- [ ] Scaling Izhikevich equations between 5 volt range
+- [ ] Scaling Izhikevich equations between 5 or 3 volt range
 - [ ] Linking adders and multipliers together
 - [ ] Reset circuit
+- [ ] Analog pipeline synthesis
+  - [ ] PySpice testing
+  - [ ] FPAA simulation
 
 ## Basic Flow
 
