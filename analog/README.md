@@ -14,7 +14,7 @@
 - [ ] Schematics
   - [ ] Digital to analog
   - [ ] Voltage adder
-    - [X] With disconnected power supplies
+    - [x] With disconnected power supplies
     - [ ] With singular power supply
   - [ ] Voltage multiplier
 - [ ] Digital to analog conversions
@@ -22,12 +22,13 @@
   - [ ] Test simple addition
     - Power supply can just use Arduino for now
 - [ ] AD633 testing
+  - [ ] Simple multplication testing
 - [ ] Scaling Izhikevich equations between 5 or 3 volt range
 - [ ] Linking adders and multipliers together
 - [ ] Reset circuit
-- [ ] Analog pipeline synthesis
+- [ ] Analog pipeline synthesis similar to equation high level synthesis
   - [ ] PySpice testing
-  - [ ] FPAA simulation
+  - [ ] FPAA simulation (Anadigm probably)
 
 ## Basic Flow
 
