@@ -81,7 +81,7 @@
   - [ ] SPI
     - [ ] Synthesis
     - [ ] On chip verification
-  - [ ] RPGA side communication
+  - [ ] FPGA side communication
   - [ ] Raspberry Pi side communication
   - [ ] Distributed communication
 - [ ] Izhikevich matrix
@@ -112,6 +112,7 @@
   - [ ] Fit to eeg signaling
 - [ ] Neurotransmission
   - [ ] Neurotranmission module per row of neurons to handle entire row's calculations
+  - [ ] Using fit parameters of Izhikevich neuron to emulate neurotranmission
 
 ## Hardware Documentation
 
