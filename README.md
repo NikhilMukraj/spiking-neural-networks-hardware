@@ -80,8 +80,8 @@
     - [ ] BRAM access from different controllers
     - [ ] BRAM could store weights for every neuron
       - If 20 bits, first 4 can store whether there is a connection, and if it is inhibitory or excitatory
-    - [ ] BRAM could also store every $dv$ change at each iteration
   - [ ] Regular RAM
+    - [ ] Having RAM store last $dv$ to be used in calculations and read from multiple places at the same time
 - [ ] Communication protocol
   - [ ] Basic pin testing
   - [ ] SPI
