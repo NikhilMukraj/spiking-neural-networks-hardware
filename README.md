@@ -76,6 +76,12 @@
   - [ ] Coupled Izhikevich cores
 - [ ] Hodgkin huxley core
 - [ ] RAM interface
+  - [ ] BRAM
+    - [ ] BRAM access from different controllers
+    - [ ] BRAM could store weights for every neuron
+      - If 20 bits, first 4 can store whether there is a connection, and if it is inhibitory or excitatory
+    - [ ] BRAM could also store every $dv$ change at each iteration
+  - [ ] Regular RAM
 - [ ] Communication protocol
   - [ ] Basic pin testing
   - [ ] SPI
