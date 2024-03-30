@@ -1,7 +1,7 @@
 # check if all internal variables are correct
 # test reseting with rst and then doing next multiplication
 import cocotb
-from cocotb.triggers import Timer
+from cocotb.triggers import Timer, RisingEdge
 from cocotb.binary import BinaryValue
 from fixed_point_models import fixed_point_to_decimal, decimal_to_fixed_point
 from fixed_point_models import booth_algo, check_with_tolerance
@@ -16,7 +16,7 @@ async def generate_clock(dut, timesteps):
         await Timer(4, units='ns')
 
 @cocotb.test()
-async def mult_test(dut):
+async def booth_mult_test(dut):
     int_bits = 16
     frac_bits = 16
     lower_bound = -128
@@ -30,7 +30,16 @@ async def mult_test(dut):
 
         booth_verification = booth_algo(a, b, length=int_bits + frac_bits)
 
-        # dut.a.value
-        # dut.s.value
-        # dut.p.value
-        # dut.two_comp_m.value
+        # fixing precision
+        a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
+        b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits), int_bits, frac_bits)
+
+        dut.a.value = decimal_to_fixed_point(a, int_bits, frac_bits)
+        dut.b.value = decimal_to_fixed_point(b, int_bits, frac_bits)
+
+        await RisingEdge(dut.clk)
+
+        assert dut.a_static.value == booth_verification['a']
+        assert dut.s.value == booth_verification['s']
+        assert dut.p_init.value == booth_verification['p_init']
+        assert dut.two_comp_m.value == booth_verification['two_comp_m']
