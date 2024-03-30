@@ -74,11 +74,12 @@
       - [ ] Adaptive value change calculation
     - [ ] Full plotting
   - [ ] Coupled Izhikevich cores
+- [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
 - [ ] Hodgkin huxley core
 - [ ] RAM interface
   - [ ] BRAM
     - [ ] BRAM access from different controllers
-    - [ ] BRAM could store weights for every neuron
+    - [ ] BRAM could store weights for every neuron (until RAM interface is developed)
       - If 20 bits, first 4 can store whether there is a connection, and if it is inhibitory or excitatory
   - [ ] Regular RAM
     - [ ] Having RAM store last $dv$ to be used in calculations and read from multiple places at the same time
