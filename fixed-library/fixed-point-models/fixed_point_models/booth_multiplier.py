@@ -66,7 +66,7 @@ def booth_algo(m: int, r: int, length: int, debug: bool=False) -> dict:
     ilen = length + length + 1 # The common length of internal variables
     a = m_string + '0' * (length + 1) # A: place M in leftmost position. Fill the left bits with 0.
     s = two_comp(m_string) + '0' * (length + 1) # S: place negative M in leftmost position.
-    p = '0' * (length + 1) + r_string + '0' # P: place R by rightmost 0.
+    p = '0' * (length) + r_string + '0' # P: place R by rightmost 0.
 
     logging.debug('Internal variables:')
     logging.debug(f'M = {m}')
