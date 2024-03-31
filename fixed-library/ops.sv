@@ -149,6 +149,8 @@ module booth_mult #(
 			done <= count == max_count;
 		end
 	end
+
+	assign c = p[N-1:0];
 endmodule
 
 module abs #(
