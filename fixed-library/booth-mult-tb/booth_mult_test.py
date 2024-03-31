@@ -24,7 +24,10 @@ async def booth_mult_test(dut):
 
     dut.rst.value = 1
 
-    for i in range(100):
+    iterations = 100
+    await cocotb.start(generate_clock(dut, timesteps * (int_bits + frac_bits + 8)))
+
+    for i in range(iterations):
         a = np.random.uniform(lower_bound, upper_bound)
         b = np.random.uniform(lower_bound, upper_bound)
 
@@ -43,3 +46,5 @@ async def booth_mult_test(dut):
         assert dut.s.value == booth_verification['s']
         assert dut.p_init.value == booth_verification['p_init']
         assert dut.two_comp_m.value == booth_verification['two_comp_m']
+
+        # on the last iteration only check the relevant bits in the c wire
