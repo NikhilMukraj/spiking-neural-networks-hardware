@@ -21,6 +21,9 @@ def check_with_tolerance(expected: float, actual: float, tolerance=1e-5):
     return np.abs(expected - actual) < tolerance
 
 def fixed_point_to_decimal(binary_str: str, integer_bits: int, fractional_bits: int):
+    if type(binary_str) != str:
+        raise TypeError(f'Binary string must be a string not {type(binary_str)}')
+
     if integer_bits + fractional_bits <= 3: 
         raise NotImplementedError('Unimplemented for size of 3 and under')
         
@@ -36,6 +39,9 @@ def fixed_point_to_decimal(binary_str: str, integer_bits: int, fractional_bits: 
     return result
 
 def decimal_to_fixed_point(number: float, integer_bits: float, fractional_bits: float):
+    if type(number) not in [float, int]:
+        raise TypeError(f'Number must be a numeric not {type(number)}')
+
     if integer_bits + fractional_bits <= 3: 
         raise NotImplementedError('Unimplemented for size of 3 and under')
 
