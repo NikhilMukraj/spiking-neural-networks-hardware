@@ -43,9 +43,9 @@
   - [ ] Multiplication
     - [x] Basic multiplication
     - [ ] Optimized for LUTs (Booth's algorithm)
-      - [ ] Code simulation
+      - [x] Code simulation
         - [x] Integers
-        - [ ] Fixed point decimals
+        - [x] Fixed point decimals
       - [ ] Hardware simulation
   - [x] Negation
   - [x] Reciprocal
