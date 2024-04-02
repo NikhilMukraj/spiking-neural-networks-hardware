@@ -38,7 +38,7 @@ async def booth_mult_test(dut):
         dut.a.value = BinaryValue(decimal_to_fixed_point(a, int_bits, frac_bits))
         dut.b.value = BinaryValue(decimal_to_fixed_point(b, int_bits, frac_bits))
 
-        booth_verification = booth_algo(a, b, length=int_bits + frac_bits)
+        booth_verification = booth_algo(a, b, int_bits=int_bits, frac_bits=frac_bits)
 
         await RisingEdge(dut.clk)
 
