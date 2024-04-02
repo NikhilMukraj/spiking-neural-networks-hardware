@@ -54,16 +54,18 @@ def bit_shift(n: str, shift: int) -> str:
         n_ = n + ''.join(['0'] * (-shift))
         return n_[-len(n):]
 
-def booth_algo(m: int, r: int, length: int, debug: bool=False) -> dict:
+def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=False) -> dict:
     if debug:
         logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(message)s')
     else:
         logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(message)s')
 
-    m_string = decimal_to_fixed_point(m, length, 0)
-    r_string = decimal_to_fixed_point(r, length, 0)
+    m_string = decimal_to_fixed_point(m, int_bits, frac_bits)
+    r_string = decimal_to_fixed_point(r, int_bits, frac_bits)
 
-    ilen = length + length + 1 # The common length of internal variables
+    length = int_bits + frac_bits
+
+    # ilen = length + length + 1 # The common length of internal variables
     a = m_string + '0' * (length + 1) # A: place M in leftmost position. Fill the left bits with 0.
     s = two_comp(m_string) + '0' * (length + 1) # S: place negative M in leftmost position.
     p = '0' * (length) + r_string + '0' # P: place R by rightmost 0.
@@ -123,7 +125,7 @@ def booth_algo(m: int, r: int, length: int, debug: bool=False) -> dict:
     }
 
 def main():
-    booth_algo(3, 2, 4, debug=True)
+    booth_algo(3, 2, 4, 0, debug=True)
 
 if __name__ == '__main__':
     main()
