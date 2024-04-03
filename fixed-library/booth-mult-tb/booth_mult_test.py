@@ -54,3 +54,5 @@ async def booth_mult_test(dut):
         break # for now
 
         # on the last iteration only check the relevant bits in the c wire
+        # on the last iteration, account for negative 
+        # (booth_verification['iterations'][-1][0] + booth_verification['iterations'][-1][int_bits + frac_bits:])
