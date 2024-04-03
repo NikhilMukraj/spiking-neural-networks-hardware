@@ -150,7 +150,7 @@ module booth_mult #(
 		end
 	end
 
-	assign c = p[N-1:0];
+	assign c = {p[N * 2], p[N-2:0]};
 endmodule
 
 module abs #(
