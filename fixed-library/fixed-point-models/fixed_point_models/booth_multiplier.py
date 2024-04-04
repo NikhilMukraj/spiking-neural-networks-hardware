@@ -104,12 +104,14 @@ def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=Fals
         p = bit_shift(p, 1)
         logging.debug(f'\tP = {p}\n')
 
-    p = p[:-1]
     iterations.append(p)
 
-    logging.debug(f'The answer is: {p}, {fixed_point_to_decimal(p[-4:], length, 0)}')
+    answer_string = p[0] + p[-length:-1]
+    answer = fixed_point_to_decimal(answer_string, int_bits, frac_bits)
+
+    logging.debug(f'The answer is: {p}, {answer}')
     logging.debug(f'Verification: {m} * {r} = {m * r}')
-    logging.debug(f'Verification: {m_string} * {r_string} = {p[-4:]}')
+    logging.debug(f'Verification: {m_string} * {r_string} = {answer_string}')
 
     return {
         'm' : m,
@@ -122,6 +124,8 @@ def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=Fals
         'p_init' : p_init,
         'ops' : ops,
         'iterations' : iterations,
+        'answer' : answer,
+        'answer_string' : answer_string,
     }
 
 def main():
