@@ -126,6 +126,7 @@ module booth_mult #(
 	reg [4:0] count;
 	reg [4:0] max_count = $bits(N);
 
+	// test p_new = p + 1'b1
 	add #(.N(N * 2 + 1), .Q(Q * 2 + 1)) adder2( p, to_add, p_new );
 
 	always @ (posedge clk) begin
@@ -150,6 +151,7 @@ module booth_mult #(
 		end
 	end
 
+	// sign bit + rest of string
 	assign c = {p[N * 2], p[N-2:0]};
 endmodule
 
