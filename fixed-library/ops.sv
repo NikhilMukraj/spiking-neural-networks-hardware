@@ -152,7 +152,7 @@ module booth_mult #(
 	end
 
 	// sign bit + rest of string
-	assign c = {p[N * 2], p[N-2:0]};
+	assign c = {p[N * 2], p[N:1]};
 endmodule
 
 module abs #(
