@@ -43,13 +43,13 @@ async def booth_mult_test(dut):
         await RisingEdge(dut.clk)
 
         assert dut.a_static.value == booth_verification['a'], \
-        f"{a}, {b} | {dut.a_static.value} != {booth_verification['a']}"
+        f"{dut.a_static.value} != {booth_verification['a']}"
         assert dut.s.value == booth_verification['s'], \
-        f"{a}, {b} | {dut.s.value} != {booth_verification['s']}"
+        f"{dut.s.value} != {booth_verification['s']}"
         assert dut.p_init.value == booth_verification['p_init'], \
-        f"{a}, {b} | {dut.p_init.value} != {booth_verification['p_init']}"
+        f"{dut.p_init.value} != {booth_verification['p_init']}"
         assert dut.two_comp_m.value == booth_verification['two_comp_m'], \
-        f"{a}, {b} | {dut.two_comp_m.value} != {booth_verification['two_comp_m']}"
+        f"{dut.two_comp_m.value} != {booth_verification['two_comp_m']}"
 
         break # for now
 
@@ -57,3 +57,27 @@ async def booth_mult_test(dut):
         # on the last iteration, account for negative 
         # (booth_verification['iterations'][-1][0] + booth_verification['iterations'][-1][int_bits + frac_bits:])
         # could adapt algo to account for sign in last output
+
+        index = 0
+        while dut.done.value != 1:
+            assert dut.p.value == booth_verification['iterations'][index], \
+            f"{dut.p.value} != {booth_verification['iterations'][index]}"
+
+            assert dut.op.value == booth_verification['iterations'][index][-2:], \
+            f"{dut.op.value} != {booth_verification['iterations'][index][-2:]}"
+
+            dut._log.info(f'count: {dut.count.value}, max_count: {dut.max_count.value}')
+
+            await RisingEdge(dut.clk)
+
+            index += 1
+
+        assert dut.c.value == booth_verification['answer_string'], \
+        f"{dut.c.value} != {booth_verification['answer_string']}"
+
+        numeric_answer = fixed_point_to_decimal(dut.c.value, int_bits, frac_bits)
+        assert numeric_answer == booth_verification['answer'], \
+        f"{numeric_answer} != {booth_verification['answer']}"
+
+        # dut.rst.value = 1
+        # await RisingEdge(dut.clk)
