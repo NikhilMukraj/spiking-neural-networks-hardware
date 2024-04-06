@@ -35,10 +35,18 @@ async def booth_mult_test(dut):
         a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
         b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits), int_bits, frac_bits)
 
-        dut.a.value = BinaryValue(decimal_to_fixed_point(a, int_bits, frac_bits))
-        dut.b.value = BinaryValue(decimal_to_fixed_point(b, int_bits, frac_bits))
+        binary_a = decimal_to_fixed_point(a, int_bits, frac_bits)
+        binary_b = decimal_to_fixed_point(b, int_bits, frac_bits)
+
+        dut.a.value = BinaryValue(binary_a)
+        dut.b.value = BinaryValue(binary_b)
 
         booth_verification = booth_algo(a, b, int_bits=int_bits, frac_bits=frac_bits)
+
+        assert binary_a == booth_verification['m_string'], \
+        f"{binary_a} != {booth_verification['m_string']}"
+        assert binary_b == booth_verification['r_string'], \
+        f"{binary_b} != {booth_verification['r_string']}"
 
         await RisingEdge(dut.clk)
 
@@ -80,4 +88,4 @@ async def booth_mult_test(dut):
         f"{numeric_answer} != {booth_verification['answer']}"
 
         # dut.rst.value = 1
-        # await RisingEdge(dut.clk)
+        await RisingEdge(dut.clk)
