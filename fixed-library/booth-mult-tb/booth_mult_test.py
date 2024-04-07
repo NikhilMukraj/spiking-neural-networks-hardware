@@ -48,8 +48,6 @@ async def booth_mult_test(dut):
         assert binary_b == booth_verification['r_string'], \
         f"{binary_b} != {booth_verification['r_string']}"
 
-        await RisingEdge(dut.clk)
-
         assert dut.a_static.value == booth_verification['a'], \
         f"{dut.a_static.value} != {booth_verification['a']}"
         assert dut.s.value == booth_verification['s'], \
@@ -66,15 +64,20 @@ async def booth_mult_test(dut):
         # (booth_verification['iterations'][-1][0] + booth_verification['iterations'][-1][int_bits + frac_bits:])
         # could adapt algo to account for sign in last output
 
+        # when this is done test p_new = p + 1'b1
+
         index = 0
         while dut.done.value != 1:
+            dut._log.info(f'count: {dut.count.value}, max_count: {dut.max_count.value}')
+
+            assert fixed_point_to_decimal(dut.count.value, np.floor(np.log2(x)) + 1, 0) == index, \
+            f"{dut.count.value} != {index}"
+
             assert dut.p.value == booth_verification['iterations'][index], \
             f"{dut.p.value} != {booth_verification['iterations'][index]}"
 
             assert dut.op.value == booth_verification['iterations'][index][-2:], \
             f"{dut.op.value} != {booth_verification['iterations'][index][-2:]}"
-
-            dut._log.info(f'count: {dut.count.value}, max_count: {dut.max_count.value}')
 
             await RisingEdge(dut.clk)
 
