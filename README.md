@@ -68,7 +68,7 @@
   - [x] Adaptive value change
   - [x] Is spiking indicator
   - [ ] Clocked operations
-    - [ ] Potentially using one operator at a time
+    - [ ] Potentially using one operator at a time (use finite state machine to keep track of which operators to use, keep track of numbers in a stack)
   - [ ] Verification on chip
     - [x] Vivado synthesis
       - [x] Without pins
