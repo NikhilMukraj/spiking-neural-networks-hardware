@@ -47,6 +47,7 @@
         - [x] Integers
         - [x] Fixed point decimals
       - [ ] Hardware simulation
+      - [ ] Comparison of LUT ultization
   - [x] Negation
   - [x] Reciprocal
   - [x] Division
@@ -66,6 +67,8 @@
   - [x] Voltage change
   - [x] Adaptive value change
   - [x] Is spiking indicator
+  - [ ] Clocked operations
+    - [ ] Potentially using one operator at a time
   - [ ] Verification on chip
     - [x] Vivado synthesis
       - [x] Without pins
