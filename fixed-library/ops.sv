@@ -124,7 +124,7 @@ module booth_mult #(
 	assign p_init = { {(N+1){1'b0}}, b };
 
 	reg [4:0] count;
-	reg [4:0] max_count = $bits(N);
+	reg [4:0] max_count = N - 1;
 
 	// test p_new = p + 1'b1
 	add #(.N(N * 2 + 1), .Q(Q * 2 + 1)) adder2( p, to_add, p_new );
