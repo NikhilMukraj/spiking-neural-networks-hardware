@@ -22,10 +22,14 @@ async def booth_mult_test(dut):
     lower_bound = -128
     upper_bound = 128
 
-    dut.rst.value = 1
-
     iterations = 100
     await cocotb.start(generate_clock(dut, iterations * (int_bits + frac_bits + 8)))
+
+    dut.rst.value = 1
+    await RisingEdge(dut.clk)
+
+    dut.rst.value = 0
+    await RisingEdge(dut.clk)
 
     for i in range(iterations):
         a = np.random.uniform(lower_bound, upper_bound)
@@ -48,17 +52,6 @@ async def booth_mult_test(dut):
         assert binary_b == booth_verification['r_string'], \
         f"{binary_b} != {booth_verification['r_string']}"
 
-        assert dut.a_static.value == booth_verification['a'], \
-        f"{dut.a_static.value} != {booth_verification['a']}"
-        assert dut.s.value == booth_verification['s'], \
-        f"{dut.s.value} != {booth_verification['s']}"
-        assert dut.p_init.value == booth_verification['p_init'], \
-        f"{dut.p_init.value} != {booth_verification['p_init']}"
-        assert dut.two_comp_m.value == booth_verification['two_comp_m'], \
-        f"{dut.two_comp_m.value} != {booth_verification['two_comp_m']}"
-
-        break # for now
-
         # on the last iteration only check the relevant bits in the c wire
         # on the last iteration, account for negative 
         # (booth_verification['iterations'][-1][0] + booth_verification['iterations'][-1][int_bits + frac_bits:])
@@ -70,7 +63,7 @@ async def booth_mult_test(dut):
         while dut.done.value != 1:
             dut._log.info(f'count: {dut.count.value}, max_count: {dut.max_count.value}')
 
-            assert fixed_point_to_decimal(dut.count.value, np.floor(np.log2(x)) + 1, 0) == index, \
+            assert fixed_point_to_decimal(str(dut.count.value), np.ceil(np.log2(a)), 0) == index, \
             f"{dut.count.value} != {index}"
 
             assert dut.p.value == booth_verification['iterations'][index], \
@@ -82,6 +75,16 @@ async def booth_mult_test(dut):
             await RisingEdge(dut.clk)
 
             index += 1
+
+        # if above fails, print these values to debug
+        assert dut.a_static.value == booth_verification['a'], \
+        f"{dut.a_static.value} != {booth_verification['a']}"
+        assert dut.s.value == booth_verification['s'], \
+        f"{dut.s.value} != {booth_verification['s']}"
+        assert dut.p_init.value == booth_verification['p_init'], \
+        f"{dut.p_init.value} != {booth_verification['p_init']}"
+        assert dut.two_comp_m.value == booth_verification['two_comp_m'], \
+        f"{dut.two_comp_m.value} != {booth_verification['two_comp_m']}"
 
         assert dut.c.value == booth_verification['answer_string'], \
         f"{dut.c.value} != {booth_verification['answer_string']}"
