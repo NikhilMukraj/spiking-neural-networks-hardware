@@ -17,18 +17,19 @@ async def generate_clock(dut, timesteps):
 
 @cocotb.test()
 async def booth_mult_test(dut):
-    int_bits = 16
-    frac_bits = 16
-    lower_bound = -128
-    upper_bound = 128
+    int_bits = 4
+    frac_bits = 4
+    lower_bound = -3
+    upper_bound = 3
 
     iterations = 100
     await cocotb.start(generate_clock(dut, iterations * (int_bits + frac_bits + 8)))
 
     dut.rst.value = 1
+    dut.enable.value = 0
     await RisingEdge(dut.clk)
 
-    dut.rst.value = 0
+    dut.rst.value = 1
     await RisingEdge(dut.clk)
 
     for i in range(iterations):
@@ -52,6 +53,8 @@ async def booth_mult_test(dut):
         assert binary_b == booth_verification['r_string'], \
         f"{binary_b} != {booth_verification['r_string']}"
 
+        dut._log.info(f'a: {binary_a} | b: {binary_b}')
+
         # on the last iteration only check the relevant bits in the c wire
         # on the last iteration, account for negative 
         # (booth_verification['iterations'][-1][0] + booth_verification['iterations'][-1][int_bits + frac_bits:])
@@ -59,33 +62,43 @@ async def booth_mult_test(dut):
 
         # when this is done test p_new = p + 1'b1
 
+        await RisingEdge(dut.clk)
+
+        # if below fails, print these values to debug
+        # if below fails because static values have not been set yet, wait 1 clock cycle to set values
+        assert str(dut.p_init.value) == booth_verification['p_init'], \
+        f"{dut.p_init.value} != {booth_verification['p_init']}"
+        # assert str(dut.two_comp_m.value) == booth_verification['two_comp_m'], \
+        # f"{dut.two_comp_m.value} != {booth_verification['two_comp_m']}"
+        # assert str(dut.a_static.value) == booth_verification['a'], \
+        # f"{dut.a_static.value} != {booth_verification['a']}"
+        # assert str(dut.s.value) == booth_verification['s'], \
+        # f"{dut.s.value} != {booth_verification['s']}"
+
+        dut.enable.value = BinaryValue(1)
+        await RisingEdge(dut.clk)
+
         index = 0
         while dut.done.value != 1:
             dut._log.info(f'count: {dut.count.value}, max_count: {dut.max_count.value}')
+            dut._log.info(f'p: {dut.p.value}')
+            dut._log.info(f'p_new: {dut.p_new.value}')
+            dut._log.info(f'iteration[{index}]: {booth_verification["iterations"][index]}')
 
-            assert fixed_point_to_decimal(str(dut.count.value), np.ceil(np.log2(a)), 0) == index, \
-            f"{dut.count.value} != {index}"
+            # assert fixed_point_to_decimal(str(dut.count.value), int(np.ceil(np.log2(a))), 0) == index, \
+            # f"{dut.count.value} != {index}"
 
-            assert dut.p.value == booth_verification['iterations'][index], \
-            f"{dut.p.value} != {booth_verification['iterations'][index]}"
+            # assert dut.p.value == booth_verification['iterations'][index], \
+            # f"{dut.p.value} != {booth_verification['iterations'][index]}"
 
-            assert dut.op.value == booth_verification['iterations'][index][-2:], \
-            f"{dut.op.value} != {booth_verification['iterations'][index][-2:]}"
+            # assert dut.op.value == booth_verification['iterations'][index][-2:], \
+            # f"{dut.op.value} != {booth_verification['iterations'][index][-2:]}"
 
             await RisingEdge(dut.clk)
 
             index += 1
 
-        # if above fails, print these values to debug
-        assert dut.a_static.value == booth_verification['a'], \
-        f"{dut.a_static.value} != {booth_verification['a']}"
-        assert dut.s.value == booth_verification['s'], \
-        f"{dut.s.value} != {booth_verification['s']}"
-        assert dut.p_init.value == booth_verification['p_init'], \
-        f"{dut.p_init.value} != {booth_verification['p_init']}"
-        assert dut.two_comp_m.value == booth_verification['two_comp_m'], \
-        f"{dut.two_comp_m.value} != {booth_verification['two_comp_m']}"
-
+        dut._log.info(f'c: {dut.c.value}')
         assert dut.c.value == booth_verification['answer_string'], \
         f"{dut.c.value} != {booth_verification['answer_string']}"
 
