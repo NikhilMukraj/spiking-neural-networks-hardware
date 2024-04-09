@@ -103,10 +103,11 @@ module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmeti
 endmodule
 
 module booth_mult #(
-	parameter N = 32,
-	parameter Q = 16
+	parameter N = 8,
+	parameter Q = 4
 )(
 	input clk,
+	input enable,
 	input rst,
 	input [N-1:0] a,
 	input [N-1:0] b,
@@ -135,7 +136,7 @@ module booth_mult #(
 			count <= 4'b000;
 			done <= 1'b0;
 		end
-		if (!done) begin
+		if (!done & enable) begin
 			case (p[1:0])
 				2'b10 : to_add <= s;
 				2'b01 : to_add <= a_static;
@@ -144,7 +145,7 @@ module booth_mult #(
 				default : to_add <= {(N * 2 + 1){1'b0}};
 			endcase
 
-			p <= { p_new[N-1], p[N-1:1] };
+			p <= { p_new[N * 2], p[N * 2:1] };
 			count <= count + 1;
 
 			done <= count == max_count;
