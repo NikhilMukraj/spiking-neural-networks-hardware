@@ -123,7 +123,7 @@ module booth_mult #(
 
 	assign a_static = { a, {(N+1){1'b0}} };
 	assign s = { two_comp_m, {(N+1){1'b0}} };
-	assign p_init = { {(N+1){1'b0}}, b };
+	assign p_init = { {(N){1'b0}}, b, 1'b0 };
 
 	reg [$clog2(N)-1:0] count;
 	reg [$clog2(N)-1:0] max_count = N - 1;
