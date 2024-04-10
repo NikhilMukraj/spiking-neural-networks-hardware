@@ -43,9 +43,10 @@
   - [ ] Multiplication
     - [x] Basic multiplication
     - [ ] Optimized for LUTs (Booth's algorithm)
-      - [x] Code simulation
+      - [ ] Code simulation
         - [x] Integers
-        - [x] Fixed point decimals
+        - [x] Fixed point decimals (balanced)
+        - [ ] Fixed point decimals (unbalanced)
       - [ ] Hardware simulation
       - [ ] Comparison of LUT ultization
   - [x] Negation
