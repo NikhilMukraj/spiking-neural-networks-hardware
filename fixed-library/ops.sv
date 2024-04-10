@@ -104,7 +104,8 @@ endmodule
 
 module booth_mult #(
 	parameter N = 8,
-	parameter Q = 4
+	parameter Q = 4,
+	parameter bits = 8,
 )(
 	input clk,
 	input enable,
@@ -153,7 +154,9 @@ module booth_mult #(
 	end
 
 	// sign bit + rest of string
-	assign c = {p[N * 2], p[N:1]};
+	// this will only work when same number of fractional and integer bits
+	// or if just using integers
+	assign c = {p[N * 2], p[bits + 1:bits * 2 + 1]};
 endmodule
 
 module abs #(
