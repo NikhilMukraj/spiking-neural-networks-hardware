@@ -60,9 +60,12 @@ def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=Fals
     else:
         logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(message)s')
 
+    if frac_bits != 0 and frac_bits != int_bits:
+        raise NotImplementedError('Currently only implemented for balanced integer and fractional bits and integers')
+
     m_string = decimal_to_fixed_point(m, int_bits, frac_bits)
     r_string = decimal_to_fixed_point(r, int_bits, frac_bits)
-
+    
     length = int_bits + frac_bits
 
     # ilen = length + length + 1 # The common length of internal variables
@@ -106,7 +109,9 @@ def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=Fals
 
     iterations.append(p)
 
-    answer_string = p[0] + p[-length:-1]
+    # answer_string = p[0] + p[-length:-1]
+
+    answer_string = p[0] + p[int_bits + 1:int_bits + 1 + length]
     answer = fixed_point_to_decimal(answer_string, int_bits, frac_bits)
 
     logging.debug(f'The answer is: {p}, {answer}')
