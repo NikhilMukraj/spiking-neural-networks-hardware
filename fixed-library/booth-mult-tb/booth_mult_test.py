@@ -66,8 +66,15 @@ async def booth_mult_test(dut):
 
         # if below fails, print these values to debug
         # if below fails because static values have not been set yet, wait 1 clock cycle to set values
+
+        # modify p init to work correctly
+
+        # ****** CHECK IF NUMBER ADDED TO ~a IS THE SAME IN BOOTH ALGO AS WELL ******
+        # ****** CALCULATE WHERE VALID ANSWER IS BASED ON THE NUMBER OF INT AND FRAC BITS ******
+        # ****** DETERMINE IF THAT CALCULATION HOLDS TRUE FOR MANY POSSIBLE VALUES ******
+
         assert str(dut.p_init.value) == booth_verification['p_init'], \
-        f"{dut.p_init.value} != {booth_verification['p_init']}"
+        f"{dut.p_init.value} != {booth_verification['p_init']}" 
         # assert str(dut.two_comp_m.value) == booth_verification['two_comp_m'], \
         # f"{dut.two_comp_m.value} != {booth_verification['two_comp_m']}"
         # assert str(dut.a_static.value) == booth_verification['a'], \
