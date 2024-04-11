@@ -73,6 +73,8 @@ async def booth_mult_test(dut):
         # ****** CALCULATE WHERE VALID ANSWER IS BASED ON THE NUMBER OF INT AND FRAC BITS ******
         # ****** DETERMINE IF THAT CALCULATION HOLDS TRUE FOR MANY POSSIBLE VALUES ******
 
+        # check if two comp m is the same if only dealing with integer or after modifying to work with fractionals
+
         assert str(dut.p_init.value) == booth_verification['p_init'], \
         f"{dut.p_init.value} != {booth_verification['p_init']}" 
         # assert str(dut.two_comp_m.value) == booth_verification['two_comp_m'], \
