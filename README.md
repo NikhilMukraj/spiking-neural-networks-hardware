@@ -56,6 +56,10 @@
   - [ ] High precision $e^x$
   - [x] Limited range $e^x$
   - [ ] Preprocessing of equation
+- [ ] Single operation a time system
+  - Apply a function to a given set of numbers
+  - Keep track of the new number, get rid of old numbers if not needed
+  - Determine next function and repeat
 - [ ] Operations verification on chip
   - [ ] Addition/Subtraction
   - [ ] Multiplication
@@ -69,7 +73,7 @@
   - [x] Adaptive value change
   - [x] Is spiking indicator
   - [ ] Clocked operations
-    - [ ] Potentially using one operator at a time (use finite state machine to keep track of which operators to use, keep track of numbers in a stack)
+    - [ ] Using one operator at a time (use finite state machine to keep track of which operators to use, keep track of numbers in a stack)
   - [ ] Verification on chip
     - [x] Vivado synthesis
       - [x] Without pins
