@@ -3,6 +3,8 @@
 from models import fixed_point_to_decimal, decimal_to_fixed_point
 import logging
 import sys
+import numpy as np
+import json
 
 
 def bit_add(m: str, n: str, length: int):
@@ -141,3 +143,19 @@ def find_substring(a, b, int_bits, frac_bits):
 
     # ignore sign for now
     return output['iterations'][-1].find(c_string[1:]) # return match
+
+substrings = {}
+for int_bits, frac_bits in [(16, 16), (8, 8), (4, 8), (12, 8)]:
+    for i in range(100):
+        a = np.random.uniform(-100, 100)
+        b = np.random.uniform(-100, 100)
+
+        output = find_substring(a, b, int_bits, frac_bits)
+        if (int_bits, frac_bits) not in substrings:
+            substrings[(int_bits, frac_bits)] = [(a, b, output)]
+        else:
+            substrings[(int_bits, frac_bits)].append((a, b, output))
+
+with open('substrings.json', 'w+') as f: 
+    json.dump(substrings, f)
+    
