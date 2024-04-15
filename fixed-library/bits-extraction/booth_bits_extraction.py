@@ -156,6 +156,5 @@ for int_bits, frac_bits in [(16, 16), (8, 8), (4, 8), (12, 8)]:
         else:
             substrings[(int_bits, frac_bits)].append((a, b, output))
 
-with open('substrings.json', 'w+') as f: 
+with open('booth_substrings.json', 'w+') as f: 
     json.dump(substrings, f)
-    
