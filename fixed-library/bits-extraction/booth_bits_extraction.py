@@ -1,10 +1,11 @@
 # https://www.geeksforgeeks.org/computer-organization-booths-algorithm/
 # implement booth mulitplier in python and then in hardware
-from models import fixed_point_to_decimal, decimal_to_fixed_point
+from fixed_point_models import fixed_point_to_decimal, decimal_to_fixed_point
 import logging
 import sys
 import numpy as np
 import json
+from tqdm import tqdm
 
 
 def bit_add(m: str, n: str, length: int):
@@ -59,8 +60,8 @@ def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=Fals
     else:
         logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(message)s')
 
-    if frac_bits != 0 and frac_bits != int_bits:
-        raise NotImplementedError('Currently only implemented for balanced integer and fractional bits and integers')
+    # if frac_bits != 0 and frac_bits != int_bits:
+    #     raise NotImplementedError('Currently only implemented for balanced integer and fractional bits and integers')
 
     m_string = decimal_to_fixed_point(m, int_bits, frac_bits)
     r_string = decimal_to_fixed_point(r, int_bits, frac_bits)
@@ -110,7 +111,7 @@ def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=Fals
 
     # answer_string = p[0] + p[-length:-1]
 
-    answer_string = p[0] + p[int_bits + 1:int_bits + 1 + length]
+    answer_string = p[0] + p[int_bits + 1:int_bits + length]
     answer = fixed_point_to_decimal(answer_string, int_bits, frac_bits)
 
     logging.debug(f'The answer is: {p}, {answer}')
@@ -133,28 +134,36 @@ def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=Fals
     }
 
 def find_substring(a, b, int_bits, frac_bits):
-    a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits))
-    b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits))
+    a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
+    b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits), int_bits, frac_bits)
 
     c = a * b
-    c_string = decimal_to_fixed_point(c_string, int_bits, frac_bits)
+    c_string = decimal_to_fixed_point(c, int_bits, frac_bits)
 
     output = booth_algo(a, b, int_bits=int_bits, frac_bits=frac_bits)
 
     # ignore sign for now
-    return output['iterations'][-1].find(c_string[1:]) # return match
+    index = output['iterations'][-1].find(c_string[1:]) # return match
+
+    if index == -1:
+        return [output['iterations'][-1], f'{c_string} not found', output['answer_string'], output['answer'], c, output['answer'] == c ]
+    else:
+        return [output['iterations'][-1], index, output['answer_string'], output['answer'], c, output['answer'] == c]
 
 substrings = {}
-for int_bits, frac_bits in [(16, 16), (8, 8), (4, 8), (12, 8)]:
+for int_bits, frac_bits in tqdm([(16, 16), (8, 8), (4, 8), (12, 8)]):
     for i in range(100):
-        a = np.random.uniform(-100, 100)
-        b = np.random.uniform(-100, 100)
+        a = np.random.randint(-16, 16)
+        b = np.random.randint(-16, 16)
 
         output = find_substring(a, b, int_bits, frac_bits)
-        if (int_bits, frac_bits) not in substrings:
-            substrings[(int_bits, frac_bits)] = [(a, b, output)]
+        if str((int_bits, frac_bits)) not in substrings:
+            a_dict = {'a' : {'num' : a, 'string' : decimal_to_fixed_point(a, int_bits, frac_bits)}}
+            b_dict = {'b' : {'num' : b, 'string' : decimal_to_fixed_point(b, int_bits, frac_bits)}}
+
+            substrings[str((int_bits, frac_bits))] = [{f'nums_{i+1}' : [a_dict, b_dict], 'output' : output}]
         else:
-            substrings[(int_bits, frac_bits)].append((a, b, output))
+            substrings[str((int_bits, frac_bits))].append([{f'nums_{i+1}' : [a_dict, b_dict], 'output' : output}])
 
 with open('booth_substrings.json', 'w+') as f: 
-    json.dump(substrings, f)
+    json.dump(substrings, f, indent=4)
