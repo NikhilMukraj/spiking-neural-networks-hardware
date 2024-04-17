@@ -133,7 +133,7 @@ def booth_algo(m: int, r: int, int_bits: int, frac_bits: int=0, debug: bool=Fals
         'answer_string' : answer_string,
     }
 
-def find_substring(a, b, int_bits, frac_bits):
+def find_substring(a, b, int_bits, frac_bits, use_integer=False):
     a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
     b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits), int_bits, frac_bits)
 
@@ -143,7 +143,10 @@ def find_substring(a, b, int_bits, frac_bits):
     output = booth_algo(a, b, int_bits=int_bits, frac_bits=frac_bits)
 
     # ignore sign for now
-    index = output['iterations'][-1].find(c_string[1:]) # return match
+    if use_integer:
+        c_string = c_string[0] + c_string[1:int_bits]
+    
+    index = output['iterations'][-1].find(c_string[1:])
 
     if index == -1:
         return [output['iterations'][-1], f'{c_string} not found', output['answer_string'], output['answer'], c, output['answer'] == c ]
@@ -153,10 +156,10 @@ def find_substring(a, b, int_bits, frac_bits):
 substrings = {}
 for int_bits, frac_bits in tqdm([(16, 16), (8, 8), (4, 8), (12, 8)]):
     for i in range(100):
-        a = np.random.randint(-16, 16)
-        b = np.random.randint(-16, 16)
+        a = np.random.uniform(-16, 16)
+        b = np.random.uniform(-16, 16)
 
-        output = find_substring(a, b, int_bits, frac_bits)
+        output = find_substring(a, b, int_bits, frac_bits, True)
         if str((int_bits, frac_bits)) not in substrings:
             a_dict = {'a' : {'num' : a, 'string' : decimal_to_fixed_point(a, int_bits, frac_bits)}}
             b_dict = {'b' : {'num' : b, 'string' : decimal_to_fixed_point(b, int_bits, frac_bits)}}
@@ -167,3 +170,5 @@ for int_bits, frac_bits in tqdm([(16, 16), (8, 8), (4, 8), (12, 8)]):
 
 with open('booth_substrings.json', 'w+') as f: 
     json.dump(substrings, f, indent=4)
+
+# try prescaling by multplying by 2 ** frac_bits first and using booth algo with int_bits=(int_bits+frac_bits)
