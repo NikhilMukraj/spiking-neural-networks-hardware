@@ -61,8 +61,8 @@ module negator #(
 endmodule
 
 module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmetic/blob/master/multiplier.sv
-    parameter N = 32,
-    parameter F = 16
+    parameter N = 16,
+    parameter F = 8
 )(
 	input [N-1:0] a, 
 	input [N-1:0] b,
