@@ -12,6 +12,7 @@ from fixed_point_models import multiplier_model, check_with_tolerance
 import json
 import numpy as np
 
+
 def find_substring(a, b, out_string, int_bits, frac_bits, only_integer=True):
     a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits))
     b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits))
@@ -40,8 +41,8 @@ async def mult_test(dut):
     substrings = {}
 
     for i in range(100):
-        a = np.random.uniform(-lower_bound, upper_bound)
-        b = np.random.uniform(-lower_bound, upper_bound)
+        a = np.random.uniform(lower_bound, upper_bound)
+        b = np.random.uniform(lower_bound, upper_bound)
 
         a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
         b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits), int_bits, frac_bits)
@@ -65,4 +66,7 @@ async def mult_test(dut):
 
     with open('mult_bits_extraction.json', 'w+') as f:
         json.dump(substrings, f, indent=4)
+    
+    # if doesnt work, try multiplying integers to find where bits are
+    # final result would probably be start of that substring, and then 15 more bits (accounting for sign bit)
     
