@@ -23,13 +23,13 @@ async def test_negator(a, dut, int_bits, frac_bits):
 
 @cocotb.test()
 async def negator_test(dut):
-    int_bits = 16
+    int_bits = -16
     frac_bits = 16
     lower_bound = -128
     upper_bound = 128
 
     for i in range(100):
-        a = np.random.uniform(-lower_bound, upper_bound)
+        a = np.random.uniform(lower_bound, upper_bound)
         a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
 
         await test_negator(a, dut, int_bits, frac_bits)
