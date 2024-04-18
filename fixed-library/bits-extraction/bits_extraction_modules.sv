@@ -1,3 +1,25 @@
+module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmetic/blob/master/multiplier.sv
+    parameter N = 16,
+    parameter F = 8
+)(
+	input [N-1:0] a, 
+	input [N-1:0] b,
+	output [N-1:0] c
+);
+	reg [2*N-1:0] result;
+	reg [N-1:0] finalresult;
+	assign c = finalresult;
+
+	always @ (*) begin						
+		result <= a[N-2:0] * b[N-2:0];													
+	end
+	
+	always @ (*) begin 										
+		finalresult[N-1] <= a[N-1] ^ b[N-1];	
+		finalresult[N-2:0] <= result[N-2+F:F];							
+	end
+endmodule
+
 module add #( // https://github.com/freecores/verilog_fixed_point_math_library/blob/master/qadd.v
 	parameter Q = 16,
 	parameter N = 32
@@ -60,32 +82,10 @@ module negator #(
 	end
 endmodule
 
-module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmetic/blob/master/multiplier.sv
-    parameter N = 16,
-    parameter F = 8
-)(
-	input [N-1:0] a, 
-	input [N-1:0] b,
-	output [N-1:0] c
-);
-	reg [2*N-1:0] result;
-	reg [N-1:0] finalresult;
-	assign c = finalresult;
-
-	always @ (*) begin						
-		result <= a[N-2:0] * b[N-2:0];													
-	end
-	
-	always @ (*) begin 										
-		finalresult[N-1] <= a[N-1] ^ b[N-1];	
-		finalresult[N-2:0] <= result[N-2+F:F];							
-	end
-endmodule
-
 module booth_mult #(
 	parameter N = 8,
 	parameter Q = 4,
-	parameter bits = 8,
+	parameter bits = 8
 )(
 	input clk,
 	input enable,
