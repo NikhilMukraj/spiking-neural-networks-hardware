@@ -24,7 +24,7 @@ def find_substring(a, b, out_string, int_bits, frac_bits, only_integer=True):
     if only_integer:
         end_index = int_bits
     else:
-        end_index = len('c_string')
+        end_index = len(c_string)
 
     looking_for = c_string[1:end_index]
 
@@ -35,8 +35,8 @@ def find_substring(a, b, out_string, int_bits, frac_bits, only_integer=True):
 async def mult_test(dut):
     int_bits = 16
     frac_bits = 16
-    lower_bound = -5
-    upper_bound = 5
+    lower_bound = -16
+    upper_bound = 16
 
     substrings = {}
 
@@ -68,5 +68,6 @@ async def mult_test(dut):
         json.dump(substrings, f, indent=4)
     
     # if doesnt work, try multiplying integers to find where bits are
-    # final result would probably be start of that substring, and then 15 more bits (accounting for sign bit)
+    # final result would probably be start of that substring
+    # and then 15 more bits (accounting for sign bit)
     
