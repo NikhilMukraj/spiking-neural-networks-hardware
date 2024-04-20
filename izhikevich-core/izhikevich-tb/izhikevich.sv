@@ -4,8 +4,8 @@
 
 
 module izhikevich_core #(
-	parameter N=32,
-	parameter Q=16
+	parameter N=16,
+	parameter Q=8
 )(
     input clk,
 	input [N-1:0] i,
@@ -27,8 +27,8 @@ module izhikevich_core #(
     reg eq, gt, lt, apply_edge;
     wire [N-1:0] dv, dw, new_voltage, new_w, w_at_th;
 
-    calc_dv calc_dv1 ( voltage, w, i, step, dv );
-    calc_dw calc_dw1 (
+    calc_dv #(.N(N), .Q(Q)) calc_dv1 ( voltage, w, i, step, dv );
+    calc_dw #(.N(N), .Q(Q)) calc_dw1 (
         a,
         b,
         voltage,
@@ -37,9 +37,9 @@ module izhikevich_core #(
         dw
     );
 
-    add adder1 ( voltage, dv, new_voltage );
-    add adder2 ( w, dw, new_w );
-    add adder3 ( w, d, w_at_th );
+    add #(.N(N), .Q(Q)) adder1 ( voltage, dv, new_voltage );
+    add #(.N(N), .Q(Q)) adder2 ( w, dw, new_w );
+    add #(.N(N), .Q(Q)) adder3 ( w, d, w_at_th );
 
     always @ (posedge clk) begin
         if (rst) begin
