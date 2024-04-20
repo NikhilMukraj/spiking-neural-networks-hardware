@@ -19,8 +19,8 @@ module div #(
 endmodule
 
 module add #( // https://github.com/freecores/verilog_fixed_point_math_library/blob/master/qadd.v
-	parameter Q = 16,
-	parameter N = 32
+	parameter N = 32,
+	parameter Q = 16
 )(
     input [N-1:0] a,
     input [N-1:0] b,
@@ -66,7 +66,8 @@ module add #( // https://github.com/freecores/verilog_fixed_point_math_library/b
 endmodule
 
 module negator #(
-	parameter N = 32
+	parameter N = 32,
+	parameter Q = 16
 )(
 	input [N-1:0] a,
 	output reg [N-1:0] out
@@ -82,7 +83,7 @@ endmodule
 
 module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmetic/blob/master/multiplier.sv
     parameter N = 32,
-    parameter F = 16
+    parameter Q = 16
 )(
 	input [N-1:0] a, 
 	input [N-1:0] b,
@@ -98,12 +99,13 @@ module mult #( // https://github.com/Mehdi0xC/SystemVerilog-FixedPoint-Arithmeti
 	
 	always @ (*) begin 										
 		finalresult[N-1] <= a[N-1] ^ b[N-1];	
-		finalresult[N-2:0] <= result[N-2+F:F];							
+		finalresult[N-2:0] <= result[N-2+Q:Q];							
 	end
 endmodule
 
 module abs #(
-	parameter N = 32
+	parameter N = 32,
+	parameter Q = 16
 )(
 	input [N-1:0] x,
 	output reg [N-1:0] out
@@ -536,7 +538,8 @@ module exp_higher_precision #(
 endmodule
 
 module linear_piecewise #(
-	parameter N = 32
+	parameter N = 32,
+	parameter Q = 16
 ) (
 	input [N-1:0] x,
 	input [N-1:0] m1,
@@ -549,28 +552,28 @@ module linear_piecewise #(
 	reg [N-1:0] mx1, mx2, mxb1, mxb2;
 
 	// m1 * x
-	mult multiplier1(
+	mult #(.N(N), .Q(Q)) multiplier1(
 		m1,
 		x,
 		mx1
 	);
 
 	// m1 * x + b1
-	add adder1(
+	add #(.N(N), .Q(Q)) adder1(
 		mx1,
 		b1,
 		mxb1
 	);
 
 	// m2 * x
-	mult multiplier2(
+	mult #(.N(N), .Q(Q)) multiplier2(
 		m2,
 		x,
 		mx2
 	);
 
 	// m2 * x + b1	
-	add adder2(
+	add #(.N(N), .Q(Q)) adder2(
 		mx2,
 		b2,
 		mxb2
@@ -579,7 +582,7 @@ module linear_piecewise #(
 	reg eq, gt, lt;
 
 	// see if can be simplified
-	fixed_point_cmp cmp1(
+	fixed_point_cmp #(.N(N)) cmp1(
 		x,
 		split,
 		eq,
