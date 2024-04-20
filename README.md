@@ -45,7 +45,7 @@
     - [ ] Optimized for LUTs (Booth's algorithm)
       - [ ] Code simulation
         - [x] Integers
-        - [x] Fixed point decimals (balanced)
+        - [ ] Fixed point decimals (balanced)
         - [ ] Fixed point decimals (unbalanced)
       - [ ] Hardware simulation
       - [ ] Comparison of LUT ultization
@@ -74,6 +74,9 @@
   - [x] Is spiking indicator
   - [ ] Clocked operations
     - [ ] Using one operator at a time (use finite state machine to keep track of which operators to use, keep track of numbers in a stack)
+  - [ ] 16-bit processor (with slwer clock speed)
+    - [ ] 8|8 split
+    - [ ] 10|6 split
   - [ ] Verification on chip
     - [x] Vivado synthesis
       - [x] Without pins
@@ -96,8 +99,13 @@
 - [ ] Communication protocol
   - [ ] Basic pin testing
   - [ ] SPI
+    - [ ] Simulation
+      - [x] Computer to FPGA (display incoming string on leds)
+      - [ ] FPGA to computer (invert incoming string)
     - [ ] Synthesis
     - [ ] On chip verification
+      - [ ] Computer to FPGA
+      - [ ] FPGA to computer
   - [ ] FPGA side communication
   - [ ] Raspberry Pi side communication
   - [ ] Distributed communication
