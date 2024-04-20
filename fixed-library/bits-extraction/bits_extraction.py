@@ -14,8 +14,8 @@ import numpy as np
 
 
 def find_substring(a, b, out_string, int_bits, frac_bits, only_integer=True):
-    a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits))
-    b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits))
+    a = fixed_point_to_decimal(decimal_to_fixed_point(a, int_bits, frac_bits), int_bits, frac_bits)
+    b = fixed_point_to_decimal(decimal_to_fixed_point(b, int_bits, frac_bits), int_bits, frac_bits)
 
     # c = multiplier_model(a, b, int_bits + frac_bits - 1) * (2 ** (-frac_bits))
     c = a * b
@@ -33,10 +33,10 @@ def find_substring(a, b, out_string, int_bits, frac_bits, only_integer=True):
 
 @cocotb.test()
 async def mult_test(dut):
-    int_bits = 16
-    frac_bits = 16
-    lower_bound = -16
-    upper_bound = 16
+    int_bits = 8
+    frac_bits = 8
+    lower_bound = -8
+    upper_bound = 8
 
     substrings = {}
 
@@ -66,8 +66,4 @@ async def mult_test(dut):
 
     with open('mult_bits_extraction.json', 'w+') as f:
         json.dump(substrings, f, indent=4)
-    
-    # if doesnt work, try multiplying integers to find where bits are
-    # final result would probably be start of that substring
-    # and then 15 more bits (accounting for sign bit)
     
