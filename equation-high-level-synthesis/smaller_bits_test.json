@@ -1,6 +1,6 @@
 {
     "name": "smaller_bits_test",
-    "equation": "((x+y)+z)",
+    "equation": "((x+y)*z)",
     "variables": ["x", "y", "z"],
     "out_variable": "out",
     "integer_bits": 8,
