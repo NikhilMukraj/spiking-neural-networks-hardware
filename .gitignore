@@ -12,6 +12,10 @@
 /izhikevich-core/izhikevich-tb/__pycache__
 /izhikevich-core/izhikevich-tb/output.log
 /izhikevich-core/izhikevich-tb/temp.sv
+/izhikevich-core/smaller-bits-izhikevich-tb/sim_build
+/izhikevich-core/smaller-bits-izhikevich-tb/results.xml
+/izhikevich-core/smaller-bits-izhikevich-tb/__pycache__
+/izhikevich-core/smaller-bits-izhikevich-tb/output.log
 /izhikevich-core/stdp/stdp-tb/sim_build
 /izhikevich-core/stdp/stdp-tb/results.xml
 /izhikevich-core/stdp/stdp-tb/__pycache__
