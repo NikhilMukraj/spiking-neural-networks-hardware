@@ -4,8 +4,8 @@
 
 
 module izhikevich_core #(
-	parameter N=16,
-	parameter Q=6
+	parameter N=20,
+	parameter Q=10
 )(
     input clk,
 	input [N-1:0] i,
@@ -46,7 +46,7 @@ module izhikevich_core #(
             voltage = v_init;
             w = w_init;
             is_spiking <= 1'b0;
-            last_dv <= 16'b0000000000000000; // 0
+            last_dv <= 20'b00000000000000000000; // 0
         end
 
         if (apply & ($signed(voltage) > $signed(v_th))) begin

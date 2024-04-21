@@ -1,6 +1,6 @@
 module calc_dw #(
-	parameter N=16,
-	parameter Q=6
+	parameter N=20,
+	parameter Q=10
 )(
 	input [N-1:0] a,
 	input [N-1:0] b,
