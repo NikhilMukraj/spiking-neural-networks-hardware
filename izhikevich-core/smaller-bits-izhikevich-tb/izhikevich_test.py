@@ -15,15 +15,15 @@ async def generate_clock(dut, timesteps):
 
 @cocotb.test()
 async def test(dut):
-    timesteps = 1000
+    timesteps = 2000
 
     with open('output.log', 'w+') as f:
         f.write('voltage,w,is_spiking,bit_string\n')
 
     await cocotb.start(generate_clock(dut, timesteps * 2 + 20))
     
-    int_bits = 10
-    frac_bits = 10
+    int_bits = 16
+    frac_bits = 8
     tolerance = 0.1
 
     # can play around with these params

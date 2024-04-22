@@ -4,8 +4,8 @@
 
 
 module izhikevich_core #(
-	parameter N=20,
-	parameter Q=10
+	parameter N=24,
+	parameter Q=8
 )(
     input clk,
 	input [N-1:0] i,
