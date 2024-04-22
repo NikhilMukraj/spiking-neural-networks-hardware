@@ -1,5 +1,5 @@
 module calc_dv #(
-	parameter N=20,
+	parameter N=24,
 	parameter Q=8
 )(
 	input [N-1:0] v,
