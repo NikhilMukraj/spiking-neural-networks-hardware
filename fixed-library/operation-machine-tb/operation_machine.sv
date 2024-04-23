@@ -19,12 +19,28 @@ module operations #(
     parameter Q = 16,
     parameter stack = 5
 )(
+    input rst,
     input clk,
-    input continue,
+    input apply,
     output [$clog2(stack)+1:0] index1,
     output [$clog2(stack)+1:0] index2,
-    output [2:0] operand
+    output [$clog2(stack)+1:0] index3,
+    output [2:0] operand,
+    output done
 );
+    always @ (posedge clk) begin
+        if (rst) begin
+            index1 <= {N{1'b0}};
+            index2 <= {N{1'b0}};
+            index3 <= {N{1'b0}};
+            operand <= 3'b000;
+            done <= 1'b0;
+        end
+
+        if (apply) begin
+            // change index and operation according to finite state machine
+        end
+    end
 endmodule
 
 module operation_machine #(
@@ -39,7 +55,6 @@ module operation_machine #(
     input [$clog2(stack)+1:0] index2,
     input [$clog2(stack)+1:0] index3,
     input [N-1:0] value,
-    output reg done,
     output [N-1:0] out
 );
     // all clocked operations
@@ -57,27 +72,39 @@ module operation_machine #(
     negator #(.N(N), .Q(Q)) negator1 ( a, b, neg_out );
     abs #(.N(N), .Q(Q)) abs1 ( a, b, abs_out );
 
+    // https://stackoverflow.com/questions/38134217/how-do-i-access-an-array-element-using-a-variable-as-index
+    // rewrite with above link in mind ^
+    // probably can automatically generate index values and then 
+    // index the pregenerated values based on index1, index2, and index3 in a table
+
+    // https://electronics.stackexchange.com/questions/67983/accessing-rows-of-an-array-using-variable-in-verilog
+    // test variable indexing separately before continuing
+
     always @ (posedge clk) begin
         if (rst) begin
             a <= {N{1'b0}};
             b <= {N{1'b0}};
+            adder_out <= {N{1'b0}};
+            mult_out <= {N{1'b0}};
+            neg_out <= {N{1'b0}};
+            abs_out <= {N{1'b0}};
             stack <= {(N * stack){1'b0}};
         end
 
         if (operand == 3'b001) begin
-            stack[index1-1:index1-N-1] <= value;
+            stack[index1*N-1:index1*N-N-1] <= value;
         end else if (operand == 3'b010) begin
-            stack[index2-1:index2-N-1] <= value;
+            stack[index2*N-1:index2*N-N-1] <= value;
         end else if (operand == 3'b011 | operand == 3'b100 | operand == 3'b101 | operand == 3'b110) begin
-            a <= stack[index1-1:index1-N-1]; 
-            b <= stack[index2-1:index2-N-1]; 
+            a <= stack[index1*N-1:index1*N-N-1]; 
+            b <= stack[index2*N-1:index2*N-N-1]; 
         end
 
         case (operand)
-            3'b011 : stack[index3-1:index3-N-1] <= adder_out;
-            3'b100 : stack[index3-1:index3-N-1] <= mult_out;
-            3'b101 : stack[index3-1:index3-N-1] <= neg_out;
-            3'b110 : stack[index3-1:index3-N-1] <= abs_out;
+            3'b011 : stack[index3*N-1:index3*N-N-1] <= adder_out;
+            3'b100 : stack[index3*N-1:index3*N-N-1] <= mult_out;
+            3'b101 : stack[index3*N-1:index3*N-N-1] <= neg_out;
+            3'b110 : stack[index3*N-1:index3*N-N-1] <= abs_out;
         endcase
     end
 
