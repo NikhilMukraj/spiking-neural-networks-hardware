@@ -17,28 +17,50 @@
 module operations #(
     parameter N = 32,
     parameter Q = 16,
+    parameter count = 3,
     parameter stack = 5
 )(
     input rst,
     input clk,
     input apply,
-    output [$clog2(stack)+1:0] index1,
-    output [$clog2(stack)+1:0] index2,
-    output [$clog2(stack)+1:0] index3,
+    output [$clog2(stack):0] index1,
+    output [$clog2(stack):0] index2,
+    output [$clog2(stack):0] index3,
+    output [N:0] 
     output [2:0] operand,
     output done
 );
+    reg [counter-1:0] counter;
+
     always @ (posedge clk) begin
         if (rst) begin
-            index1 <= {N{1'b0}};
-            index2 <= {N{1'b0}};
-            index3 <= {N{1'b0}};
+            index1 <= {$clog2(stack){1'b0}};
+            index2 <= {$clog2(stack){1'b0}};
+            index3 <= {$clog2(stack){1'b0}};
             operand <= 3'b000;
             done <= 1'b0;
         end
 
+        // try implementing (x+y)*z
+
+        // try implementing (5+y)*z
+        // 5 is static so it should be in some reserve part of memory
+
+        // then generalize this
+
         if (apply) begin
             // change index and operation according to finite state machine
+
+            // first load in all values into memory
+
+            // once loaded pick 0 for index1 and 1 for index2
+            // with plus operand, index3 should be 3
+
+            // mult operand, 3 for index1 and 2 for index2, 4 for index3
+
+            // if (counter == 3'b000) begin
+                
+            // end
         end
     end
 endmodule
@@ -51,9 +73,9 @@ module operation_machine #(
     input rst,
     input clk,
     input [2:0] operand,
-    input [$clog2(stack)+1:0] index1,
-    input [$clog2(stack)+1:0] index2,
-    input [$clog2(stack)+1:0] index3,
+    input [$clog2(stack):0] index1,
+    input [$clog2(stack):0] index2,
+    input [$clog2(stack):0] index3,
     input [N-1:0] value,
     output [N-1:0] out
 );
@@ -65,7 +87,7 @@ module operation_machine #(
     // output when done
 
     reg [N-1:0] a, b, adder_out, mult_out, neg_out, abs_out;
-    reg [N * stack - 1:0] stack;
+    reg [N*stack-1:0] stack;
 
     add #(.N(N), .Q(Q)) adder1 ( a, b, adder_out );
     mult #(.N(N), .Q(Q)) mult1 ( a, b, mult_out );
@@ -80,6 +102,9 @@ module operation_machine #(
     // https://electronics.stackexchange.com/questions/67983/accessing-rows-of-an-array-using-variable-in-verilog
     // test variable indexing separately before continuing
 
+    reg do_operation;
+    assign do_operation = operand == 3'b011 | operand == 3'b100 | operand == 3'b101 | operand == 3'b110;
+
     always @ (posedge clk) begin
         if (rst) begin
             a <= {N{1'b0}};
@@ -92,19 +117,19 @@ module operation_machine #(
         end
 
         if (operand == 3'b001) begin
-            stack[index1*N-1:index1*N-N-1] <= value;
+            stack[(index1*N)-1+:N] <= value;
         end else if (operand == 3'b010) begin
-            stack[index2*N-1:index2*N-N-1] <= value;
-        end else if (operand == 3'b011 | operand == 3'b100 | operand == 3'b101 | operand == 3'b110) begin
-            a <= stack[index1*N-1:index1*N-N-1]; 
-            b <= stack[index2*N-1:index2*N-N-1]; 
+            stack[(index2*N)-1+:N] <= value;
+        end else if (do_operation) begin
+            a <= stack[(index1*N)-1+:N]; 
+            b <= stack[(index2*N)-1+:N]; 
         end
 
         case (operand)
-            3'b011 : stack[index3*N-1:index3*N-N-1] <= adder_out;
-            3'b100 : stack[index3*N-1:index3*N-N-1] <= mult_out;
-            3'b101 : stack[index3*N-1:index3*N-N-1] <= neg_out;
-            3'b110 : stack[index3*N-1:index3*N-N-1] <= abs_out;
+            3'b011 : stack[(index3*N)-1+:N] <= adder_out;
+            3'b100 : stack[(index3*N)-1+:N] <= mult_out;
+            3'b101 : stack[(index3*N)-1+:N] <= neg_out;
+            3'b110 : stack[(index3*N)-1+:N] <= abs_out;
         endcase
     end
 
