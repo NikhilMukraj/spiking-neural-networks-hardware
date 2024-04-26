@@ -116,6 +116,7 @@ module operation_machine #(
             stack <= {(N * stack){1'b0}};
         end
 
+        // may want to redo this to input two values at once
         if (operand == 3'b001) begin
             stack[(index1*N)-1+:N] <= value;
         end else if (operand == 3'b010) begin
