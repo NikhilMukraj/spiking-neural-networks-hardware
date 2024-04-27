@@ -74,9 +74,10 @@
   - [x] Is spiking indicator
   - [ ] Clocked operations
     - [ ] Using one operator at a time (use finite state machine to keep track of which operators to use, keep track of numbers in a stack)
-  - [ ] 16-bit processor (with slwer clock speed)
-    - [ ] 8|8 split
-    - [ ] 10|6 split
+  - [x] 16-bit processor (with slower clock speed) (found to be inaccurate)
+    - [x] 8|8 split
+    - [x] 10|6 split
+  - [x] 24 bit processor (found to be more accurate but not enough)
   - [ ] Verification on chip
     - [x] Vivado synthesis
       - [x] Without pins
