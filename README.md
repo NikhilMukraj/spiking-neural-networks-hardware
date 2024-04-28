@@ -56,7 +56,11 @@
   - [ ] High precision $e^x$
   - [x] Limited range $e^x$
   - [ ] Preprocessing of equation
-- [ ] Single operation a time system
+- [ ] Operation machine
+  - [ ] Variable indexing to stack
+  - [ ] Doing operation and saving output
+  - [ ] Machine that determines which is the next operation and where to store it (state driving machine)
+  - [ ] High level synthesis of state driving machine
   - Apply a function to a given set of numbers
   - Keep track of the new number, get rid of old numbers if not needed
   - Determine next function and repeat
