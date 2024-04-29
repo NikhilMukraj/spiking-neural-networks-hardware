@@ -12,7 +12,8 @@ module izhikevich_core #(
 	input [N-1:0] v_init,
 	input [N-1:0] w_init,
     input [N-1:0] v_th,
-    input [N-1:0] step,
+    input [N-1:0] dv_step,
+    input [N-1:0] dw_step,
 	input [N-1:0] a,
 	input [N-1:0] b,
 	input [N-1:0] c,
@@ -27,13 +28,13 @@ module izhikevich_core #(
     reg eq, gt, lt, apply_edge;
     wire [N-1:0] dv, dw, new_voltage, new_w, w_at_th;
 
-    calc_dv #(.N(N), .Q(Q)) calc_dv1 ( voltage, w, i, step, dv );
+    calc_dv #(.N(N), .Q(Q)) calc_dv1 ( voltage, w, i, dv_step, dv );
     calc_dw #(.N(N), .Q(Q)) calc_dw1 (
         a,
         b,
         voltage,
         w,
-        step,
+        dw_step,
         dw
     );
 
