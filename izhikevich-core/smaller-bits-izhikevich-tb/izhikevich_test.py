@@ -31,7 +31,8 @@ async def test(dut):
     v_init = -65
     w_init = 30
     v_th = 30
-    step = 0.5 / 10 # dt / tau_m
+    dv_step = 0.1 / 1 # dt / cm
+    dw_step = 0.1 / 10 # dt / tau m
     a = 0.01
     b = 0.25
     c = -55
@@ -43,7 +44,8 @@ async def test(dut):
     dut.v_init.value = BinaryValue(decimal_to_fixed_point(v_init, int_bits, frac_bits))
     dut.w_init.value = BinaryValue(decimal_to_fixed_point(w_init, int_bits, frac_bits))
     dut.v_th.value = BinaryValue(decimal_to_fixed_point(v_th, int_bits, frac_bits))
-    dut.step.value = BinaryValue(decimal_to_fixed_point(step, int_bits, frac_bits))
+    dut.dv_step.value = BinaryValue(decimal_to_fixed_point(dv_step, int_bits, frac_bits))
+    dut.dw_step.value = BinaryValue(decimal_to_fixed_point(dw_step, int_bits, frac_bits))
     dut.a.value = BinaryValue(decimal_to_fixed_point(a, int_bits, frac_bits))
     dut.b.value = BinaryValue(decimal_to_fixed_point(b, int_bits, frac_bits))
     dut.c.value = BinaryValue(decimal_to_fixed_point(c, int_bits, frac_bits))
