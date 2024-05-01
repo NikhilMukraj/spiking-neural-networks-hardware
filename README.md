@@ -81,6 +81,7 @@
   - [x] 16-bit processor (with slower clock speed) (found to be inaccurate)
     - [x] 8|8 split
     - [x] 10|6 split
+  - [x] 18-bit processor (found to be inaccurate)
   - [x] 24 bit processor (found to be more accurate but not enough)
   - [ ] Verification on chip
     - [x] Vivado synthesis
