@@ -82,6 +82,8 @@
     - [x] 8|8 split
     - [x] 10|6 split
   - [x] 18-bit processor (found to be inaccurate)
+  - [ ] 16-bit processor with scaling down (to prevent overflow)
+    - [Equations reference](https://people.ece.cornell.edu/land/courses/ece5760/DDA/NeuronIndex.htm)
   - [x] 24 bit processor (found to be more accurate but not enough)
   - [ ] Verification on chip
     - [x] Vivado synthesis
