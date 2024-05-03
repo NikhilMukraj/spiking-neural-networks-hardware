@@ -104,7 +104,7 @@
     - [ ] BRAM could store weights for every neuron (until RAM interface is developed)
       - If 20 bits, first 4 can store whether there is a connection, and if it is inhibitory or excitatory
   - [ ] Regular RAM
-    - [ ] Having RAM store last $dv$ to be used in calculations and read from multiple places at the same time
+    - Try with one memory controller and multiple memory controllers
 - [ ] Communication protocol
   - [ ] Basic pin testing
   - [ ] SPI
@@ -121,6 +121,7 @@
 - [ ] Izhikevich matrix
   - [ ] Interwoven matrix
     - Potentially could refactor with asynchronous execution of neurons and crossbar mechanisms in mind
+    - For now, try implementing with one memory controller and see if you can get it to work with multiple memory controllers
     - [ ] Save each output of neuron to memory
     - [ ] Calculate inputs for each neuron by row from memory and save to hardware matrix
     - [ ] Run iteration of lattice
