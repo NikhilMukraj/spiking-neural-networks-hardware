@@ -1,5 +1,5 @@
 {
-    "name": "calc_dv",
+    "name": "scaled_calc_dv",
     "equation": "(((((4*(v*v))+(5*v))+1.4)+((-1*w)+i))*step)",
     "variables": ["v", "w", "i", "step"],
     "out_variable": "out",
