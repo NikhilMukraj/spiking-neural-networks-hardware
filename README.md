@@ -103,7 +103,8 @@
     - [ ] BRAM access from different controllers
     - [ ] BRAM could store weights for every neuron (until RAM interface is developed)
       - If 20 bits, first 4 can store whether there is a connection, and if it is inhibitory or excitatory
-  - [ ] Regular RAM
+  - [ ] SDRAM
+    - [SDRAM controller](https://opencores.org/projects/ddr3_sdram)
     - Try with one memory controller and multiple memory controllers
 - [ ] Communication protocol
   - [ ] Basic pin testing
