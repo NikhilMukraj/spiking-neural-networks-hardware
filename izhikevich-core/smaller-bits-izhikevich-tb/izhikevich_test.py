@@ -2,7 +2,6 @@ import cocotb
 from cocotb.triggers import RisingEdge, Timer
 from cocotb.binary import BinaryValue
 from fixed_point_models import fixed_point_to_decimal, decimal_to_fixed_point
-from fixed_point_models import check_with_tolerance
 import os
 
 
@@ -24,7 +23,6 @@ async def test(dut):
     
     int_bits = 16
     frac_bits = 8
-    tolerance = 0.1
 
     # can play around with these params
     i = 40
