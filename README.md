@@ -84,6 +84,14 @@
   - [x] 18-bit processor (found to be inaccurate)
   - [ ] 16-bit processor with scaling down (to prevent overflow)
     - [Equations reference](https://people.ece.cornell.edu/land/courses/ece5760/DDA/NeuronIndex.htm)
+    - [x] Verilog
+    - [ ] Finding correct parameters
+      - Currently the w parameter will reach 0 and then never change, need to find a set of parameters that does not engage in this behavior
+      - Valid parameters could be generated computationally
+      - Could be that some of the parameters are so small the fixed point approximation is 0
+    - [ ] Synthesis
+      - [ ] Place and route
+      - [ ] Timing constraints (lower clock speed until timing constraints met, maybe 50 MHz)
   - [x] 24 bit processor (found to be more accurate but not enough)
   - [ ] Verification on chip
     - [x] Vivado synthesis
