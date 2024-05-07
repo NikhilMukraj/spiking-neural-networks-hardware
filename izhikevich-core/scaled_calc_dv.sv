@@ -1,6 +1,3 @@
-`include "../ops.sv"
-
-
 module scaled_calc_dv #(
 	parameter N=16,
 	parameter Q=8
