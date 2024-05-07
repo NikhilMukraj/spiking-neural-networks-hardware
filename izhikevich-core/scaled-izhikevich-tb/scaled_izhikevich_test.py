@@ -31,12 +31,14 @@ async def test(dut):
     v_th = 0.3
     dv_step = 1 / 16 # dt / cm
     dw_step = 1 / 16 # dt / tau m
-    a = 0.01
-    b = 0.2
+    a = 0.016
+    b = 0.25
     c = -0.5
     d = 0.02
     apply = 0
     rst = 1
+
+    # could also try a step smaller than 1/16 (2^-8)
 
     dut.i.value = BinaryValue(decimal_to_fixed_point(i, int_bits, frac_bits))
     dut.v_init.value = BinaryValue(decimal_to_fixed_point(v_init, int_bits, frac_bits))
