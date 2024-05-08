@@ -22,7 +22,7 @@ async def test(dut):
     await cocotb.start(generate_clock(dut, timesteps * 2 + 20))
     
     int_bits = 8
-    frac_bits = 8
+    frac_bits = 10
 
     # can play around with these params
     i = 0.15
