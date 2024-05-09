@@ -22,18 +22,20 @@ module iterator #(
     end
 endmodule
 
-module voltage_to_current #(
+module gap_junction #(
     parameter N=32,
     parameter Q=16
 )(
-    input [N-1:0] dv,
-    input [N-1:0] dt_reciprocal,
-    input [N-1:0] cm_reciprocal,
+    input [N-1:0] gap_conductance,
+    input [N-1:0] presyanptic_voltage,
+    input [N-1:0] postsynaptic_voltage,
     output reg [N-1:0] current
 );
-    reg [N-1:0] term1;
-    mult multiplier1(dv, dt_reciprocal, term1);
-    mult multiplier2(term1, cm_reciprocal, current);
+    reg [N-1:0] term1, term2, term3;
+
+    negator negator1(postsynaptic_voltage, term1);
+    adder adder1(presyanptic_voltage, term2, term3);
+    mult multiplier1(gap_conductance, term3, current);
 endmodule
 
 module top #(
