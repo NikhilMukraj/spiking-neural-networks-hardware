@@ -84,13 +84,13 @@
   - [x] 18-bit processor (found to be inaccurate)
   - [ ] 18-bit processor with scaling down (to prevent overflow)
     - [Equations reference](https://people.ece.cornell.edu/land/courses/ece5760/DDA/NeuronIndex.htm)
-    - **NEEDS TO BE REDONE WITH 18 BIT, (6-bit fraction)**
     - If still suffering from inaccuracies, redo it but use the method the Cornell documentation does, such that the calcuation before the step is applied is multiplied by one fourth on each term and the the step is just one fourth for a total of 1/16 step
     - [ ] Verilog
     - [ ] Finding correct parameters
       - Currently the w parameter will reach 0 and then never change, need to find a set of parameters that does not engage in this behavior
       - Valid parameters could be generated computationally
       - Could be that some of the parameters are so small the fixed point approximation is 0
+        - [ ] Simulate the fixed point operations (do add and mult and then calculate overflow) to see when the equation starts to fail
     - [ ] Synthesis
       - [ ] Place and route
       - [ ] Timing constraints (lower clock speed until timing constraints met, maybe 50 MHz)
