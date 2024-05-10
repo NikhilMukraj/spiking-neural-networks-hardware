@@ -94,6 +94,7 @@
     - [ ] Synthesis
       - [ ] Place and route
       - [ ] Timing constraints (lower clock speed until timing constraints met, maybe 50 MHz)
+  - [ ] 20 bit processor
   - [x] 24 bit processor (found to be more accurate but not enough)
   - [ ] Verification on chip
     - [x] Vivado synthesis
