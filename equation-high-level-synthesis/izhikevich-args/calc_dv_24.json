@@ -1,5 +1,5 @@
 {
-    "name": "calc_dv_18_bit",
+    "name": "calc_dv_24_bit",
     "equation": "(((((0.04*(v*v))+(5*v))+140)+((-1*w)+i))*step)",
     "variables": ["v", "w", "i", "step"],
     "out_variable": "out",
