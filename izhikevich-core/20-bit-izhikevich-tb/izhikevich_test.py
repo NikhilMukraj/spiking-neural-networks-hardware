@@ -29,8 +29,8 @@ async def test(dut):
     v_init = -65
     w_init = 30
     v_th = 30
-    dv_step = 0.1 / 10 # dt / cm
-    dw_step = 0.1 / 10 # dt / tau m
+    dv_step = 0.1 / 1 # dt / cm
+    dw_step = 0.1 / 1 # dt / tau m
     a = 0.02
     b = 0.25
     c = -55
