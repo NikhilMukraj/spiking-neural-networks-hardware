@@ -27,6 +27,10 @@
 /izhikevich-core/24-bit-izhikevich-tb/results.xml
 /izhikevich-core/24-bit-izhikevich-tb/__pycache__
 /izhikevich-core/24-bit-izhikevich-tb/output.log
+/izhikevich-core/cornell-izhikevich-tb/sim_build
+/izhikevich-core/cornell-izhikevich-tb/results.xml
+/izhikevich-core/cornell-izhikevich-tb/__pycache__
+/izhikevich-core/cornell-izhikevich-tb/output.log
 /izhikevich-core/scaled-izhikevich-tb/sim_build
 /izhikevich-core/stdp/stdp-tb/sim_build
 /izhikevich-core/stdp/stdp-tb/results.xml
