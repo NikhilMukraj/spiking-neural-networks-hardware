@@ -26,6 +26,7 @@ module izhikevich_core #(
 )(
     input clk,
     input reset,
+	input apply,
     input signed [N-1:0] v_init, // 18'sh3_4CCD ; // -0.7
     input signed [N-1:0] u_init, // 18'sh3_CCCD ; // -0.2
     input signed [N-1:0] v_th, // 18'sh0_4CCC ; // 0.30
@@ -58,13 +59,13 @@ module izhikevich_core #(
 		end	
 		else 
 		begin
-			if ((v1 > p)) 
+			if (apply & (v1 > p)) 
 			begin 
 				v1 <= c; 		
 				u1 <= u1reset;
 				spike <= 1;
 			end
-			else
+			else if (apply)
 			begin
 				v1 <= v1new;
 				u1 <= u1new; 
