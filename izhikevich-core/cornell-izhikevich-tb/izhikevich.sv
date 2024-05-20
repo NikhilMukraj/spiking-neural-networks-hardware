@@ -46,7 +46,7 @@ module izhikevich_core #(
 	
 	assign c14 = 18'sh1_6666; // 1.4
 	
-	assign voltage = v1;  //copy state var to output
+	assign voltage = v1;  // copy state var to output
     assign u = u1;
 	
 	always @ (posedge clk) 
@@ -55,7 +55,7 @@ module izhikevich_core #(
 		begin	
 			v1 <= v_init; // -0.7
 			u1 <= u_init; // -0.2
-			spike <= 0;
+			is_spiking <= 0;
 		end	
 		else 
 		begin
@@ -63,13 +63,13 @@ module izhikevich_core #(
 			begin 
 				v1 <= c; 		
 				u1 <= u1reset;
-				spike <= 1;
+				is_spiking <= 1;
 			end
 			else if (apply)
 			begin
 				v1 <= v1new;
 				u1 <= u1new; 
-				spike <= 0;	
+				is_spiking <= 0;	
 			end
 		end 
 	end
