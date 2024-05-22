@@ -43,7 +43,6 @@ module izhikevich_core #(
 	reg signed [N-1:0] v1,u1;
 	wire signed	[N-1:0] u1reset, v1new, u1new, du1;
 	wire signed	[N-1:0] v1xv1, v1xb;
-	wire signed	[N-1:0] p, c14;
 	
 	// assign c14 = 18'sh1_6666; // 1.4
 	
