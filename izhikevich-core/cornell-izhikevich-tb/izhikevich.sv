@@ -40,7 +40,7 @@ module izhikevich_core #(
     output reg signed [N-1:0] u,
     output reg is_spiking,
 );
-	reg signed [N-1:0] v1,u1;
+	reg signed [N-1:0] v1, u1;
 	wire signed	[N-1:0] u1reset, v1new, u1new, du1;
 	wire signed	[N-1:0] v1xv1, v1xb;
 	
