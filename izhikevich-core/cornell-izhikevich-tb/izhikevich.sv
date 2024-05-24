@@ -49,24 +49,17 @@ module izhikevich_core #(
 	assign voltage = v1;  // copy state var to output
     assign u = u1;
 	
-	always @ (posedge clk) 
-	begin
-		if (reset) 
-		begin	
+	always @ (posedge clk) begin
+		if (reset) begin	
 			v1 <= v_init; // -0.7
 			u1 <= u_init; // -0.2
 			is_spiking <= 0;
-		end	
-		else 
-		begin
-			if (apply & (v1 > v_th)) 
-			begin 
+		end	else begin
+			if (apply & (v1 > v_th)) begin 
 				v1 <= c; 		
 				u1 <= u1reset;
 				is_spiking <= 1;
-			end
-			else if (apply)
-			begin
+			end else if (apply) begin
 				v1 <= v1new;
 				u1 <= u1new; 
 				is_spiking <= 0;	
