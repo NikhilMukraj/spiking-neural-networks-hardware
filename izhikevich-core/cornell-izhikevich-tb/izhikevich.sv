@@ -26,7 +26,7 @@ module izhikevich_core #(
 )(
     input clk,
     input reset,
-	input apply, // remove if no update occurs
+	input apply, // remove if no update occurs during testing
     input signed [N-1:0] v_init, // 18'sh3_4CCD ; // -0.7
     input signed [N-1:0] u_init, // 18'sh3_CCCD ; // -0.2
     input signed [N-1:0] v_th, // 18'sh0_4CCC ; // 0.30
@@ -72,11 +72,11 @@ module izhikevich_core #(
 	// but note that what is actually coded is
 	// v1(n+1) = v1(n) + (v1(n)^2) + 5/4*v1(n) +1.40/4 - u1(n)/4 + I/4)/4
 	signed_mult v1sq(v1xv1, v1, v1);
-	assign v1new = v1 + ((v1xv1 + v1+(v1>>>2) + (c14>>>2) - (u1>>>2) + (I>>>2))>>>2);
+	assign v1new = v1 + ((v1xv1 + v1 + (v1 >>> 2) + (c14 >>>2 ) - (u1 >>> 2) + (I >>> 2)) >>> 2);
 	
 	// u1(n+1) = u1 + dt*a*(b*v1(n) - u1(n))
-	assign v1xb = v1>>>b;         //mult (v1xb, v1, b);
-	assign du1 = (v1xb-u1)>>>a ;  //mult (du1, (v1xb-u1), a);
-	assign u1new = u1 + (du1>>>4) ; 
-	assign u1reset = u1 + d ;
+	assign v1xb = v1 >>> b;         //mult (v1xb, v1, b);
+	assign du1 = (v1xb - u1) >>>a;  //mult (du1, (v1xb-u1), a);
+	assign u1new = u1 + (du1 >>> 4) ; 
+	assign u1reset = u1 + d;
 endmodule
