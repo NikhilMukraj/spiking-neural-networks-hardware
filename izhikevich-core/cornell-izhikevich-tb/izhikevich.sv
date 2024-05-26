@@ -71,8 +71,8 @@ module izhikevich_core #(
 	// v1(n+1) = v1(n) + dt*(4*(v1(n)^2) + 5*v1(n) +1.40 - u1(n) + I)
 	// but note that what is actually coded is
 	// v1(n+1) = v1(n) + (v1(n)^2) + 5/4*v1(n) +1.40/4 - u1(n)/4 + I/4)/4
-	signed_mult v1sq(v1xv1, v1, v1);
-	assign v1new = v1 + ((v1xv1 + v1 + (v1 >>> 2) + (c14 >>>2 ) - (u1 >>> 2) + (I >>> 2)) >>> 2);
+	signed_mult v1sq( v1xv1, v1, v1 );
+	assign v1new = v1 + ((v1xv1 + v1 + (v1 >>> 2) + (c14 >>> 2) - (u1 >>> 2) + (I >>> 2)) >>> 2);
 	
 	// u1(n+1) = u1 + dt*a*(b*v1(n) - u1(n))
 	assign v1xb = v1 >>> b;         //mult (v1xb, v1, b);
