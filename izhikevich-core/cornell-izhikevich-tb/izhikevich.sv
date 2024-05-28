@@ -46,7 +46,7 @@ module izhikevich_core #(
 	
 	// assign c14 = 18'sh1_6666; // 1.4
 	
-	assign voltage = v1;  // copy state var to output
+	assign voltage = v1; // copy state var to output
     assign u = u1;
 	
 	always @ (posedge clk) begin
@@ -68,15 +68,15 @@ module izhikevich_core #(
 	end
 	
 	// dt = 1/16 or 2>>4
-	// v1(n+1) = v1(n) + dt*(4*(v1(n)^2) + 5*v1(n) +1.40 - u1(n) + I)
+	// v1(n+1) = v1(n) + dt * (4 * (v1(n) ^ 2) + 5 * v1(n) + 1.40 - u1(n) + I)
 	// but note that what is actually coded is
-	// v1(n+1) = v1(n) + (v1(n)^2) + 5/4*v1(n) +1.40/4 - u1(n)/4 + I/4)/4
+	// v1(n+1) = v1(n) + (v1(n) ^ 2) + 5/4 * v1(n) + 1.40 / 4 - u1(n) / 4 + I / 4) / 4
 	signed_mult v1sq ( v1xv1, v1, v1 );
 	assign v1new = v1 + ((v1xv1 + v1 + (v1 >>> 2) + (c14 >>> 2) - (u1 >>> 2) + (I >>> 2)) >>> 2);
 	
 	// u1(n+1) = u1 + dt*a*(b*v1(n) - u1(n))
-	assign v1xb = v1 >>> b;         //mult (v1xb, v1, b);
-	assign du1 = (v1xb - u1) >>>a;  //mult (du1, (v1xb-u1), a);
+	assign v1xb = v1 >>> b;         // sgned_mult ( v1xb, v1, b );
+	assign du1 = (v1xb - u1) >>>a;  // sgned_mult ( du1, (v1xb - u1), a );
 	assign u1new = u1 + (du1 >>> 4) ; 
 	assign u1reset = u1 + d;
 endmodule
