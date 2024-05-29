@@ -102,6 +102,7 @@
       - [x] With pins
   - [ ] Cornell processor
     - [ ] Code verification
+      - [ ] Schematic
     - [ ] Synthesis (?)
   - [ ] Editing equations so $dw$ change does not use $\tau_{m}$ in step only $dt$
     - [ ] Vivado synthesis redo with specification of which is the top module
