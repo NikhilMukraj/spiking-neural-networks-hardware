@@ -38,7 +38,7 @@ module izhikevich_core #(
     input signed [N-1:0] d,
     output reg signed [N-1:0] voltage,
     output reg signed [N-1:0] u,
-    output reg is_spiking,
+    output reg is_spiking
 );
 	reg signed [N-1:0] v1, u1;
 	wire signed	[N-1:0] u1reset, v1new, u1new, du1;
