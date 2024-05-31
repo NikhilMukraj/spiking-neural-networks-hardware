@@ -3,7 +3,7 @@ module signed_mult #(
 )(
     input signed [N-1:0] a, 
     input signed [N-1:0] b,
-    output reg signed [N-1] out;
+    output reg signed [N-1] out
 );
 	wire signed	[N * 2 - 1:0] mult_out;
 
