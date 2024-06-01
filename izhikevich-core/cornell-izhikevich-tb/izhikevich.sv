@@ -11,8 +11,6 @@ module signed_mult #(
 	assign out = {mult_out[N * 2 - 1], mult_out[N * 2 - 4:N - 2]};
 endmodule
 
-// input as hex from py tb
-
 // a <=  18'sh0_051E ; // 0.02
 // b <=  18'sh0_3333 ; // 0.2
 // c <=  18'sh3_8000 ; // -0.5
@@ -75,8 +73,8 @@ module izhikevich_core #(
 	assign v1new = v1 + ((v1xv1 + v1 + (v1 >>> 2) + (c14 >>> 2) - (u1 >>> 2) + (I >>> 2)) >>> 2);
 	
 	// u1(n+1) = u1 + dt*a*(b*v1(n) - u1(n))
-	assign v1xb = v1 >>> b;         // sgned_mult ( v1xb, v1, b );
-	assign du1 = (v1xb - u1) >>>a;  // sgned_mult ( du1, (v1xb - u1), a );
+	assign v1xb = v1 >>> b;         // signed_mult ( v1xb, v1, b );
+	assign du1 = (v1xb - u1) >>>a;  // signed_mult ( du1, (v1xb - u1), a );
 	assign u1new = u1 + (du1 >>> 4) ; 
 	assign u1reset = u1 + d;
 endmodule
