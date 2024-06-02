@@ -112,7 +112,9 @@
     - [ ] Full plotting
   - [ ] Coupled Izhikevich cores
 - [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
-- [ ] Hodgkin huxley core
+- [ ] Hodgkin Huxley core
+- [ ] Poisson neuron
+- [ ] Preset spike train
 - [ ] RAM interface
   - [ ] BRAM
     - [ ] BRAM access from different controllers
