@@ -23,7 +23,7 @@ module pn_gen #(
 
 	always @(posedge clk) begin
 		if (rst) begin
-		pn_q <= INIT ^ seed;
+			pn_q <= INIT ^ seed;
 		end else begin
 			pn_q <= pn_d;
 		end
