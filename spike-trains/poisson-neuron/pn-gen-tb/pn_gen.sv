@@ -4,11 +4,11 @@ module pn_gen #(
 	input clk,
 	input rst,
 	input next,
-	input [N-1:0] init, // 32'b01101011110010110111011010011100
 	input [N-1:0] seed,
 	output [N-1:0] num
 );
-	reg [31:0] pn_d, pn_q = init;
+	localparam INIT = 32'b01101011110010110111011010011100;
+	reg [N:0] pn_d, pn_q = INIT;
 
 	assign num = pn_q;
 
@@ -28,5 +28,4 @@ module pn_gen #(
 			pn_q <= pn_d;
 		end
 	end
-
 endmodule
