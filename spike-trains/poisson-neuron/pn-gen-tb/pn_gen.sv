@@ -14,6 +14,7 @@ module pn_gen #(
 
 	always @(*) begin
 		if (next) begin
+			// maybe assume an even number greater than 16 and try more evenly spreading bits
 			// pn_d = {pn_q[N-2:0], pn_q[N-3] ^ pn_q[N-8] ^ pn_q[N-12] ^ pn_q[N-14]};
 			pn_d = {pn_q[30:0], pn_q[30] ^ pn_q[24] ^ pn_q[10] ^ pn_q[6]};
 		end else begin
