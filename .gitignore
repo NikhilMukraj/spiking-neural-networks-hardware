@@ -51,3 +51,4 @@
 /ram/ram-tb/__pycache__
 /ram/ram-tb/sim_build
 /ram/ram-tb/results.xml
+/spike-trains/poisson-neuron/pn-gen-tb/output.log
