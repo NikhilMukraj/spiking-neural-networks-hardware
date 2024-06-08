@@ -30,6 +30,7 @@ async def pn_gen_test(dut):
         await RisingEdge(dut.clk)
     
     with open('output.log') as f:
+        f.write('nums,')
         for i in nums:
-            f.write(f'{i}\n')
+            f.write(f'{i},\n')
     
