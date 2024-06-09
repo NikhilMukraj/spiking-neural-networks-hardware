@@ -114,6 +114,7 @@
 - [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
 - [ ] Hodgkin Huxley core
 - [ ] Poisson neuron
+  - [ ] Psuedo-random number generation
 - [ ] Preset spike train
 - [ ] RAM interface
   - [ ] BRAM
