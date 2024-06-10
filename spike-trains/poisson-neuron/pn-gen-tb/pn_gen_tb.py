@@ -16,7 +16,10 @@ async def generate_clock(dut, timesteps):
 async def pn_gen_test(dut):
     generate_clock(dut, 120)
 
-    dut.seed = decimal_to_fixed_point(1, 32, 0)
+    seed = 1
+    bits = 32
+
+    dut.seed = decimal_to_fixed_point(seed, bits, 0)
     dut.rst = BinaryValue(1)
 
     await RisingEdge(dut.clk)
