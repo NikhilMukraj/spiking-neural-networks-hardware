@@ -115,6 +115,7 @@
 - [ ] Hodgkin Huxley core
 - [ ] Poisson neuron
   - [ ] Psuedo-random number generation
+    - Should work with a bit length parameter from 16 to 32
 - [ ] Preset spike train
 - [ ] RAM interface
   - [ ] BRAM
