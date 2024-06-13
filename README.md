@@ -140,6 +140,7 @@
   - [ ] Distributed communication
 - [ ] Izhikevich matrix
   - [ ] Interwoven matrix
+    - [reference FPGA neural networks](https://www.youtube.com/playlist?list=PLJePd8QU_LYKZwJnByZ8FHDg5l1rXtcIq)
     - Potentially could refactor with asynchronous execution of neurons
     - For now, try implementing with one memory controller and see if you can get it to work with multiple memory controllers
     - *Could also try using a crossbar instead of storing voltages in memory*
