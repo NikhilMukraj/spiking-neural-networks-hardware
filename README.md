@@ -105,6 +105,7 @@
       - [ ] Schematic
     - [ ] Synthesis (?)
     - [ ] Compare LUT usage
+    - [ ] Place and route
   - [ ] Editing equations so $dw$ change does not use $\tau_{m}$ in step only $dt$
     - [ ] Vivado synthesis redo with specification of which is the top module
     - [ ] Preliminary core testing
