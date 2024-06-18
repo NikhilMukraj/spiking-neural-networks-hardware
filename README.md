@@ -113,6 +113,7 @@
       - [ ] Adaptive value change calculation
     - [ ] Full plotting
   - [ ] Coupled Izhikevich cores
+    - [ ] Gap junction
 - [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
 - [ ] Hodgkin Huxley core
 - [ ] Poisson neuron
