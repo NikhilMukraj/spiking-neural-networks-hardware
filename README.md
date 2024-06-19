@@ -115,6 +115,10 @@
   - [ ] Coupled Izhikevich cores
     - [ ] Gap junction
 - [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
+- [ ] Neurotransmission
+  - [ ] Neurotransmitter core
+  - [ ] Neurotranmission module per row of neurons to handle entire row's calculations
+  - [ ] Using fit parameters of Izhikevich neuron to emulate neurotranmission
 - [ ] Hodgkin Huxley core
 - [ ] Poisson neuron
   - [ ] Psuedo-random number generation
@@ -172,9 +176,6 @@
   - [ ] Input values to feed forward version
   - [ ] Classifier
   - [ ] Fit to eeg signaling
-- [ ] Neurotransmission
-  - [ ] Neurotranmission module per row of neurons to handle entire row's calculations
-  - [ ] Using fit parameters of Izhikevich neuron to emulate neurotranmission
 
 ## Hardware Documentation
 
