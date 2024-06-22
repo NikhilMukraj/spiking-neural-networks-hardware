@@ -113,6 +113,7 @@
     - [ ] Full plotting
   - [ ] Coupled Izhikevich cores
     - [ ] Gap junction
+    - [ ] Coupling with spike train
 - [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
 - [ ] Neurotransmission
   - [ ] Neurotransmitter core
