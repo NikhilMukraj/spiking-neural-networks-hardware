@@ -114,6 +114,7 @@
   - [ ] Coupled Izhikevich cores
     - [ ] Gap junction
     - [ ] Coupling with spike train
+      - [ ] Delta dirac approximation
 - [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
 - [ ] Neurotransmission
   - [ ] Neurotransmitter core
