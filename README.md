@@ -114,7 +114,6 @@
   - [ ] Coupled Izhikevich cores
     - [ ] Gap junction
     - [ ] Coupling with spike train
-      - [ ] Delta dirac approximation
 - [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
 - [ ] Neurotransmission
   - [ ] Neurotransmitter core
@@ -127,6 +126,8 @@
     - Could also try gaussian number generation
 - [ ] Preset spike train
 - [ ] Neural refractoriness function
+  - [ ] Exponential decay approximation or use delta dirac approximation
+    - Only needs to concern itself with the positive domain
 - [ ] RAM interface
   - [ ] BRAM
     - [ ] BRAM access from different controllers
