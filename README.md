@@ -123,7 +123,7 @@
 - [ ] Poisson neuron
   - [ ] Psuedo-random number generation
     - Should work with a bit length parameter from 16 to 32, could probably index through multiplying max bit length by certain values rather than just subtracting in order to ensure a spread
-    - Could also try gaussian number generation
+    - Could also try gaussian number generation, would need to approximate distribution function
 - [ ] Preset spike train
 - [ ] Neural refractoriness function
   - [ ] Exponential decay approximation or use delta dirac approximation
