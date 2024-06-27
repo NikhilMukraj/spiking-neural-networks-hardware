@@ -55,7 +55,7 @@
   - [x] Absolute value
   - [ ] High precision $e^x$
   - [x] Limited range $e^x$
-  - [ ] Preprocessing of equation
+  - [ ] Preprocessing of equation with tree
 - [ ] Operation machine
   - [ ] Variable indexing to stack
   - [ ] Doing operation and saving output
