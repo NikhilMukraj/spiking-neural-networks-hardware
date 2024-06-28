@@ -64,6 +64,7 @@
   - Apply a function to a given set of numbers
   - Keep track of the new number, get rid of old numbers if not needed
   - Determine next function and repeat
+  - Multiple operation machines could read from the same state machine
 - [ ] Operations verification on chip
   - [ ] Addition/Subtraction
   - [ ] Multiplication
