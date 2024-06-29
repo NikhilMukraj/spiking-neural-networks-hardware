@@ -48,7 +48,7 @@
         - [ ] Fixed point decimals (balanced)
         - [ ] Fixed point decimals (unbalanced)
       - [ ] Hardware simulation
-      - [ ] Comparison of LUT ultization
+      - [ ] Comparison of LUT utilization
   - [x] Negation
   - [x] Reciprocal
   - [x] Division
