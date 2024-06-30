@@ -89,7 +89,7 @@
     - [ ] Verilog
     - [ ] Finding correct parameters
       - Currently the w parameter will reach 0 and then never change, need to find a set of parameters that does not engage in this behavior
-      - Valid parameters could be generated computationally
+      - Valid parameters could be generated computationaly
       - Could be that some of the parameters are so small the fixed point approximation is 0
         - [ ] Simulate the fixed point operations (do add and mult and then calculate overflow) to see when the equation starts to fail
     - [ ] Synthesis
