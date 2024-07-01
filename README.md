@@ -76,7 +76,7 @@
 - [ ] Izhikevich core
   - [x] Voltage change
   - [x] Adaptive value change
-  - [x] Is spiking indicator
+  - [x] Is spiking signal indicator
   - [ ] Clocked operations
     - [ ] Using one operator at a time (use finite state machine to keep track of which operators to use, keep track of numbers in a stack)
   - [x] 16-bit processor (with slower clock speed) (found to be inaccurate)
