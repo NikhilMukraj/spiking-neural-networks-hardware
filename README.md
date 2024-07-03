@@ -118,6 +118,7 @@
 - [ ] Potentially (8-bit) minifloat FPUs for computation, one per neuron core
 - [ ] Neurotransmission
   - [ ] Neurotransmitter core
+    - [ ] NMDA modifier
   - [ ] Neurotranmission module per row of neurons to handle entire row's calculations
   - [ ] Using fit parameters of Izhikevich neuron to emulate neurotranmission
 - [ ] Hodgkin Huxley core
