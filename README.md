@@ -104,7 +104,7 @@
   - [ ] Cornell processor
     - [ ] Code verification
       - [ ] Schematic
-    - [ ] Synthesis (?)
+    - [ ] Synthesis
     - [ ] Compare LUT usage
     - [ ] Place and route
     - [ ] Vivado synthesis redo with specification of which is the top module
