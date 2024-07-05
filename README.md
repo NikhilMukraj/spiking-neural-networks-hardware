@@ -111,7 +111,7 @@
     - [ ] Preliminary core testing
       - [ ] Voltage change calculation
       - [ ] Adaptive value change calculation
-    - [ ] Full plotting
+    - [ ] Plotting adaptive values and voltage values
   - [ ] Coupled Izhikevich cores
     - [ ] Gap junction
     - [ ] Coupling with spike train
